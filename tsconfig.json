@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@database": [
+        "database/db.ts"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@context/*": [
+        "context/*"
+      ],
+      "@util/*": [
+        "util/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "context/CalculateABY.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

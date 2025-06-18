@@ -1,0 +1,9 @@
+{
+    "bnb": {
+      "providerUrl": "https://bsc-dataseed.binance.org/",
+      "network": "bnb",
+      "chainId": "56",
+      "chainIdHex": "0x38",
+      "usdtAddress": "0x55d398326f99059ff775485246999027b3197955"
+    }
+  }
