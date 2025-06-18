@@ -29,8 +29,8 @@ const Home = () => {
           <h1 className="text-white hero-title mx-10 p-0">{t('blockchainSecurityAuditorTitle')}</h1>
           <p className='mx-10 text-white michroma-regular'>{t('certifyTechnology')}</p>
           <div className='flex w-[80%] justify-around m-2'>
-            <Link href="/form">
-              <button className="p-3 bg-[#BA181B] text-xl michroma-regular">
+            <Link href="/form" className='text-white'>
+              <button className="p-3 bg-[#BA181B] text-xl michroma-regular ">
                 {t('talkToAdvisor')}
               </button>
             </Link>
