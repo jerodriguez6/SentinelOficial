@@ -1,81 +1,103 @@
-import React, { useEffect, useRef, useState } from "react";
+// pages/index.tsx
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { useTranslation } from 'next-i18next';
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// Importa tus componentes (asegúrate de que las rutas sean correctas)
 import ServicesSection from '@components/ServicesSection';
-import BlockchainLogos from '@components/BlockchainLogos';
-import TechnologiesGrid from '@components/TechnologiesGrid';
-import { Shield, CheckCircle, Users, Star } from 'lucide-react';
+import BlockchainLogos from '@components/BlockchainLogos'; // Asumo que este componente ya es responsive internamente
+import TechnologiesGrid from '@components/TechnologiesGrid'; // Asumo que este componente ya es responsive internamente
+import { Shield, CheckCircle, Users } from 'lucide-react'; // Importamos solo los iconos necesarios
 
 const Home = () => {
   const router = useRouter();
-  // Usar el hook useTranslation. Si no pasas un namespace, usa el default.
-  // Es una buena práctica especificar el namespace si tus traducciones están divididas.
   const { t, i18n } = useTranslation('common');
-  console.log('Idioma actual detectado:', i18n.language);
-  // Función para cambiar el idioma
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
 
   useEffect(() => {
+    // Este console.log es útil para depurar el idioma en el cliente
     console.log('Idioma actual detectado por useEffect:', i18n.language);
-  }, [i18n.language]); // This will log every time i18n.language changes
+  }, [i18n.language]);
 
   return (
-    <div>
-      <div className="hero h-[90vh] bg-black items-center flex justify-center ">
-        <div className="w-[50%] flex justify-center flex-column">
-          <p className='mx-10 text-white michroma-regular'>{t('auditWeb3')}</p>
-          <h1 className="text-white hero-title mx-10 p-0">{t('blockchainSecurityAuditorTitle')}</h1>
-          <p className='mx-10 text-white michroma-regular'>{t('certifyTechnology')}</p>
-          <div className='flex w-[80%] justify-around m-2'>
-            <Link href="/form" className='text-white'>
-              <button className="p-3 bg-[#BA181B] text-xl michroma-regular ">
+    <div className="overflow-hidden"> {/* Asegura que no haya scroll horizontal */}
+      {/* Hero Section */}
+      <section className="min-h-screen bg-black flex flex-col md:flex-row items-center justify-center p-4 sm:p-8 lg:p-12">
+        {/* Contenido del Hero (texto y botones) */}
+        <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0">
+          <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4'>
+            {t('auditWeb3')}
+          </p>
+          <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            {/* dangerousSetInnerHTML para el <br /> */}
+            <span dangerouslySetInnerHTML={{ __html: t('blockchainSecurityAuditorTitle') as string }} />
+          </h1>
+          <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8'>
+            {t('certifyTechnology')}
+          </p>
+          <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full sm:w-[80%] mx-auto md:mx-0'>
+            <Link href="/contacto" className='no-underline'>
+              <button className="px-6 py-3 bg-sentinel-primary text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
                 {t('talkToAdvisor')}
               </button>
             </Link>
-            <button className="p-3 bg-[#d3d3d3] text-xl michroma-regular text-black">
-              {t('talkToAdvisor')}
-            </button>
+            <Link href="/audits" className='no-underline'>
+              <button className="px-6 py-3 bg-gray-300 text-black text-base sm:text-lg michroma-regular rounded-md hover:bg-gray-400 transition-colors duration-200 w-full sm:w-auto">
+                {t('viewSuccessStoriesBtn')} {/* Botón para ver casos de éxito */}
+              </button>
+            </Link>
           </div>
         </div>
-        <div className="w-[50%] flex justify-center">
-          <Image className="block" height={620} width={620} src={'/sentinel.png'} alt={'sentinel'} />
+        {/* Imagen del Hero */}
+        <div className="w-full md:w-1/2 flex justify-center p-4">
+          <Image
+            className="block max-w-full h-auto" // Ajusta la imagen al ancho de su contenedor
+            height={620} // Altura base, se escalará con 'h-auto'
+            width={620} // Ancho base, se escalará con 'max-w-full'
+            src={'/sentinel.png'}
+            alt={t('sentinelImageAlt')}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Optimización de Next.js Image
+            priority // Carga prioritaria para LCP
+          />
         </div>
-      </div>
+      </section>
+
+      {/* Services Section (Asumimos que ya es responsive) */}
       <ServicesSection />
+
       {/* Blockchains Supported Section */}
-      <section className="section-padding py-20 bg-gray-50">
-        <div className="container-max">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-brand-black mb-4">
-              Blockchains Soportadas
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              {t('blockchainsSupportedTitle')}
             </h2>
-            <p className="text-xl text-brand-gray-600 max-w-3xl mx-auto">
-              Expertise comprobado en las principales redes blockchain del ecosistema
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+              {t('blockchainsSupportedDesc')}
             </p>
           </div>
+          {/* Asumimos que BlockchainLogos ya es responsive internamente */}
           <BlockchainLogos />
         </div>
       </section>
 
-      {/* Technologies Section */}
-      <section className="section-padding py-20 bg-gray-50 g">
-        <div className="container-max">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-black mb-4">
-              Tecnologías Auditadas
+      {/* Technologies Section - Adjusted to bg-gray-50 to potentially avoid text visibility issues */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8"> {/* Changed background to gray-50 */}
+        <div className="max-w-screen-xl mx-auto">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4"> {/* Changed text-white to text-gray-900 */}
+              {t('technologiesAuditedTitle')}
             </h2>
-            <p className="text-xl text-white max-w-3xl mx-auto">
-              Cobertura completa para todos los componentes de tu proyecto Web3
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"> {/* Changed text-white to text-gray-600 */}
+              {t('technologiesAuditedDesc')}
             </p>
           </div>
+          {/* Asumimos que TechnologiesGrid ya es responsive internamente */}
           <TechnologiesGrid />
         </div>
       </section>
+
       {/* Process Visualization */}
       <div className="bg-sentinel-dark rounded-3xl p-8 md:p-12">
         <div className="text-center mb-12">
@@ -104,74 +126,70 @@ const Home = () => {
           ))}
         </div>
       </div>
+
       {/* Trust Indicators */}
-      <section className="section-padding py-20 bg-gray-50">
-        <div className="container-max">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#d3d3d3] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Shield className="w-8 h-8 text-brand-red" />
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+            <div className="text-center p-4 bg-white rounded-lg shadow-md">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <Shield className="w-7 h-7 sm:w-8 sm:h-8 text-sentinel-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-brand-black mb-4">
-                Metodología Rigurosa
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                {t('rigorousMethodologyTitle')}
               </h3>
-              <p className="text-brand-gray-600">
-                Proceso de auditoría sistemático con más de 200 checks de seguridad
-                y revisión manual exhaustiva por expertos.
+              <p className="text-gray-600 text-sm sm:text-base">
+                {t('rigorousMethodologyDesc')}
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#d3d3d3] rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-8 h-8 text-brand-red" />
+            <div className="text-center p-4 bg-white rounded-lg shadow-md">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-sentinel-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-brand-black mb-4">
-                Garantía de Calidad
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                {t('qualityAssuranceTitle')}
               </h3>
-              <p className="text-brand-gray-600">
-                Reportes detallados con recomendaciones específicas y seguimiento
-                post-auditoría para garantizar la implementación correcta.
+              <p className="text-gray-600 text-sm sm:text-base">
+                {t('qualityAssuranceDesc')}
               </p>
             </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[#d3d3d3] rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="w-8 h-8 text-brand-red" />
+            <div className="text-center p-4 bg-white rounded-lg shadow-md">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                <Users className="w-7 h-7 sm:w-8 sm:h-8 text-sentinel-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-brand-black mb-4">
-                Equipo de Elite
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                {t('eliteTeamTitle')}
               </h3>
-              <p className="text-brand-gray-600">
-                Auditores certificados con experiencia en ciberseguridad,
-                desarrollo blockchain y investigación en vulnerabilidades.
+              <p className="text-gray-600 text-sm sm:text-base">
+                {t('eliteTeamDesc')}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Clients Section */}
-      {/* c:\Dev\Shark\BH\VetaWallet\AUKA-ICO\components\BlockchainLogos.tsx */}
-
       {/* Final CTA */}
-      <section className="section-padding py-20 bg-sentinel-dark">
-        <div className="container-max">
-          <div className="text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-              ¿Listo para proteger tu proyecto?
-            </h2>
-            <p className="text-xl text-white mb-10 max-w-2xl mx-auto">
-              Únete a los cientos de proyectos que han confiado en nuestra experiencia
-              para asegurar su código y proteger a sus usuarios.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/contacto" className="btn-primary text-lg px-10 py-4">
-                Comenzar Auditoría
-              </Link>
-              <Link href="/audits" className="text-white border-2 border-white hover:bg-white hover:text-brand-black px-10 py-4 rounded-md font-medium transition-all duration-200">
-                Ver Casos de Éxito
-              </Link>
-            </div>
+      <section className="py-12 sm:py-16 lg:py-20 bg-sentinel-dark px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
+            {t('readyToProtectTitle')}
+          </h2>
+          <p className="text-base sm:text-lg text-gray-300 mb-8 sm:mb-10 max-w-3xl mx-auto">
+            {t('readyToProtectDesc')}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/contacto" className="no-underline">
+              <button className="px-8 py-3 bg-sentinel-primary text-white text-base sm:text-lg rounded-md font-semibold hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
+                {t('startAuditBtn')}
+              </button>
+            </Link>
+            <Link href="/audits" className="no-underline">
+              <button className="px-8 py-3 text-white border-2 border-white text-base sm:text-lg rounded-md font-semibold hover:bg-white hover:text-black transition-colors duration-200 w-full sm:w-auto">
+                {t('viewSuccessStoriesBtn')}
+              </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -182,9 +200,7 @@ const Home = () => {
 export const getStaticProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
-      // Pass the translations for the 'common' namespace to the page component
       ...(await serverSideTranslations(locale, ['common'])),
-      // You can add other props here if your page needs them
     },
   };
 };

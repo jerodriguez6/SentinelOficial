@@ -37,7 +37,7 @@ const NavBar = () => {
     // y para que next-i18next maneje automáticamente los prefijos de idioma.
 
     return (
-        <nav className="bg-black flex text-white justify-between items-center w-full px-5 py-2">
+        <nav className="bg-black fixed flex text-white justify-between items-center w-full px-5 py-2">
             {/* Logo y Título */}
             <Link href="/" className="text-white no-underline flex items-center">
                 <Image className="block" height={100} width={100} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
