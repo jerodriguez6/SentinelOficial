@@ -5,8 +5,14 @@
     "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
+      "@/*": [
+        "./src/*"
+      ],
       "@database": [
         "database/db.ts"
+      ],
+      "@lib": [
+        "lib/*"
       ],
       "@components/*": [
         "components/*"
@@ -23,9 +29,6 @@
       "@hooks/*": [
         "hooks/*"
       ],
-      "@/*": [
-        "./src/*"
-      ]
     },
     "lib": [
       "dom",

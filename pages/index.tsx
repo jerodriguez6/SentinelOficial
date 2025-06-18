@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from "next/router"
 import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import ServicesSection from '@components/ServicesSection';
 
 const Home = () => {
   const router = useRouter();
@@ -27,16 +28,22 @@ const Home = () => {
           <p className='mx-10 text-white michroma-regular'>{t('auditWeb3')}</p>
           <h1 className="text-white hero-title mx-10 p-0">{t('blockchainSecurityAuditorTitle')}</h1>
           <p className='mx-10 text-white michroma-regular'>{t('certifyTechnology')}</p>
-          <div className='flex'>
+          <div className='flex w-[80%] justify-around m-2'>
             <Link href="/form">
-              {t('talkToAdvisor')}
+              <button className="p-3 bg-[#BA181B] text-xl michroma-regular">
+                {t('talkToAdvisor')}
+              </button>
             </Link>
+            <button className="p-3 bg-[#d3d3d3] text-xl michroma-regular text-black">
+              {t('talkToAdvisor')}
+            </button>
           </div>
         </div>
         <div className="w-[50%] flex justify-center">
           <Image className="block" height={620} width={620} src={'/sentinel.png'} alt={'sentinel'} />
         </div>
       </div>
+      <ServicesSection />
       <div className="hero h-screen bg-white">
 
       </div>
