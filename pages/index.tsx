@@ -98,23 +98,23 @@ const Home = () => {
         )}
         {/* Contenido del Hero (texto y botones) */}
         <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-20">
-          <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4'>
+          <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4 relative z-10'>
             {t('auditWeb3')}
           </p>
-          <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative z-10">
             {/* dangerousSetInnerHTML para el <br /> */}
             <span dangerouslySetInnerHTML={{ __html: t('blockchainSecurityAuditorTitle') as string }} />
           </h1>
-          <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8'>
+          <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8 relative z-10'>
             {t('certifyTechnology')}
           </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full sm:w-[80%] mx-auto md:mx-0'>
-            <Link href="/contacto" className='no-underline'>
+          <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full sm:w-[80%] mx-auto md:mx-0 '>
+            <Link href="/contacto" className='no-underline relative z-10'>
               <button className="px-6 py-3 bg-sentinel-primary text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
                 {t('talkToAdvisor')}
               </button>
             </Link>
-            <Link href="/audits" className='no-underline'>
+            <Link href="/audits" className='no-underline relative z-10'>
               <button className="px-6 py-3 bg-gray-300 text-black text-base sm:text-lg michroma-regular rounded-md hover:bg-gray-400 transition-colors duration-200 w-full sm:w-auto">
                 {t('viewSuccessStoriesBtn')} {/* Botón para ver casos de éxito */}
               </button>
@@ -124,7 +124,7 @@ const Home = () => {
         {/* Imagen del Hero */}
         <div className="w-full md:w-1/2 flex justify-center p-4">
           <Image
-            className="block max-w-full h-auto" // Ajusta la imagen al ancho de su contenedor
+            className="block max-w-full h-auto relative z-10" // Ajusta la imagen al ancho de su contenedor
             height={620} // Altura base, se escalará con 'h-auto'
             width={620} // Ancho base, se escalará con 'max-w-full'
             src={'/sentinel.png'}
@@ -139,7 +139,7 @@ const Home = () => {
       <ServicesSection />
 
       {/* Blockchains Supported Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-screen-xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
@@ -155,7 +155,7 @@ const Home = () => {
       </section>
 
       {/* Technologies Section - Adjusted to bg-gray-50 to potentially avoid text visibility issues */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8"> {/* Changed background to gray-50 */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10"> {/* Changed background to gray-50 */}
         <div className="max-w-screen-xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4"> {/* Changed text-white to text-gray-900 */}
@@ -171,7 +171,7 @@ const Home = () => {
       </section>
 
       {/* Process Visualization */}
-      <div className="bg-sentinel-dark rounded-3xl p-8 md:p-12">
+      <div className="bg-sentinel-dark rounded-3xl p-8 md:p-12 relative z-10">
         <div className="text-center mb-12">
           <h3 className="text-3xl font-bold text-white mb-4">Proceso de Auditoría IA</h3>
           <p className="text-white text-lg">De código fuente a reporte completo en tiempo record</p>
@@ -200,7 +200,7 @@ const Home = () => {
       </div>
 
       {/* Trust Indicators */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-screen-xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             <div className="text-center p-4 bg-white rounded-lg shadow-md">
@@ -215,7 +215,7 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="text-center p-4 bg-white rounded-lg shadow-md">
+            <div className="text-center p-4 bg-white rounded-lg shadow-md relative z-10">
               <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
                 <CheckCircle className="w-7 h-7 sm:w-8 sm:h-8 text-sentinel-primary" />
               </div>
@@ -227,7 +227,7 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="text-center p-4 bg-white rounded-lg shadow-md">
+            <div className="text-center p-4 bg-white rounded-lg shadow-md relative z-10">
               <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
                 <Users className="w-7 h-7 sm:w-8 sm:h-8 text-sentinel-primary" />
               </div>
@@ -243,7 +243,7 @@ const Home = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-sentinel-dark px-4 sm:px-6 lg:px-8">
+      <section className="py-12 sm:py-16 lg:py-20 bg-sentinel-dark px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-screen-xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
             {t('readyToProtectTitle')}
