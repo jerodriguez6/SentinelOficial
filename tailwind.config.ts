@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -109,13 +108,26 @@ export default {
           '50%': {
             boxShadow: '0 0 40px rgba(0, 186, 255, 0.6)'
           }
+        },
+        // ✨ NUEVO KEYFRAME PARA ANIMACIÓN DE TEXTO (fade-in-up) ✨
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'float': 'float 3s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite'
+        'glow': 'glow 2s ease-in-out infinite',
+        // ✨ NUEVA ANIMACIÓN (fade-in-up) ✨
+        'fade-in-up': 'fade-in-up 0.6s ease-out forwards'
       }
     }
   },

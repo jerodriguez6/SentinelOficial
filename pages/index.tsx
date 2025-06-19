@@ -1,5 +1,5 @@
 // pages/index.tsx
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useTranslation } from 'next-i18next';
 import { useRouter } from "next/router";
@@ -7,25 +7,97 @@ import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 // Importa tus componentes (asegúrate de que las rutas sean correctas)
 import ServicesSection from '@components/ServicesSection';
-import BlockchainLogos from '@components/BlockchainLogos'; // Asumo que este componente ya es responsive internamente
-import TechnologiesGrid from '@components/TechnologiesGrid'; // Asumo que este componente ya es responsive internamente
-import { Shield, CheckCircle, Users } from 'lucide-react'; // Importamos solo los iconos necesarios
+import BlockchainLogos from '@components/BlockchainLogos';
+import TechnologiesGrid from '@components/TechnologiesGrid';
+import { Shield, CheckCircle, Users } from 'lucide-react';
+
+// ✨ PARTICLE IMPORTS ✨
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
+// ✨ Importa los tipos y enums necesarios de tsparticles/engine ✨
+import type { IOptions, RecursivePartial } from "@tsparticles/engine"; // Import IOptions and RecursivePartial for useMemo
+import { MoveDirection, OutMode } from "@tsparticles/engine"; // Importa los enums para 'direction' y 'outModes'
 
 const Home = () => {
   const router = useRouter();
   const { t, i18n } = useTranslation('common');
 
+  // ✨ PARTICLE STATE ✨
+  const [particlesInit, setParticlesInit] = useState(false);
+
+  // ✨ PARTICLE INITIALIZATION EFFECT ✨
   useEffect(() => {
-    // Este console.log es útil para depurar el idioma en el cliente
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => {
+      setParticlesInit(true);
+    });
+  }, []);
+
+  // ✨ PARTICLE OPTIONS - Usando enums de tsparticles/engine para compatibilidad de tipos ✨
+  const particlesOptions: RecursivePartial<IOptions> = useMemo( // Añadir el tipo explícito aquí para mayor claridad
+    () => ({
+      background: { color: { value: "transparent" } },
+      fpsLimit: 120,
+      interactivity: {
+        events: {
+          onClick: { enable: true, mode: "push" },
+          onHover: { enable: true, mode: "repulse" },
+        },
+        modes: {
+          push: { quantity: 4 },
+          repulse: { distance: 200, duration: 0.4 },
+        },
+      },
+      particles: {
+        color: { value: "#ffffff" },
+        links: {
+          enable: false,
+          color: "#ffffff",
+          distance: 150,
+          opacity: 0.5,
+          width: 1,
+        },
+        move: {
+          direction: MoveDirection.none, // ✨ FIX: Usar MoveDirection.none directamente ✨
+          enable: true,
+          outModes: { default: OutMode.bounce }, // ✨ FIX: Usar OutMode.bounce directamente ✨
+          random: false,
+          speed: 3,
+          straight: false,
+        },
+        number: {
+          density: { enable: true },
+          value: 80,
+        },
+        opacity: { value: 0.5 },
+        shape: { type: "circle" },
+        size: { value: { min: 1, max: 5 } },
+      },
+      detectRetina: true,
+    }),
+    [],
+  );
+
+
+  useEffect(() => {
     console.log('Idioma actual detectado por useEffect:', i18n.language);
   }, [i18n.language]);
 
   return (
     <div className="overflow-hidden"> {/* Asegura que no haya scroll horizontal */}
       {/* Hero Section */}
-      <section className="min-h-screen bg-black flex flex-col md:flex-row items-center justify-center p-4 sm:p-8 lg:p-12">
+      <section className="min-h-screen bg-black flex flex-col md:flex-row items-center justify-center p-4 sm:p-8 lg:p-12 pt-20 md:pt-24 relative overflow-hidden">
+        {/* ✨ PARTÍCULAS DE FONDO ✨ */}
+        {particlesInit && (
+          <Particles
+            id="tsparticles-hero" // ID único para esta instancia de Particles
+            className="absolute inset-0 w-full h-full z-0" // Ocupa todo el espacio, detrás del contenido
+            options={particlesOptions}
+          />
+        )}
         {/* Contenido del Hero (texto y botones) */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0">
+        <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-20">
           <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4'>
             {t('auditWeb3')}
           </p>
