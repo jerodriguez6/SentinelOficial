@@ -67,7 +67,7 @@ const ContactForm: React.FC = () => {
 
             if (res.ok) {
                 setMessage(t('formSubmittedSuccess'));
-                router.push('/thank-you');
+                router.push('/');
             } else {
                 const errorData = await res.json();
                 setMessage(errorData.message || t('formSubmissionError'));
