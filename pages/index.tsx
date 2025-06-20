@@ -109,7 +109,7 @@ const Home = () => {
             {t('certifyTechnology')}
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full sm:w-[80%] mx-auto md:mx-0 '>
-            <Link href="/contacto" className='no-underline relative z-10'>
+            <Link href="/form" className='no-underline relative z-10'>
               <button className="px-6 py-3 bg-sentinel-primary text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
                 {t('talkToAdvisor')}
               </button>
@@ -135,24 +135,37 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Services Section (Asumimos que ya es responsive) */}
-      <ServicesSection />
-
       {/* Blockchains Supported Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="py-12 sm:py-16 lg:py-20 bg-black px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-screen-xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
               {t('blockchainsSupportedTitle')}
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-white max-w-3xl mx-auto">
               {t('blockchainsSupportedDesc')}
             </p>
           </div>
           {/* Asumimos que BlockchainLogos ya es responsive internamente */}
           <BlockchainLogos />
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
+              {t('PoweredBySharkTechnology')}
+            </h2>
+            {/* <Image
+                                            src={'/'l}
+                                            alt={`${blockchain.name} logo`}
+                                            width={100} // Ancho y alto de la imagen en px
+                                            height={100}
+                                            className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
+                                        /> */}
+          </div>
+
         </div>
       </section>
+      {/* Services Section (Asumimos que ya es responsive) */}
+      <ServicesSection />
+
 
       {/* Technologies Section - Adjusted to bg-gray-50 to potentially avoid text visibility issues */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10"> {/* Changed background to gray-50 */}

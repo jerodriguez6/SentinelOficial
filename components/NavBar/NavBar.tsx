@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from 'next/link';
 // import { useAppContext } from 'context/state'; // Eliminado: ya no se usa el contexto de la wallet
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next'; // Importar useTranslation
 import { useRouter } from 'next/router'; // Importar useRouter de next/router
 
 const NavBar = () => {
     // const { connectWallet, walletAddress, onWalletConnectedCallback } = useAppContext(); // Eliminado: ya no se usa la lógica de la wallet
-    const { t, i18n } = useTranslation('common');
+    // ✨ FIX: Añadir { useSSR: false } para evitar errores de hidratación en SSR/CSR mismatch ✨
+    const { t, i18n } = useTranslation('common'); // useSSR: false removido
     const router = useRouter(); // Inicializa useRouter
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Estado para el desplegable
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Estado para el menú hamburguesa
@@ -38,7 +39,7 @@ const NavBar = () => {
     // y para que next-i18next maneje automáticamente los prefijos de idioma.
 
     return (
-        <nav className="bg-black fixed w-full top-0 left-0 z-50 shadow-md">
+        <nav className="bg-black fixed w-full top-0 left-0 z-50 shadow-md h-24">
             <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
                 {/* Logo y Título */}
                 <Link href="/" className="text-white no-underline flex items-center shrink-0">
@@ -91,7 +92,9 @@ const NavBar = () => {
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                             className="flex items-center px-4 py-2 rounded-md bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
                         >
-                            {t('language')} ({i18n.language.toUpperCase()})
+                            {t('language')}{" "}
+                            {/* Renderizado condicional del idioma */}
+                            {i18n.language ? `(${i18n.language.toUpperCase()})` : ''}
                             {/* Icono de flecha para el desplegable */}
                             <svg
                                 className={`ml-2 w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
@@ -120,7 +123,6 @@ const NavBar = () => {
                             </div>
                         )}
                     </div>
-                    {/* Botón de Conectar Wallet - Eliminado */}
                 </div>
             </div>
 
@@ -146,7 +148,9 @@ const NavBar = () => {
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                             className="flex items-center justify-center w-full px-4 py-2 rounded-md bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
                         >
-                            {t('language')} ({i18n.language.toUpperCase()})
+                            {t('language')}{" "}
+                            {/* Renderizado condicional del idioma en móvil también */}
+                            {i18n.language ? `(${i18n.language.toUpperCase()})` : ''}
                             <svg
                                 className={`ml-2 w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
                                 fill="none"
@@ -174,8 +178,6 @@ const NavBar = () => {
                             </div>
                         )}
                     </div>
-
-                    {/* Botón de Conectar Wallet - Eliminado */}
                 </div>
             </div>
         </nav>
