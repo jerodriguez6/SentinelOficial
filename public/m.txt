@@ -1,0 +1,82 @@
+Mapa Conceptual: Gestión Estratégica de la Continuidad y el Servicio
+	Gestión de la Continuidad del Negocio (GCN) - Marco ISO 22301
+		Propósito Fundamental
+			Definición: Un proceso de gestión holístico que identifica amenazas potenciales, los impactos que podrían causar y proporciona un marco para construir resiliencia organizacional.
+			Objetivo Clave: Proteger a la organización, reducir la probabilidad de ocurrencia de incidentes, prepararse para ellos, responder y recuperarse de manera efectiva para minimizar el impacto.
+			Conceptos de Interrupción:
+				Incidente: Evento que, si no se maneja, puede escalar a una emergencia o desastre.
+				Emergencia: Evento repentino que requiere acción inmediata por su impacto en la salud, seguridad o ambiente.
+				Desastre: Evento catastrófico no planificado que impide que la organización opere funciones críticas.
+				Crisis: Punto de inflexión que puede afectar la rentabilidad, reputación o capacidad de operación.
+		Ciclo de Mejora Continua (PHVA) - Estructura de ISO 22301
+			P - Planificar (Establecer el SGCN)
+				Fase donde se establecen la política, objetivos, controles y procedimientos para entregar resultados alineados con los objetivos de la organización.
+				Cláusula 4. Contexto de la Organización
+					Propósito: Entender los factores internos y externos que afectan a la organización para establecer un SGCN alineado y con el alcance correcto.
+					(4.1) Comprensión de la organización y su contexto: Determinar temas externos e internos relevantes, alinear el SGCN con la misión y visión, y entender las actividades, funciones, recursos y obligaciones.
+					(4.2) Comprensión de las necesidades y expectativas de las partes interesadas: Identificar partes interesadas (clientes, proveedores, reguladores, empleados) y sus requisitos legales, reglamentarios y contractuales.
+					(4.3) Determinación del alcance del SGCN: Definir los límites y la aplicabilidad del SGCN, considerando el contexto y las necesidades de las partes interesadas.
+					(4.4) Sistema de Gestión de la Continuidad del Negocio (SGCN): Establecer, implementar, mantener y mejorar continuamente el SGCN de acuerdo con la norma.
+				Cláusula 5. Liderazgo
+					Propósito: Asegurar el compromiso y la dirección de la alta gerencia para la eficacia del SGCN.
+					(5.1) Liderazgo y compromiso: La alta dirección debe demostrar su compromiso, asegurar que la política y los objetivos de CN son compatibles con la dirección estratégica, e integrar el SGCN en los procesos de negocio.
+					(5.2) Compromiso de la dirección: La gerencia debe establecer objetivos, comunicar la importancia del SGCN, participar en ejercicios y dirigir la mejora continua.
+					(5.3) Política de Continuidad del Negocio: Crear una política clara que proporcione un marco para establecer objetivos, que incluya el compromiso de satisfacer los requisitos y mejorar continuamente.
+					(5.4) Roles, responsabilidades y autoridades: Asignar y comunicar claramente los roles, responsabilidades y autoridades relevantes dentro de la organización para el SGCN.
+				Cláusula 6. Planificación
+					Propósito: Abordar los riesgos y oportunidades, y establecer objetivos de continuidad del negocio.
+					(6.1) Acciones para abordar riesgos y oportunidades: Determinar los riesgos y oportunidades que deben ser abordados para asegurar que el SGCN pueda lograr sus resultados previstos y prevenir o reducir efectos no deseados.
+					(6.2) Objetivos y planes de Continuidad del Negocio: Establecer objetivos de CN medibles en funciones y niveles pertinentes, que sean coherentes con la política de CN y que consideren el nivel mínimo de productos y servicios aceptable para la organización.
+				Cláusula 7. Soporte
+					Propósito: Proveer los recursos, competencias y mecanismos de comunicación y documentación necesarios para el SGCN.
+					(7.1) Recursos: Determinar y proporcionar los recursos necesarios para el establecimiento, implementación, mantenimiento y mejora del SGCN.
+					(7.2) Competencia: Asegurar que las personas que realizan trabajos que afectan al SGCN son competentes, basándose en la educación, formación o experiencia adecuadas.
+					(7.3) Conciencia: El personal debe ser consciente de la política de CN, su contribución a la eficacia del SGCN y las implicaciones de no cumplir con los requisitos.
+					(7.4) Comunicación: Establecer comunicaciones internas y externas pertinentes al SGCN, incluyendo qué, cuándo, a quién y cómo comunicar.
+					(7.5) Información documentada: Crear, actualizar y controlar la información documentada requerida por la norma y necesaria para la eficacia del SGCN.
+			H - Hacer (Implementar y Operar el SGCN)
+				Fase donde se implementan y operan la política, los controles y los procedimientos de CN.
+				Cláusula 8. Operación
+					Propósito: Planificar, implementar y controlar los procesos necesarios para cumplir con los requisitos de continuidad del negocio.
+					(8.1) Planificación y control operacional: Implementar los planes y acciones definidos en la Cláusula 6 para gestionar los procesos operativos y controlar los cambios planificados.
+					(8.2) Análisis de Impacto al Negocio (AIE) y evaluación de riesgos:
+						(8.2.1) Generalidades: Establecer, implementar y mantener un proceso formal y documentado.
+						(8.2.2) Análisis de Impacto al Negocio (AIE): (Ver sección 2 para detalles).
+						(8.2.3) Evaluación de riesgos: Identificar, analizar y evaluar los riesgos de interrupción de las actividades priorizadas.
+					(8.3) Estrategia de continuidad del negocio: Identificar y seleccionar estrategias de CN basadas en los resultados del AIE y la evaluación de riesgos para reducir la probabilidad de interrupción y recuperarse.
+					(8.4) Establecer e implementar procedimientos de CN: Desarrollar planes de respuesta a incidentes, planes de continuidad y planes de recuperación para gestionar un incidente disruptivo.
+					(8.5) Ejercicio y prueba: Realizar ejercicios y pruebas periódicas del plan de CN para validar su eficacia y que los equipos estén preparados.
+			V - Verificar (Monitorear y Revisar el SGCN)
+				Fase donde se monitorea y revisa el desempeño en relación con los objetivos y la política de CN.
+				Cláusula 9. Evaluación del desempeño
+					Propósito: Evaluar el rendimiento de la seguridad de la información y la eficacia del SGCN.
+					(9.1) Monitoreo, medición, análisis y evaluación: Determinar qué necesita seguimiento y medición, los métodos a utilizar, cuándo se realizarán y cuándo se analizarán los resultados.
+					(9.2) Auditoría interna: Realizar auditorías internas a intervalos planificados para proporcionar información sobre si el SGCN se ajusta a los requisitos de la organización y de la norma.
+					(9.3) Revisión por la dirección: La alta dirección debe revisar el SGCN a intervalos planificados para asegurar su conveniencia, adecuación y eficacia continuas.
+			A - Actuar (Mantener y Mejorar el SGCN)
+				Fase donde se toman medidas correctivas basadas en los resultados de la revisión por la dirección para mejorar continuamente el SGCN.
+				Cláusula 10. Mejoramiento
+					Propósito: Reaccionar a las no conformidades y mejorar continuamente la eficacia del SGCN.
+					(10.1) No conformidad y acción correctiva: Cuando ocurre una no conformidad, la organización debe reaccionar, evaluar la necesidad de acciones para eliminar las causas y aplicar las acciones correctivas necesarias.
+					(10.2) Mejora continua: Mejorar continuamente la idoneidad, adecuación y eficacia del SGCN.
+	Análisis de Impacto al Negocio (AIE / BIA)
+		Propósito
+			Examina el impacto cualitativo y cuantitativo de una interrupción en las operaciones y procesos de negocio.
+			Identifica las actividades críticas y las dependencias entre ellas.
+		Pasos Clave del AIE
+			(a) Establecer Prioridad para el Análisis: Definir criterios de impacto (financiero, reputacional, legal, seguridad).
+			(b) Identificar Funciones Comerciales Críticas (FCC): Determinar qué procesos son vitales para la supervivencia y operación de la organización.
+			(c) Determinar Requisitos de Soporte de las FCC:
+				Identificar dependencias (internas, externas, de proveedores).
+				Definir Métricas de Recuperación:
+					OTR (Objetivo de Tiempo de Recuperación): Tiempo máximo permitido para recuperar una FCC después de un desastre.
+					OPR (Objetivo de Punto de Recuperación): La cantidad máxima de pérdida de datos tolerable, medida en tiempo (ej. datos de las últimas 4 horas).
+					PMIT (Período Máximo de Interrupción Tolerable): El tiempo total que una función puede estar inoperativa antes de que el impacto sea inaceptable.
+			(d) Consolidar Hallazgos: Documentar las FCC, sus dependencias, y los OTR, OPR y PMIT definidos para cada una.
+	Referencias (Formato APA)
+		Gallacher, L., & Morris, H. (2012). ITIL Foundation Exam Study Guide (1.a ed.).
+		Goh, M. H. (2014). A Manager's Guide to ISO 22301 Standard for Business Continuity Management System. Business continuity management specialist series.
+		Hintzbergen, J., Hintzbergen, K., Smulders, A., & Baars, H. (2010). Foundations of IT Security Based on ISO27001/27002 (2.a ed.). Van Haren Publishing.
+		International Organization for Standardization. (2012). ISO 22301:2012 - Societal security -- Business continuity management systems -- Requirements.
+		International Organization for Standardization, & Commission, I. E. (2013). ISO/IEC 27001:2013 - Information technology -- Security techniques -- Information security management systems -- Requirements.
+		Karkoszka, T. (2013). Risk management as an element of processes continuity assurance. Procedia Engineering, 63, 873-877.

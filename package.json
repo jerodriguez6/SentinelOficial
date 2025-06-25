@@ -17,6 +17,7 @@
     "@chakra-ui/cli": "^3.16.1",
     "@chakra-ui/react": "^3.16.1",
     "@emotion/react": "^11.14.0",
+    "@heroicons/react": "^2.2.0",
     "@iconify/react": "^5.0.1",
     "@metamask/detect-provider": "^2.0.0",
     "@radix-ui/react-slot": "^1.2.3",
