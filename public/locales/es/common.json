@@ -32,7 +32,7 @@
     "talkToAdvisor": "Hablar con un Asesor",
     "advisorPageMessage": "Un asesor se pondrá en contacto contigo en breve para discutir tus necesidades.",
     "language": "Idioma",
-    "auditoriaNav": "AUDITORÍA",
+    "auditoriaNav": "AUDITORÍAS",
     "certificadosNav": "CERTIFICADOS",
     "blogNav": "BLOG",
     "contactoNav": "CONTACTO",
@@ -102,5 +102,8 @@
     "customSolutionQuestion": "¿Necesitas una solución personalizada?",
     "customSolutionDesc": "Nuestro equipo de expertos puede diseñar una estrategia de seguridad específica para tu proyecto.",
     "freeConsultationBtn": "Consulta Gratuita",
-    "viewCaseStudiesBtn": "Ver Casos de Estudio"
+    "viewCaseStudiesBtn": "Ver Casos de Estudio",
+    "infoBarMessage1": "AUDITORÍAS DE SMART CONTRACTS CON IA",
+    "infoBarMessage2": "CERTIFICADOS NFT ÚNICOS PARA VALIDAR TU SEGURIDAD",
+    "infoBarMessage3": "PROTEGE TU PROYECTO WEB3 CON TECNOLOGÍA DE VANGUARDIA"
 }

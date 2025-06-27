@@ -32,7 +32,7 @@
     "talkToAdvisor": "Talk to an Advisor",
     "advisorPageMessage": "An advisor will contact you shortly to discuss your needs.",
     "language": "Language",
-    "auditoriaNav": "AUDIT",
+    "auditoriaNav": "AUDITS",
     "certificadosNav": "CERTIFICATES",
     "blogNav": "BLOG",
     "contactoNav": "CONTACT",
@@ -102,5 +102,8 @@
     "customSolutionQuestion": "Need a custom solution?",
     "customSolutionDesc": "Our team of experts can design a specific security strategy for your project.",
     "freeConsultationBtn": "Free Consultation",
-    "viewCaseStudiesBtn": "View Case Studies"
+    "viewCaseStudiesBtn": "View Case Studies",
+    "infoBarMessage1": "AI-POWERED SMART CONTRACT AUDITS",
+    "infoBarMessage2": "UNIQUE NFT CERTIFICATES TO VALIDATE YOUR SECURITY",
+    "infoBarMessage3": "PROTECT YOUR WEB3 PROJECT WITH CUTTING-EDGE TECHNOLOGY"
 }
