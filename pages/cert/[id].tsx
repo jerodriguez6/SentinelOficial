@@ -4,25 +4,19 @@ import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/soli
 import { getAuditById, AuditData } from '../../lib/audit-data'; // Usamos ruta relativa
 
 // --- 1. La Función de Obtención de Datos en el Servidor ---
-// Esta función se ejecuta en el servidor en cada petición.
 export const getServerSideProps: GetServerSideProps<{ auditData: AuditData }> = async (context) => {
-    // El ID viene del objeto 'context.params'
     const id = context.params?.id as string;
 
-    // Si no hay ID en la URL, no se encuentra la página.
     if (!id) {
         return { notFound: true };
     }
 
-    // Llamamos a nuestra función de lógica directamente
     const auditData = getAuditById(id);
 
-    // Si la función no devuelve datos, mostramos un 404.
     if (!auditData) {
         return { notFound: true };
     }
 
-    // Si todo va bien, pasamos los datos a la página a través de 'props'.
     return {
         props: {
             auditData,
@@ -30,23 +24,43 @@ export const getServerSideProps: GetServerSideProps<{ auditData: AuditData }> = 
     };
 };
 
-// --- 2. El Componente de la Página (Ahora es un componente normal, no async) ---
-// Recibe 'auditData' como una prop desde getServerSideProps.
+// --- 2. El Componente de la Página ---
 const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const {
-        projectName, projectTicker, client, reportId, releaseDate, auditFirm, verdict,
+        projectName, projectTicker, client, reportId, releaseDate, auditFirm, verdict, logo, // <-- Asegúrate de desestructurar el logo aquí
         findingsSummary, keyFindings, verificationPoints, architecturalStrengths
     } = auditData;
 
     const severityColors: { [key: string]: string } = {
         'Baja': 'bg-yellow-500/20 text-yellow-400',
         'Informativo': 'bg-blue-500/20 text-blue-400',
+        // Asegúrate de tener estas también si aparecen en tus datos
+        'Crítica': 'bg-red-500/20 text-red-400',
+        'Alta': 'bg-orange-500/20 text-orange-400',
+        'Media': 'bg-yellow-500/20 text-yellow-400',
+        'Seguro': 'bg-green-500/20 text-green-400', // Para estados de verificación
+        'Verificado': 'bg-green-500/20 text-green-400',
+        'Robusto': 'bg-green-500/20 text-green-400',
+        'Total': 'bg-green-500/20 text-green-400',
+        'CONTRADICCIÓN': 'bg-red-500/20 text-red-400',
+        'ENGAÑOSO': 'bg-orange-500/20 text-orange-400',
+        'Sin Mitigar': 'bg-red-500/20 text-red-400',
+        'Reconocido': 'bg-blue-500/20 text-blue-400',
+        'Implementado': 'bg-green-500/20 text-green-400',
     };
-
+    const headerHeightClass = 'pt-20'
     return (
-        <div className="bg-gray-900 text-gray-200 min-h-screen font-sans">
-            <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="bg-black text-gray-200 min-h-screen font-sans">
+            {/* Si tu header es el que tiene position: fixed y está fuera de este archivo,
+            asegúrate de que tenga un z-index alto (ej. z-50) para que esté por encima.
+            También el header fixed DEBE estar fuera de este `main` o incluso fuera del `div` principal
+            si realmente está "fixed" al viewport.
+        */}
+            <div className="h-24"></div>
+            <div className="h-24"></div>
+            {/* APLICAMOS EL PADDING SUPERIOR A LA ETIQUETA MAIN */}
+            <main className={`max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 ${headerHeightClass}`}>
                 {/* Encabezado */}
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-gray-700 pb-4">
                     <div>
@@ -55,14 +69,14 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                     </div>
                     <a
                         href="#"
-                        className="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
+                        className="mt-4 md:mt-0 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
                     >
                         Descargar Informe (PDF)
                     </a>
                 </header>
 
                 {/* Veredicto */}
-                <section className="bg-gray-800/50 border border-green-500/30 rounded-xl p-6 mb-8 shadow-lg">
+                <section className="bg-sentinel-dark border border-gray-950 rounded-xl p-6 mb-8 shadow-lg">
                     <h2 className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-2">Veredicto Final</h2>
                     <div className="flex flex-col md:flex-row items-center gap-6">
                         <div className="text-center">
@@ -77,7 +91,10 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                 </section>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
+                    {/* Contenido Principal (Resumen de Hallazgos, Puntos de Verificación, Hallazgos Detallados) */}
+                    {/* En móvil: esta es la segunda sección (order-2) */}
+                    {/* En desktop: esta es la primera sección (lg:order-1) ocupando 2 columnas */}
+                    <div className="lg:col-span-2 order-2 lg:order-1">
                         {/* Resumen de Hallazgos */}
                         <section className="mb-8">
                             <h2 className="text-2xl font-bold text-white mb-4">Resumen de Hallazgos</h2>
@@ -95,7 +112,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                             <h2 className="text-2xl font-bold text-white mb-4">Puntos Clave de Verificación (PoSA)</h2>
                             <div className="space-y-4">
                                 {verificationPoints.map((point, index) => (
-                                    <div key={index} className="bg-gray-800 p-4 rounded-lg flex items-start gap-4">
+                                    <div key={index} className="bg-sentinel-dark p-4 rounded-lg flex items-start gap-4">
                                         <CheckCircleIcon className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
                                         <div>
                                             <h3 className="font-semibold text-white">{point.feature}: <span className="text-green-400">{point.status}</span></h3>
@@ -111,7 +128,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                             <h2 className="text-2xl font-bold text-white mb-4">Detalle de Hallazgos Menores</h2>
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left">
-                                    <thead className="bg-gray-800 text-sm uppercase text-gray-400">
+                                    <thead className="bg-sentinel-dark text-sm uppercase text-gray-400">
                                         <tr>
                                             <th className="p-3">ID</th>
                                             <th className="p-3">Descripción</th>
@@ -125,7 +142,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                                                 <td className="p-3 font-mono text-sm">{finding.id}</td>
                                                 <td className="p-3">{finding.description}</td>
                                                 <td className="p-3">
-                                                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${severityColors[finding.severity]}`}>
+                                                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${severityColors[finding.severity] || ''}`}>
                                                         {finding.severity}
                                                     </span>
                                                 </td>
@@ -138,10 +155,24 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                         </section>
                     </div>
 
-                    <aside className="lg:col-span-1 space-y-8">
-                        {/* Información de la Auditoría */}
-                        <div className="bg-gray-800 p-6 rounded-lg">
+                    {/* ASIDE DE INFORMACIÓN DE LA AUDITORÍA Y FORTALEZAS */}
+                    {/* En móvil: esta es la primera sección (order-1) */}
+                    {/* En desktop: esta es la segunda sección (lg:order-2) ocupando 1 columna */}
+                    <aside className="lg:col-span-1 space-y-8 order-1 lg:order-2"> {/* order-1 para móvil, lg:order-2 para desktop */}
+                        {/* Información de la Auditoría - Ahora incluye el logo */}
+                        <div className="bg-sentinel-dark p-6 rounded-lg">
                             <h3 className="text-xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Información de la Auditoría</h3>
+                            {logo && (
+                                <div className="mb-4 text-center">
+                                    <img
+                                        src={logo}
+                                        alt={`${projectName} Logo`}
+                                        width={100}
+                                        height={100}
+                                        className="mx-auto h-20 w-20 object-contain rounded-full"
+                                    />
+                                </div>
+                            )}
                             <ul className="space-y-2 text-sm">
                                 <li className="flex justify-between"><span>Cliente:</span> <span className="font-medium text-white">{client}</span></li>
                                 <li className="flex justify-between"><span>Firma Auditora:</span> <span className="font-medium text-white">{auditFirm}</span></li>
@@ -151,7 +182,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                         </div>
 
                         {/* Fortalezas Arquitectónicas */}
-                        <div className="bg-gray-800 p-6 rounded-lg">
+                        <div className="bg-sentinel-dark p-6 rounded-lg">
                             <h3 className="text-xl font-bold text-white mb-4 border-b border-gray-700 pb-2">Fortalezas Arquitectónicas</h3>
                             <ul className="space-y-4">
                                 {architecturalStrengths.map((strength, index) => (

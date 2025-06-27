@@ -145,3 +145,23 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
+/* Animación para el carrusel infinito de logos */
+@keyframes infinite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-infinite-scroll {
+  /* La animación se aplica aquí */
+  animation: infinite-scroll 70s linear infinite;
+}
+
+/* Pausar la animación cuando el cursor está sobre el carrusel */
+/* .group:hover .animate-infinite-scroll,
+/* .inline-flex:hover .animate-infinite-scroll {
+  animation-play-state: paused;
+} */ 

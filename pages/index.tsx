@@ -17,8 +17,12 @@ import { loadSlim } from "@tsparticles/slim";
 // ✨ Importa los tipos y enums necesarios de tsparticles/engine ✨
 import type { IOptions, RecursivePartial } from "@tsparticles/engine"; // Import IOptions and RecursivePartial for useMemo
 import { MoveDirection, OutMode } from "@tsparticles/engine"; // Importa los enums para 'direction' y 'outModes'
-
+import { getAllAudits, AuditData } from '../lib/audit-data'; // Usamos ruta relativa
 const Home = () => {
+
+  const projects: AuditData[] | undefined = getAllAudits();
+
+  console.log(projects)
   const router = useRouter();
   const { t, i18n } = useTranslation('common');
 
@@ -87,7 +91,7 @@ const Home = () => {
   return (
     <div className="overflow-hidden"> {/* Asegura que no haya scroll horizontal */}
       {/* Hero Section */}
-      <section className="min-h-screen bg-black flex flex-col md:flex-row items-center justify-center p-4 sm:p-8 lg:p-12 pt-20 md:pt-24 relative overflow-hidden">
+      <section className="min-h-screen bg-black flex flex-col items-center justify-center p-4 sm:p-8 pt-20 relative overflow-hidden">
         {/* ✨ PARTÍCULAS DE FONDO ✨ */}
         {particlesInit && (
           <Particles
@@ -96,76 +100,126 @@ const Home = () => {
             options={particlesOptions}
           />
         )}
-        {/* Contenido del Hero (texto y botones) */}
-        <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-20">
-          <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4 relative z-10'>
-            {t('auditWeb3')}
-          </p>
-          <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative z-10">
-            {/* dangerousSetInnerHTML para el <br /> */}
-            <span dangerouslySetInnerHTML={{ __html: t('blockchainSecurityAuditorTitle') as string }} />
-          </h1>
-          <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8 relative z-10'>
-            {t('certifyTechnology')}
-          </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full sm:w-[80%] mx-auto md:mx-0 '>
-            <Link href="/form" className='no-underline relative z-10'>
-              <button className="px-6 py-3 bg-sentinel-primary text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
-                {t('talkToAdvisor')}
-              </button>
-            </Link>
-            <Link href="/audits" className='no-underline relative z-10'>
-              <button className="px-6 py-3 bg-gray-300 text-black text-base sm:text-lg michroma-regular rounded-md hover:bg-gray-400 transition-colors duration-200 w-full sm:w-auto">
-                {t('viewSuccessStoriesBtn')} {/* Botón para ver casos de éxito */}
-              </button>
-            </Link>
+
+        {/* ✅ INICIO DE LA CORRECCIÓN: Contenedor para la fila superior */}
+        {/* Agrupamos las dos columnas en un solo div para que actúen como una única fila. */}
+        {/* Este div ahora controla la dirección responsive (columna en móvil, fila en desktop). */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-center mt-20">
+          {/* Columna Izquierda (Texto y botones) - SIN CAMBIOS INTERNOS */}
+          <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-20">
+            <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4 relative z-10'>
+              {t('auditWeb3')}
+            </p>
+            <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative z-10">
+              <span dangerouslySetInnerHTML={{ __html: t('blockchainSecurityAuditorTitle') as string }} />
+            </h1>
+            <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8 relative z-10'>
+              {t('certifyTechnology')}
+            </p>
+            <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full sm:w-[80%] mx-auto md:mx-0 '>
+              <Link href="/form" className='no-underline relative z-10'>
+                <button className="px-6 py-3 bg-sentinel-primary text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
+                  {t('talkToAdvisor')}
+                </button>
+              </Link>
+              <Link href="/audits" className='no-underline relative z-10'>
+                <button className="px-6 py-3 bg-gray-300 text-black text-base sm:text-lg michroma-regular rounded-md hover:bg-gray-400 transition-colors duration-200 w-full sm:w-auto">
+                  {t('viewSuccessStoriesBtn')}
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Columna Derecha (Imagen) - SIN CAMBIOS INTERNOS */}
+          <div className="w-full md:w-1/2 flex justify-center p-4">
+            <Image
+              className="block max-w-full h-auto relative z-10"
+              height={620}
+              width={620}
+              src={'/sentinel.png'}
+              alt={t('sentinelImageAlt')}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
           </div>
         </div>
-        {/* Imagen del Hero */}
-        <div className="w-full md:w-1/2 flex justify-center p-4">
-          <Image
-            className="block max-w-full h-auto relative z-10" // Ajusta la imagen al ancho de su contenedor
-            height={620} // Altura base, se escalará con 'h-auto'
-            width={620} // Ancho base, se escalará con 'max-w-full'
-            src={'/sentinel.png'}
-            alt={t('sentinelImageAlt')}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Optimización de Next.js Image
-            priority // Carga prioritaria para LCP
-          />
+        {/* ✅ FIN DE LA CORRECCIÓN: Contenedor para la fila superior */}
+
+        {/* ✅ INICIO DE LA CORRECCIÓN: Contenedor para BlockchainLogos */}
+        {/* Movemos BlockchainLogos aquí, como un hermano del contenedor superior. */}
+        {/* Le damos un ancho completo y un margen superior para separarlo del contenido de arriba. */}
+        <div className="w-full relative z-10">
+          <BlockchainLogos />
         </div>
+        {/* ✅ FIN DE LA CORRECCIÓN: Contenedor para BlockchainLogos */}
       </section>
 
       {/* Blockchains Supported Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-black px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-screen-xl mx-auto">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
-              {t('blockchainsSupportedTitle')}
-            </h2>
-            <p className="text-base sm:text-lg text-white max-w-3xl mx-auto">
-              {t('blockchainsSupportedDesc')}
-            </p>
-          </div>
-          {/* Asumimos que BlockchainLogos ya es responsive internamente */}
-          <BlockchainLogos />
-          <div className="text-center mb-12 sm:mb-16">
+      <section className="py-12  bg-transparent px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <div className="max-w-screen-xl mx-auto text-center">
+
+
+          <div className="text-center  flex flex-col justify-center items-center">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
               {t('PoweredBySharkTechnology')}
             </h2>
-            {/* <Image
-                                            src={'/'l}
-                                            alt={`${blockchain.name} logo`}
-                                            width={100} // Ancho y alto de la imagen en px
-                                            height={100}
-                                            className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
-                                        /> */}
+            <Image
+              src={'/SHARKTE.png'}
+              alt={`Shark logo`}
+              width={200} // Ancho y alto de la imagen en px
+              height={200}
+              className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
+            />
           </div>
 
         </div>
       </section>
       {/* Services Section (Asumimos que ya es responsive) */}
       <ServicesSection />
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold
+               text-white 
+               drop-shadow-lg 
+               mb-4">
+        {t('auditedProyects')}
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6 lg:gap-8 justify-items-center text-center">
+        {projects.map((project) => (
+          <div key={project.reportId} className="bg-black shadow-md rounded-lg p-4">
+            {/* Envolver el div del logo y el texto del proyecto en un Link */}
+            <Link href={`/cert/${project.reportId}`} passHref className="no-underline hover:no-underline text-white">
+              {/* Añadimos 'no-underline' y 'hover:no-underline' aquí */}
 
+              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center mb-2 relative mx-auto cursor-pointer text-white">
+                {/* Usar el componente Image de Next.js (¡asegúrate de que los dominios estén configurados en next.config.js!) */}
+                {project.logo ? (
+                  <img
+                    src={project.logo}
+                    alt={`${project.projectName} logo`}
+                    width={100} // Ancho y alto de la imagen en px (para `<img>` estándar)
+                    height={100} // Puedes ajustar estos si quieres que sean más grandes para el click
+                    className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
+                  />
+                ) : (
+                  // Fallback si no hay URL de imagen, usa el símbolo de texto
+                  <span className="text-white font-bold text-lg sm:text-xl"> {/* <-- Cambiado a text-lg o text-xl para más grande */}
+                    {project.projectName}
+                  </span>
+                )}
+              </div>
+
+              {/* También puedes envolver el nombre y el ticker si quieres que todo el bloque sea clicable */}
+              {/* Asegúrate de que estos también hereden el estilo no-underline si no están dentro del Link */}
+              <h2 className="text-xl font-bold text-center mt-2 no-underline hover:no-underlin text-whitee">{project.projectName}</h2>
+              <p className="text-gray-600 text-center no-underline hover:no-underline text-white">{project.projectTicker}</p>
+            </Link>
+
+            <p className="mt-2 text-sm text-white">
+              Veredicto: <span className="font-semibold">{project.verdict.title}</span> ({project.verdict.grade})
+            </p>
+          </div>
+        ))}
+      </div>
 
       {/* Technologies Section - Adjusted to bg-gray-50 to potentially avoid text visibility issues */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10"> {/* Changed background to gray-50 */}

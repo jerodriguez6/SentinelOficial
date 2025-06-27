@@ -1,6 +1,7 @@
 // --- Tipos de Datos (puedes exportarlos para usarlos en otros lugares) ---
 export interface AuditData {
     reportId: string;
+    logo:string;
     projectName: string;
     projectTicker: string;
     client: string;
@@ -31,6 +32,7 @@ export interface AuditData {
 const audits: AuditData[] = [
   {
     reportId: 'QG-AETL-20250624',
+    logo: 'https://www.vetawallet.com/_next/image?url=%2Foknd.png&w=128&q=75',
     projectName: 'Aethelred Ledger',
     projectTicker: 'AETL',
     client: 'Aethelred Labs Inc.',
@@ -72,6 +74,7 @@ const audits: AuditData[] = [
   },
   {
     reportId: 'SHARK-OMDB-20250609', // 
+    logo: 'https://omdblockchain.com/wp-content/uploads/2025/05/cropped-OMDBlockchain-180x180.png',
     projectName: 'One Million Dollars Blockchain', // 
     projectTicker: 'OMDB', // 
     client: 'OneMillionsDollar.com LLC', // 
@@ -128,3 +131,7 @@ const audits: AuditData[] = [
 export function getAuditById(id: string): AuditData | undefined {
   return audits.find(a => a.reportId === id);
 }
+
+export function getAllAudits(): AuditData[] { // <-- Puedes añadir una función para obtener todos los proyectos si la necesitas
+    return audits;
+  }

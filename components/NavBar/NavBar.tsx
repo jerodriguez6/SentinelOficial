@@ -1,25 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from 'next/link';
-// import { useAppContext } from 'context/state'; // Eliminado: ya no se usa el contexto de la wallet
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next'; // Importar useTranslation
-import { useRouter } from 'next/router'; // Importar useRouter de next/router
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 
-const NavBar = () => {
-    // const { connectWallet, walletAddress, onWalletConnectedCallback } = useAppContext(); // Eliminado: ya no se usa la lógica de la wallet
-    // ✨ FIX: Añadir { useSSR: false } para evitar errores de hidratación en SSR/CSR mismatch ✨
-    const { t, i18n } = useTranslation('common'); // useSSR: false removido
-    const router = useRouter(); // Inicializa useRouter
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Estado para el desplegable
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Estado para el menú hamburguesa
-
+// 1. AÑADIMOS LA PROP isInfoBarVisible A LA DEFINICIÓN DEL COMPONENTE
+const NavBar = ({ isInfoBarVisible }: { isInfoBarVisible: boolean }) => {
+    const { t, i18n } = useTranslation('common');
+    const router = useRouter();
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     // Función para cambiar el idioma y cerrar el desplegable
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
-        setIsDropdownOpen(false); // Cierra el desplegable después de seleccionar
-        setIsMobileMenuOpen(false); // Cierra el menú móvil también
+        setIsDropdownOpen(false);
+        setIsMobileMenuOpen(false);
     };
 
     // Efecto para cerrar el desplegable si se hace clic fuera
@@ -35,16 +32,20 @@ const NavBar = () => {
         };
     }, []);
 
-    // Se recomienda usar Link de Next.js para navegación interna
-    // y para que next-i18next maneje automáticamente los prefijos de idioma.
-
     return (
-        <nav className="bg-black fixed w-full top-0 left-0 z-50 shadow-md h-24">
+        // 2. MODIFICAMOS EL className DE LA ETIQUETA nav
+        <nav
+            className={`
+                bg-black fixed w-full left-0 shadow-md h-24
+                transition-all duration-300 ease-in-out z-40
+                ${isInfoBarVisible ? 'top-12' : 'top-0'}
+            `}
+        >
             <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
                 {/* Logo y Título */}
                 <Link href="/" className="text-white no-underline flex items-center shrink-0">
-                    <Image className="block" height={80} width={80} src={'/sentinel-logo.png'} alt={'sentinel-logo'} /> {/* Ajustado tamaño para mobile */}
-                    <div className='hero-title text-white no-underline ml-2 text-lg sm:text-xl'> {/* Ajustado tamaño de texto */}
+                    <Image className="block" height={80} width={80} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
+                    <div className='hero-title text-white no-underline ml-2 text-lg sm:text-xl'>
                         SENTINEL IA
                     </div>
                 </Link>
@@ -73,10 +74,10 @@ const NavBar = () => {
 
                 {/* Enlaces de Navegación y Selector de Idioma (Desktop) */}
                 <div className="hidden md:flex items-center justify-end gap-6 text-white michroma-regular text-sm md:text-base w-fit">
-                    <Link href="/auditoria" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">
+                    <Link href="/audits" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">
                         {t('auditoriaNav')}
                     </Link>
-                    <Link href="/certificados" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">
+                    <Link href="/certifites" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">
                         {t('certificadosNav')}
                     </Link>
                     <Link href="/blog" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">
@@ -93,9 +94,7 @@ const NavBar = () => {
                             className="flex items-center px-4 py-2 rounded-md bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
                         >
                             {t('language')}{" "}
-                            {/* Renderizado condicional del idioma */}
                             {i18n.language ? `(${i18n.language.toUpperCase()})` : ''}
-                            {/* Icono de flecha para el desplegable */}
                             <svg
                                 className={`ml-2 w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
                                 fill="none"
@@ -149,7 +148,6 @@ const NavBar = () => {
                             className="flex items-center justify-center w-full px-4 py-2 rounded-md bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
                         >
                             {t('language')}{" "}
-                            {/* Renderizado condicional del idioma en móvil también */}
                             {i18n.language ? `(${i18n.language.toUpperCase()})` : ''}
                             <svg
                                 className={`ml-2 w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
