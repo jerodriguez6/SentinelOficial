@@ -319,7 +319,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
 
                     <div className="flex flex-wrap gap-4 justify-center pt-8 border-t border-gray-700">
 
-                        <Link href={`/cert/${project.reportId}`}>
+                        <a href={`/cert/${project.reportId}`} target="_blank" rel="noopener noreferrer">
 
                             <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl">
 
@@ -329,7 +329,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
 
                             </Button>
 
-                        </Link>
+                        </a>
 
                         <Button variant="outline" className="border-2 border-green-500 text-green-400 hover:bg-green-500/10 px-8 py-4 text-lg font-semibold rounded-xl">
 
