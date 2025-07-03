@@ -177,49 +177,7 @@ const Home = () => {
       </section>
       {/* Services Section (Asumimos que ya es responsive) */}
       <ServicesSection />
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold
-               text-white 
-               drop-shadow-lg 
-               mb-4">
-        {t('auditedProyects')}
-      </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 sm:gap-6 lg:gap-8 justify-items-center text-center">
-        {projects.map((project) => (
-          <div key={project.reportId} className="bg-black shadow-md rounded-lg p-4">
-            {/* Envolver el div del logo y el texto del proyecto en un Link */}
-            <Link href={`/cert/${project.reportId}`} passHref className="no-underline hover:no-underline text-white">
-              {/* Añadimos 'no-underline' y 'hover:no-underline' aquí */}
 
-              <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center mb-2 relative mx-auto cursor-pointer text-white">
-                {/* Usar el componente Image de Next.js (¡asegúrate de que los dominios estén configurados en next.config.js!) */}
-                {project.logo ? (
-                  <img
-                    src={project.logo}
-                    alt={`${project.projectName} logo`}
-                    width={100} // Ancho y alto de la imagen en px (para `<img>` estándar)
-                    height={100} // Puedes ajustar estos si quieres que sean más grandes para el click
-                    className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
-                  />
-                ) : (
-                  // Fallback si no hay URL de imagen, usa el símbolo de texto
-                  <span className="text-white font-bold text-lg sm:text-xl"> {/* <-- Cambiado a text-lg o text-xl para más grande */}
-                    {project.projectName}
-                  </span>
-                )}
-              </div>
-
-              {/* También puedes envolver el nombre y el ticker si quieres que todo el bloque sea clicable */}
-              {/* Asegúrate de que estos también hereden el estilo no-underline si no están dentro del Link */}
-              <h2 className="text-xl font-bold text-center mt-2 no-underline hover:no-underlin text-whitee">{project.projectName}</h2>
-              <p className="text-gray-600 text-center no-underline hover:no-underline text-white">{project.projectTicker}</p>
-            </Link>
-
-            <p className="mt-2 text-sm text-white">
-              Veredicto: <span className="font-semibold">{project.verdict.title}</span> ({project.verdict.grade})
-            </p>
-          </div>
-        ))}
-      </div>
 
       {/* Technologies Section - Adjusted to bg-gray-50 to potentially avoid text visibility issues */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10"> {/* Changed background to gray-50 */}
