@@ -3,7 +3,7 @@ import { Button } from '@components/ui/button';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
 import Link from 'next/link';
-import { AuditData } from 'lib/audit-data'; // Asegúrate de importar la interfaz
+import { AuditData } from 'lib/types'; // Asegúrate de importar la interfaz
 
 interface ProjectDetailViewProps {
     project: AuditData;

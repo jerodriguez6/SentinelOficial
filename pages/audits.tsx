@@ -9,6 +9,7 @@ import { getAllAudits, AuditData } from 'lib/audit-data'; // Ajusta la ruta
 
 // Interfaz para las tarjetas de previsualización
 interface AuditProjectCard {
+    logo: string;
     id: string;
     name: string;
     description: string;
@@ -127,7 +128,7 @@ const ProjectsSection = () => {
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center space-x-3">
                                         <div className="relative w-8 h-8 flex-shrink-0">
-                                            <img src={project.logo} alt={`${project.blockchain} logo`} layout="fill" objectFit="contain" />
+                                            <img src={project.logo} alt={`${project.blockchain} logo`} />
                                         </div>
                                         <h3 className="text-lg font-bold text-white truncate">{project.name}</h3>
                                     </div>
