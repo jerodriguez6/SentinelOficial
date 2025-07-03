@@ -89,9 +89,9 @@ const NavBar = ({ isInfoBarVisible }: { isInfoBarVisible: boolean }) => {
                 {/* Enlaces de Navegación y Selector de Idioma (Desktop) */}
                 <div className="hidden md:flex items-center justify-end gap-6 text-white michroma-regular text-sm md:text-base w-fit">
                     <Link href="/audits" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">{t('auditoriaNav')}</Link>
-                    <Link href="/certifites" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">{t('certificadosNav')}</Link>
+                    {/* <Link href="/certifites" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">{t('certificadosNav')}</Link>
                     <Link href="/blog" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">{t('blogNav')}</Link>
-                    <Link href="/contacto" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">{t('contactoNav')}</Link>
+                    <Link href="/contacto" className="hover:text-gray-400 transition-colors duration-200 cursor-pointer no-underline text-white">{t('contactoNav')}</Link> */}
 
                     {/* ✅ PASO 4: Actualizar el JSX de ESCRITORIO */}
                     <div className="relative" ref={desktopDropdownRef}>

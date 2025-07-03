@@ -23,6 +23,12 @@ const nextConfig = {
         hostname: 'i.ibb.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cryptologos.cc', // El dominio que quieres autorizar
+        port: '',
+        pathname: '/logos/**', // Permite cualquier imagen dentro de la carpeta /logos/
+      },
     ],
   },
   i18n,
