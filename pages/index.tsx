@@ -180,20 +180,21 @@ const Home = () => {
 
 
       {/* Technologies Section - Adjusted to bg-gray-50 to potentially avoid text visibility issues */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10"> {/* Changed background to gray-50 */}
+      {/* <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8 relative z-10"> 
+      
         <div className="max-w-screen-xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4"> {/* Changed text-white to text-gray-900 */}
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4"> 
               {t('technologiesAuditedTitle')}
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"> {/* Changed text-white to text-gray-600 */}
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
               {t('technologiesAuditedDesc')}
             </p>
           </div>
-          {/* Asumimos que TechnologiesGrid ya es responsive internamente */}
+ 
           <TechnologiesGrid />
         </div>
-      </section>
+      </section> */}
 
       {/* Process Visualization */}
       <div className="bg-sentinel-dark rounded-3xl p-8 md:p-12 relative z-10">
