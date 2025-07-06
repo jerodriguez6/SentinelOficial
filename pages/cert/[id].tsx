@@ -2,6 +2,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { notFound } from 'next/navigation';
 import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 import { getAuditById, AuditData } from '../../lib/audit-data'; // Usamos ruta relativa
+import { useState } from 'react';
 
 // --- 1. La Función de Obtención de Datos en el Servidor ---
 export const getServerSideProps: GetServerSideProps<{ auditData: AuditData }> = async (context) => {
@@ -50,6 +51,50 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
         'Implementado': 'bg-green-500/20 text-green-400',
     };
     const headerHeightClass = 'pt-20'
+
+    const [isDownloading, setIsDownloading] = useState(false);
+
+    const handleDownloadCertificate = async () => {
+        setIsDownloading(true);
+        console.log(auditData.reportId)
+        try {
+            const response = await fetch(`/api/generate-certificate/${auditData.reportId}`);
+
+            if (response.ok) {
+                // ... (lógica de descarga del PDF, que está bien)
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `certificado-${auditData.reportId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            } else {
+                // ¡Aquí está la mejora!
+                const contentType = response.headers.get("content-type");
+                let errorData;
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    // Si es JSON, lo parseamos
+                    errorData = await response.json();
+                    console.error('Error del API:', errorData);
+                    alert(`Error: ${errorData.error || 'Ocurrió un problema.'}`);
+                } else {
+                    // Si no es JSON (es HTML o texto), lo leemos como texto
+                    errorData = await response.text();
+                    console.error("Se recibió una respuesta inesperada (HTML/Texto) del servidor:", errorData);
+                    alert('Ocurrió un error inesperado en el servidor.');
+                }
+            }
+        } catch (error) {
+            console.error('Error de red o de conexión:', error);
+            alert('No se pudo conectar con el servidor. Revisa tu conexión a internet.');
+        } finally {
+            setIsDownloading(false);
+        }
+    };
+
     return (
         <div className="bg-black text-gray-200 min-h-screen font-sans">
             {/* Si tu header es el que tiene position: fixed y está fuera de este archivo,
@@ -73,6 +118,13 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                     >
                         Descargar Informe (PDF)
                     </a>
+                    <button
+                        onClick={handleDownloadCertificate}
+                        disabled={isDownloading}
+                        className="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 disabled:bg-gray-500 disabled:cursor-not-allowed"
+                    >
+                        {isDownloading ? 'Generando...' : 'Descargar Certificado (PDF)'}
+                    </button>
                 </header>
 
                 {/* Veredicto */}
