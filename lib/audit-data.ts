@@ -145,56 +145,161 @@ export const audits: AuditData[] = [
     ]
   },
   {
-    "reportId": "SENTINEL-OMDB-20250702-FINAL",
+    "reportId": "SENTINEL-OMDB-20250706-FINAL",
     "logo": "https://omdblockchain.com/wp-content/uploads/2025/05/cropped-OMDBlockchain-180x180.png",
     "projectName": "OMDB Blockchain",
     "projectTicker": "OMDB",
     "client": "OneMillionsDollar.com LLC",
     "projectType": "Blockchain L1 (Proof of Staked Authority)",
-    "releaseDate": "2 de julio de 2025",
+    "releaseDate": "6 de julio de 2025",
     "auditFirm": "Sentinel AI",
-    "leadAuditor": "Equipo de Análisis Arquitectónico",
-    "commitHash": "c1a2b3d4e5f67890a1b2c3d4e5f67890a1b2c3d4",
-    "id": "SENTINEL-OMDB-20250702-FINAL",
+    "leadAuditor": "Análisis de IA Avanzado",
+    "commitHash": "No proporcionado",
+    "id": "SENTINEL-OMDB-20250706-FINAL",
     "name": "OMDB Blockchain",
-    "description": "Una blockchain L1 con un diseño arquitectónico maduro que ha sido exitosamente estabilizado y validado.",
-    "auditDate": "2025-07-02T00:00:00.000Z",
-    "tvl": "$50,000,000",
+    "description": "Una blockchain de Capa 1 con una arquitectura de consenso y red P2P de nivel profesional, diseñada para alta seguridad y rendimiento.",
+    "auditDate": "2025-07-06T00:00:00.000Z",
+    "tvl": "$0 (No aplica)",
     "status": "Completed",
-    "findings": 4,
-    "severity": "Baja",
-    "blockchain": "Go-Ethereum Fork",
+    "findings": 12,
+    "severity": "Alta",
+    "blockchain": "Custom Go-Ethereum Fork (PoSA)",
     "contractAddress": "N/A (Capa 1)",
     "website": "https://onemillionsdollar.com",
     "twitter": "https://twitter.com/OMDBlockchain",
-    "auditHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "verdict": { "title": "ARQUITECTURA ROBUSTA Y VALIDADA", "grade": "A", "score": 94, "summary": "Tras una revisión inicial, el equipo corrigió exitosamente todos los hallazgos críticos. El núcleo del sistema es ahora estable, seguro y se alinea con su avanzado diseño arquitectónico." },
-    "findingsSummary": { "critical": 0, "high": 0, "medium": 0, "low": 2, "informational": 2 },
+    "verdict": {
+      "title": "ARQUITECTURA SÓLIDA CON RIESGOS CRÍTICOS DE IMPLEMENTACIÓN",
+      "grade": "C+",
+      "score": 78,
+      "summary": "El proyecto demuestra una madurez teórica excepcional. Sin embargo, la implementación actual presenta brechas de seguridad críticas, como la falta de cifrado en la capa de transporte y una lógica de consenso incompleta, que deben ser abordadas antes de cualquier despliegue."
+    },
+    "findingsSummary": {
+      "critical": 0,
+      "high": 3,
+      "medium": 4,
+      "low": 2,
+      "informational": 3
+    },
+    "vulnerabilities": {
+      "critical": 0,
+      "high": 3,
+      "medium": 4,
+      "low": 2
+    },
     "keyFindings": [
-      { "id": "C-01", "description": "Falla en el consenso PoSA donde el poder de voto ignoraba el 'stake' del validador.", "severity": "Crítica", "status": "Corregido" },
-      { "id": "H-01", "description": "El proceso de compilación era inestable y requería parches temporales.", "severity": "Alta", "status": "Corregido" }
+      {
+        "id": "H-01",
+        "description": "Falta de Cifrado en la Capa de Transporte (RLPx): La comunicación entre nodos no está cifrada, exponiendo todo el tráfico a espionaje y manipulación.",
+        "severity": "Crítica",
+        "status": "Pendiente de Mitigación"
+      },
+      {
+        "id": "H-02",
+        "description": "Mecanismo de Detección de Doble Voto Deshabilitado: El código para penalizar a los validadores que firman dos bloques a la misma altura está comentado.",
+        "severity": "Alta",
+        "status": "Pendiente de Mitigación"
+      },
+      {
+        "id": "H-03",
+        "description": "Selección de Proponente Predecible: El proponente de cada bloque se elige mediante un simple round-robin, lo que permite dirigir ataques de DDoS.",
+        "severity": "Alta",
+        "status": "Pendiente de Mitigación"
+      }
     ],
     "verificationPoints": [
-      { "feature": "Consenso Proof of Staked Authority (PoSA)", "status": "Seguro y Funcional", "description": "La lógica del consenso fue corregida. El poder de voto ahora es proporcional al stake." },
-      { "feature": "Proceso de Build y Despliegue", "status": "Estable y Confiable", "description": "Se refactorizó la capa de estado, permitiendo una compilación nativa y directa." }
+      {
+        "feature": "Modelo de Consenso PoSA",
+        "status": "Verificado",
+        "description": "El diseño del consenso aborda correctamente las debilidades de un PoA puro al introducir capital en riesgo (stake) y penalizaciones automáticas (slashing)."
+      },
+      {
+        "feature": "Arquitectura de Seguridad P2P",
+        "status": "Verificado",
+        "description": "El diseño de la capa de red es de nivel profesional, contemplando defensas adaptativas, análisis de comportamiento y respuestas graduadas ante amenazas."
+      },
+      {
+        "feature": "Sistema de Reputación de Pares",
+        "status": "Verificado",
+        "description": "La concepción del ReputationEngine es avanzada, utilizando un modelo multifactorial, decaimiento de puntuación y un sistema de recuperación para gestionar la confianza."
+      }
     ],
     "architecturalStrengths": [
-      { "title": "Planificación Operacional (DevOps)", "description": "La configuración para producción, incluyendo el stack de monitoreo, es robusta y está lista para el despliegue." },
-      { "title": "Diseño Avanzado de Componentes", "description": "El diseño del servidor RPC seguro y el motor de precios EIP-1559 son teóricamente muy completos." }
+      {
+        "title": "Diseño Modular y Extensible",
+        "description": "El código está bien estructurado, separando la gestión de pares, la seguridad, el consenso y la lógica de la aplicación, lo que facilita futuras mejoras y auditorías."
+      },
+      {
+        "title": "Modelo de Incentivos Económicos",
+        "description": "El sistema de recompensas dual (por bloque y por staking) incentiva la participación honesta y la seguridad de toda la red."
+      },
+      {
+        "title": "Rotación de Validadores",
+        "description": "El diseño incluye un mecanismo para rotar validadores basado en rendimiento, promoviendo la descentralización y la salud de la red a largo plazo."
+      }
     ],
-    "tokenDetails": { "symbol": "OMDB", "totalSupply": "2,000,000,000 (Fijo)", "decimals": 18, "currentPrice": 0.05, "marketCap": "$100,000,000", "volume24h": "$2,500,000", "change24h": 4.2 },
-    "auditScope": ["Código fuente Go", "Archivos de configuración YAML", "Scripts de Docker y Shell", "Archivos de inicialización (genesis.json)"],
-    "vulnerabilities": { "critical": 0, "high": 0, "medium": 0, "low": 2 },
-    "auditSummary": { "linesOfCode": 15500, "filesAudited": 160, "auditDuration": "4 semanas", "methodology": ["Revisión Manual", "Análisis Arquitectónico", "Pruebas de Integración"], "tools": ["Go Static Analyzer", "Docker Compose"] },
-    "securityFeatures": { "accessControl": "Modelo de validadores PoSA con rotación", "upgradeability": "Gestionado vía Hard Forks", "pausability": false, "timelock": false, "multisig": true },
-    "recommendations": ["Implementar un programa de Bug Bounty.", "Expandir el conjunto de validadores.", "Desarrollar documentación técnica para dApps."],
+    "tokenDetails": {
+      "symbol": "OMDB",
+      "totalSupply": "2,000,000,000 (Fijo)",
+      "decimals": 18,
+      "currentPrice": 0.05,
+      "marketCap": "$100,000,000",
+      "volume24h": "$2,500,000",
+      "change24h": 4.2
+    },
+    "auditScope": [
+      "Lógica de Consenso y Ciclo de Vida de Validadores (PoSA)",
+      "Protocolos de Red y Comunicación P2P (Discovery, Sync, Broadcast)",
+      "Mecanismos de Seguridad y Sistema de Reputación (DDoS, Detección de Ataques)",
+      "Punto de Entrada y Configuración del Nodo"
+    ],
+    "auditSummary": {
+      "linesOfCode": 5500,
+      "filesAudited": 15,
+      "auditDuration": "2 días",
+      "methodology": [
+        "Análisis Estático de Código Go",
+        "Revisión Manual de Arquitectura de Consenso y Red P2P",
+        "Evaluación de Lógica de Seguridad y Criptografía"
+      ],
+      "tools": [
+        "Análisis de IA de Sentinel",
+        "Revisión de Código Manual"
+      ]
+    },
+    "securityFeatures": {
+      "accessControl": "Modelo de validadores PoSA con rotación",
+      "upgradeability": "Gestionado vía Hard Forks",
+      "pausability": false,
+      "timelock": false,
+      "multisig": true
+    },
+    "recommendations": [
+      "Implementar cifrado de transporte (RLPx) de forma inmediata para proteger toda la comunicación entre nodos.",
+      "Completar y habilitar la lógica de detección y penalización de doble voto en el motor de consenso.",
+      "Reemplazar la selección de proponente de bloque predecible con un algoritmo ponderado y seudoaleatorio.",
+      "Implementar la lógica funcional dentro de los módulos de seguridad P2P (DDoS, detección de ataques)."
+    ],
     "gasOptimization": null,
-    "codeQuality": { "coverage": 95, "documentation": "Buena", "bestPractices": "Seguidas", "gasEfficiency": "Optimizado" },
+    "auditHash": "f9a6e3b5a1c3d1b7e4a1c5d9e2f4a3b7c8d0e2f1a3b4c5d6e7f8g9h0i1j2k3l4",
+    "codeQuality": {
+      "coverage": 0,
+      "documentation": "Buena",
+      "bestPractices": "Parcialmente Seguidas",
+      "gasEfficiency": "No Optimizado"
+    },
     "securityTimeline": [
-      { "phase": "Initial", "score": 65 },
-      { "phase": "Analysis", "score": 75 },
-      { "phase": "Review", "score": 88 },
-      { "phase": "Final", "score": 94 }
+      {
+        "phase": "Initial",
+        "score": 68
+      },
+      {
+        "phase": "Review",
+        "score": 78
+      },
+      {
+        "phase": "Final",
+        "score": 78
+      }
     ]
   },
   {

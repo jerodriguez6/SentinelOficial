@@ -17,7 +17,7 @@ declare module 'jspdf' {
 // --- FUNCIÓN PARA AÑADIR LA MARCA DE AGUA ---
 const addWatermark = (doc: jsPDF) => {
   try {
-    const watermarkPath = path.resolve('./public', 'SHARKTE.png');
+    const watermarkPath = path.resolve('./public', 'logo-b.png');
     if (!fs.existsSync(watermarkPath)) {
         console.warn(`WARN: No se encontró el archivo de la marca de agua en: ${watermarkPath}`);
         return;
@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     doc.text(`${projectName} (${projectTicker})`, 105, 45, { align: 'center' });
 
     // --- Posición inicial para el contenido dinámico (logo y tablas) ---
-    let contentStartY = 50; // Inicia después del título
+    let contentStartY = 50;
 
     // --- Logo de la Blockchain (debajo del nombre) ---
     if (logo) {
@@ -82,31 +82,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           
           const logoWidth = 30;
           const logoHeight = 30;
-          const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2; // Centrado
+          const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
 
           doc.addImage(`data:image/${imageExtension};base64,${imageBase64}`, 'PNG', logoX, contentStartY, logoWidth, logoHeight);
           
-          // Actualizamos la posición inicial para la tabla
-          contentStartY += logoHeight + 10; // Añade la altura del logo + un margen
+          contentStartY += logoHeight + 10;
         } else {
           console.warn(`WARN: No se pudo obtener el logo para el reporte ${id}. URL: ${logo}. Estado: ${imageResponse.status}`);
-          contentStartY += 10; // Si no hay logo, solo añade un margen
+          contentStartY += 10;
         }
       } catch (e) {
         console.error(`ERROR: Falló el fetch del logo para el reporte ${id}. URL: ${logo}`, e);
         contentStartY += 10;
       }
     } else {
-        contentStartY += 10; // Si no se proporciona URL de logo, añade un margen
+        contentStartY += 10;
     }
 
+    // --- Colores personalizados ---
+    // ✅ CORRECCIÓN: Se añade 'as const' para que TypeScript infiera una tupla de longitud fija.
+    const colorGris = [22, 26, 29] as [number, number, number];    // #161A1D
+    const colorRojo = [216, 47, 50] as [number, number, number];   // #D82F32
 
     // --- Tablas y Pie de Página Fijo ---
     const pageHeight = doc.internal.pageSize.getHeight();
-    const footerY = pageHeight - 15; // Posición Y fija para el pie de página
+    const footerY = pageHeight - 15;
 
     autoTable(doc, {
-      startY: contentStartY, // ✅ Usa la posición inicial dinámica
+      startY: contentStartY,
       head: [['Detalle', 'Información']],
       body: [
         ['ID del Reporte', id],
@@ -114,9 +117,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ['Firma Auditora', auditFirm],
         ['Veredicto Final', verdict.title],
         ['Calificación', `${verdict.grade} (${verdict.score} / 100)`],
-        ['Hash de Auditoría', auditHash], // ✅ Hash añadido aquí
+        ['Hash de Auditoría', auditHash],
       ],
       theme: 'grid',
+      headStyles: { fillColor: colorRojo },
     });
 
     autoTable(doc, {
@@ -129,17 +133,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ['Bajos', findingsSummary.low],
         ['Informativos', findingsSummary.informational],
       ],
-      headStyles: { fillColor: [41, 128, 185] },
+      headStyles: { fillColor: colorGris },
     });
 
     autoTable(doc, {
       startY: (doc as any).lastAutoTable.finalY + 10,
       head: [['ID', 'Descripción', 'Severidad', 'Estado']],
       body: keyFindings.map(f => [f.id, f.description, f.severity, f.status]),
+      headStyles: { fillColor: colorGris },
       didDrawPage: (data) => {
         doc.setFontSize(8);
         doc.setTextColor(150);
-        // ✅ Hash eliminado de aquí
         doc.text(`Generado el ${new Date().toLocaleString()}`, doc.internal.pageSize.getWidth() / 2, footerY, { align: 'center' });
       }
     });
