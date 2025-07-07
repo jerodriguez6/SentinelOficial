@@ -1,194 +1,195 @@
-import { useState } from 'react';
-import { ChevronDown, ExternalLink, Shield, Calendar, Eye, Share2, TrendingUp } from 'lucide-react';
-import Image from 'next/image';
+// components/ProjectsSection.tsx
+
+import { useState, useMemo } from 'react';
+import { ChevronDown, Eye, Shield, Star, ArrowRight, Clock, TrendingUp, TrendingDown } from 'lucide-react';
 import { Button } from '@components/ui/button';
-import ProjectDetailView from '@components/ProjectDetailView'; // Asegúrate que la ruta sea correcta
+import { Badge } from "@components/ui/Badge";
+import ProjectDetailView from '@components/ProjectDetailView';
 
-// PASO 1: IMPORTAR NUESTROS DATOS Y TIPOS
-import { getAllAudits, AuditData } from 'lib/audit-data'; // Ajusta la ruta
+// Importar datos y tipos
+import { getAllAudits, AuditData } from 'lib/audit-data';
 
-// Interfaz para las tarjetas de previsualización
-interface AuditProjectCard {
-    logo: string;
+// Interfaz actualizada para las tarjetas
+interface SuccessCardProps {
     id: string;
     name: string;
+    score: number;
+    change: number;
     description: string;
-    auditDate: string;
-    tvl: string;
-    status: 'Completed' | 'In Progress' | 'Pending';
-    findings: number;
-    severity: 'Low' | 'Medium' | 'High' | 'Critical' | 'N/A';
-    blockchain: string;
+    category: string;
+    audits: number;
+    lastUpdate: string;
+    highlights: string[];
+    logo: string;
+    trend: 'up' | 'down';
 }
 
-// Función auxiliar para obtener la severidad más alta
-const getHighestSeverity = (summary: AuditData['findingsSummary']): AuditProjectCard['severity'] => {
-    if (summary.critical > 0) return 'Critical';
-    if (summary.high > 0) return 'High';
-    if (summary.medium > 0) return 'Medium';
-    if (summary.low > 0) return 'Low';
-    return 'N/A';
+// Función para calcular la distancia de tiempo
+const formatDistanceToNow = (isoDate: string): string => {
+    const date = new Date(isoDate);
+    const now = new Date();
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    let interval = seconds / 86400;
+    if (interval > 1) return `hace ${Math.floor(interval)} días`;
+    interval = seconds / 3600;
+    if (interval > 1) return `hace ${Math.floor(interval)} horas`;
+    return `hace ${Math.floor(seconds / 60)} minutos`;
 };
 
-// Obtenemos todos los datos detallados una sola vez
 const allDetailedAudits = getAllAudits();
 
-// Creamos los datos para las tarjetas a partir de los datos detallados
-const auditProjectCards: AuditProjectCard[] = allDetailedAudits.map((audit) => ({
-    id: audit.reportId,
-    name: audit.projectName,
-    description: audit.description,
-    auditDate: audit.releaseDate,
-    tvl: audit.tvl,
-    status: audit.status,
-    findings: audit.findingsSummary.critical + audit.findingsSummary.high + audit.findingsSummary.medium + audit.findingsSummary.low,
-    severity: getHighestSeverity(audit.findingsSummary),
-    blockchain: audit.blockchain,
-    logo: audit.logo,
-}));
+// Mapeamos los datos al formato de la nueva tarjeta
+const successCards: SuccessCardProps[] = allDetailedAudits.map((audit) => {
+    const timelineScores = audit.securityTimeline?.map(s => s.score) || [audit.verdict.score];
+    const lastScore = timelineScores[timelineScores.length - 1] || 0;
+    const prevScore = timelineScores[timelineScores.length - 2] || lastScore;
+    const change = lastScore - prevScore;
+    const trend = change >= 0 ? 'up' : 'down';
+    const totalFindings = audit.findingsSummary.critical + audit.findingsSummary.high + audit.findingsSummary.medium + audit.findingsSummary.low;
 
+    return {
+        id: audit.reportId,
+        name: audit.projectName,
+        score: audit.verdict.score,
+        change: change,
+        trend: trend,
+        description: audit.description,
+        category: audit.projectType,
+        audits: totalFindings,
+        lastUpdate: formatDistanceToNow(audit.auditDate),
+        highlights: audit.architecturalStrengths.map(s => s.title).slice(0, 3),
+        logo: audit.logo,
+    };
+});
 
 const ProjectsSection = () => {
     const [showAllProjects, setShowAllProjects] = useState(false);
-    // El estado almacenará el objeto de datos COMPLETO (AuditData) para el modal
     const [selectedProject, setSelectedProject] = useState<AuditData | null>(null);
 
-    const displayedProjects = showAllProjects ? auditProjectCards : auditProjectCards.slice(0, 6);
+    const displayedProjects = showAllProjects ? successCards : successCards.slice(0, 3);
 
-    // Función para manejar el clic y seleccionar el proyecto detallado
     const handleProjectSelect = (id: string) => {
         const projectToDisplay = allDetailedAudits.find(p => p.reportId === id) || null;
         setSelectedProject(projectToDisplay);
     };
 
-    // Funciones de estilo (sin cambios)
-    const getSeverityColor = (severity: string) => {
-        switch (severity) {
-            case 'Critical': return 'text-red-400 border-red-400 bg-red-400/10';
-            case 'High': return 'text-orange-400 border-orange-400 bg-orange-400/10';
-            case 'Medium': return 'text-yellow-400 border-yellow-400 bg-yellow-400/10';
-            case 'Low': return 'text-green-400 border-green-400 bg-green-400/10';
-            default: return 'text-gray-400 border-gray-400 bg-gray-400/10';
-        }
-    };
-    const getStatusColor = (status: string) => {
-        switch (status) {
-            case 'Completed': return 'text-green-400 bg-green-400/20 border-green-400/50';
-            default: return 'text-gray-400 bg-gray-400/20 border-gray-400/50';
-        }
-    };
-    const getBlockchainLogo = (blockchain: string) => {
-        const logos: { [key: string]: string } = {
-            'Ethereum Mainnet': '/ethereum.png',
-            'Ethereum': '/ethereum.png',
-            'Solana': '/solana.webp',
-            'Polygon': '/polygon.png',
-            'BNB Smart Chain': '/bnb.png',
-            'Avalanche': '/avalanche.png',
-            'Arbitrum One': '/arbitrum.png',
-            'Aethelred Mainnet (EVM)': '/aethelred.png',
-            'Ethereum Fork (Geth)': '/ethereum.png'
-        };
-        return logos[blockchain] || '/ethereum.png';
-    };
-
     return (
         <section
             id="projects"
-            className="py-20 relative min-h-screen"
-            style={{
-                backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('https://img.freepik.com/free-vector/abstract-red-neon-arrow-light-glow-background_107791-28871.jpg?semt=ais_items_boosted&w=740')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed'
-            }}
+            className="py-20 relative bg-black"
         >
             <div className="h-24"></div>
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-white animate-pulse-neon">
-                        Audited Projects
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                        {/* ✅ COLOR CORREGIDO */}
+                        <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                            Proyectos{" "}Destacados
+                        </span>
                     </h2>
-                    <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in">
-                        Explore our comprehensive security audits across various blockchain ecosystems.
+                    <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Descubre cómo estos proyectos han construido su reputación tecnológica con Sentinel AI
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                    {displayedProjects.map((project, index) => (
-                        <div
-                            key={project.id}
-                            className="relative group cursor-pointer"
-                            style={{ animationDelay: `${index * 0.1}s` }}
-                            onClick={() => handleProjectSelect(project.id)}
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/20 to-neon-blue/20 rounded-2xl transform rotate-2 scale-105 opacity-30 group-hover:rotate-3 transition-all duration-500"></div>
-                            <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/15 to-neon-purple/15 rounded-2xl transform -rotate-1 scale-102 opacity-50 group-hover:-rotate-2 transition-all duration-500"></div>
-                            <div className="relative bg-gradient-to-br from-cyber-dark/95 to-cyber-darker/95 backdrop-blur-xl border border-neon-purple/30 rounded-2xl p-6 transform transition-all duration-500 hover:scale-105 hover:border-neon-purple/60 hover:shadow-2xl hover:shadow-neon-purple/20 group-hover:rotate-0">
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="relative w-8 h-8 flex-shrink-0">
-                                            <img src={project.logo} alt={`${project.blockchain} logo`} />
+                <div className="max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                        {displayedProjects.map((project, index) => (
+                            <div key={index} className="group relative overflow-hidden h-full">
+                                <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-8 h-full flex flex-col group-hover:bg-white/10 transition-all duration-300 group-hover:scale-105">
+                                    {/* Header */}
+                                    <div className="flex items-start justify-between mb-6">
+                                        <div className="flex items-center space-x-3">
+                                            {/* ✅ COLOR CORREGIDO */}
+                                            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                                                <img src={project.logo} alt={`${project.name} logo`} className="w-8 h-8 rounded-full object-contain" />
+                                            </div>
+                                            <div>
+                                                <Badge variant="outline" className="border-gray-500/50 text-gray-300 text-xs mb-1 truncate">
+                                                    {project.category}
+                                                </Badge>
+                                                <h3 className="text-lg font-bold text-white">{project.name}</h3>
+                                            </div>
                                         </div>
-                                        <h3 className="text-lg font-bold text-white truncate">{project.name}</h3>
                                     </div>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(project.status)} animate-pulse`}>
-                                        {project.status}
-                                    </span>
-                                </div>
-                                <p className="text-gray-300 mb-4 text-sm line-clamp-2 leading-relaxed">{project.description}</p>
-                                <div className="grid grid-cols-2 gap-4 mb-4">
-                                    <div className="bg-neon-purple/10 rounded-xl p-3 border border-neon-purple/20">
-                                        <div className="flex items-center space-x-2">
-                                            <TrendingUp className="h-4 w-4 text-neon-green" />
-                                            <span className="text-gray-400 text-xs">TVL</span>
+
+                                    {/* Score */}
+                                    <div className="mb-6">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span className="text-3xl font-bold text-white">{project.score.toFixed(1)}</span>
+                                            <div className="flex items-center space-x-1">
+                                                {project.trend === 'up' ? <TrendingUp className="w-4 h-4 text-green-400" /> : <TrendingDown className="w-4 h-4 text-red-400" />}
+                                                <span className={`${project.change >= 0 ? 'text-green-400' : 'text-red-400'} font-semibold`}>
+                                                    {project.change >= 0 ? '+' : ''}{project.change.toFixed(1)}
+                                                </span>
+                                                <span className="text-gray-400 text-sm">esta semana</span>
+                                            </div>
                                         </div>
-                                        <span className="text-neon-green text-lg font-bold animate-pulse">{project.tvl}</span>
-                                    </div>
-                                    <div className="bg-neon-blue/10 rounded-xl p-3 border border-neon-blue/20">
-                                        <div className="flex items-center space-x-2">
-                                            <Shield className="h-4 w-4 text-neon-blue" />
-                                            <span className="text-gray-400 text-xs">Security</span>
+                                        <div className="w-full h-2 bg-gray-700 rounded-full">
+                                            {/* ✅ COLOR CORREGIDO */}
+                                            <div
+                                                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                                                style={{ width: `${project.score}%` }}
+                                            ></div>
                                         </div>
-                                        <span className={`text-xs font-bold border px-2 py-1 rounded-full ${getSeverityColor(project.severity)}`}>
-                                            {project.findings} Findings ({project.severity})
-                                        </span>
                                     </div>
+
+                                    {/* Description */}
+                                    <p className="text-gray-300 mb-6 leading-relaxed flex-grow">
+                                        {project.description}
+                                    </p>
+
+                                    {/* Highlights */}
+                                    <div className="mb-6">
+                                        <div className="flex flex-wrap gap-2">
+                                            {project.highlights.map((highlight, i) => (
+                                                <Badge key={i} variant="outline" className="border-blue-500/30 text-blue-400 text-xs">
+                                                    {highlight}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Stats */}
+                                    <div className="flex justify-between items-center mb-6 text-sm">
+                                        <div className="flex items-center space-x-1">
+                                            <Star className="w-4 h-4 text-yellow-400" />
+                                            <span className="text-gray-300">{project.audits} hallazgos</span>
+                                        </div>
+                                        <div className="flex items-center space-x-1">
+                                            <Clock className="w-4 h-4 text-gray-400" />
+                                            <span className="text-gray-300">{project.lastUpdate}</span>
+                                        </div>
+                                    </div>
+
+                                    {/* CTA */}
+                                    <button
+                                        onClick={() => handleProjectSelect(project.id)}
+                                        className="w-full mt-auto bg-gradient-to-r from-blue-500/20 to-purple-500/20 hover:from-blue-500/30 hover:to-purple-500/30 border border-blue-500/30 text-blue-400 font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center space-x-2 group-hover:border-blue-400"
+                                    >
+                                        <span>Ver detalles y evolución</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </button>
                                 </div>
-                                <div className="flex items-center justify-between mb-4">
-                                    <span className="text-gray-400 text-sm flex items-center">
-                                        <Calendar className="h-3 w-3 mr-1" />
-                                        {project.auditDate}
-                                    </span>
-                                    <span className="text-neon-purple text-sm font-medium bg-neon-purple/10 px-2 py-1 rounded-lg">
-                                        {project.blockchain}
-                                    </span>
-                                </div>
-                                <Button className="w-full bg-gradient-to-r from-neon-purple to-neon-blue hover:from-neon-blue hover:to-neon-purple text-white text-xs px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105">
-                                    <Eye className="h-3 w-3 mr-1" />
-                                    View Details
-                                </Button>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+
+                    <div className="text-center">
+                        {/* ✅ COLOR CORREGIDO */}
+                        <Button onClick={() => setShowAllProjects(!showAllProjects)} className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition-all duration-300 text-white px-8 py-3 transform hover:scale-110">
+                            <ChevronDown className={`h-5 w-5 mr-2 transition-transform duration-300 ${showAllProjects ? 'rotate-180' : ''}`} />
+                            {showAllProjects ? 'Mostrar Menos' : 'Mostrar Todos los Proyectos'}
+                        </Button>
+                    </div>
+
+                    {selectedProject && (
+                        <ProjectDetailView
+                            project={selectedProject}
+                            onClose={() => setSelectedProject(null)}
+                        />
+                    )}
                 </div>
-
-                <div className="text-center">
-                    <Button onClick={() => setShowAllProjects(!showAllProjects)} className="bg-gradient-to-r from-neon-purple to-neon-blue hover:from-neon-blue hover:to-neon-purple transition-all duration-300 text-white px-8 py-3 animate-gradient hover:scale-110 transform shadow-lg shadow-neon-purple/30">
-                        <ChevronDown className={`h-5 w-5 mr-2 transition-transform duration-300 ${showAllProjects ? 'rotate-180' : ''}`} />
-                        {showAllProjects ? 'Show Less' : 'Show All Projects'}
-                    </Button>
-                </div>
-
-                {/* AI Assistant (sin cambios) */}
-
-                {/* La llamada a ProjectDetailView ahora es correcta y segura en tipos */}
-                {selectedProject && (
-                    <ProjectDetailView
-                        project={selectedProject}
-                        onClose={() => setSelectedProject(null)}
-                    />
-                )}
             </div>
         </section>
     );
