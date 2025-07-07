@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import InfoBar from '../InfoBar';
+import MarketStats from "@components/MarketStats";
 import Footer from '@components/Footer/Footer';
 import { useTranslation } from 'next-i18next';
 
@@ -52,7 +53,8 @@ const Layout = ({ children }: LayoutProps) => {
       {/* 👇 FIX: Renderiza los componentes SOLO cuando estemos en el cliente */}
       {isClient && (
         <>
-          <InfoBar messages={infoMessages} isVisible={isInfoBarVisible} />
+          {/* <InfoBar messages={infoMessages} isVisible={isInfoBarVisible} /> */}
+          <MarketStats isVisible={isInfoBarVisible} />
           <DynamicNavBar isInfoBarVisible={isInfoBarVisible} />
         </>
       )}
