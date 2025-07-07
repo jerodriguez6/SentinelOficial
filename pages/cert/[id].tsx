@@ -1,8 +1,8 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { notFound } from 'next/navigation';
-import { CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
-import { getAuditById, AuditData } from '../../lib/audit-data'; // Usamos ruta relativa
-import { useState } from 'react';
+import { CheckCircleIcon, InformationCircleIcon, ShareIcon } from '@heroicons/react/24/solid'; // Importa el icono de compartir
+import { getAuditById, AuditData } from '../../lib/audit-data';
+import { useEffect, useState } from 'react';
 
 // --- 1. La Función de Obtención de Datos en el Servidor ---
 export const getServerSideProps: GetServerSideProps<{ auditData: AuditData }> = async (context) => {
@@ -94,6 +94,38 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
             setIsDownloading(false);
         }
     };
+    const [currentUrl, setCurrentUrl] = useState('');
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setCurrentUrl(window.location.href);
+        }
+    }, []);
+
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: `${projectName} Certificado de Auditoría`, // Título para compartir
+                    text: `Mira el certificado de auditoría de ${projectName} (${projectTicker})`, // Texto descriptivo
+                    url: currentUrl, // La URL de la página actual
+                });
+                console.log('Contenido compartido con éxito');
+            } catch (error) {
+                console.error('Error al compartir:', error);
+                // Si el usuario cancela, no es un error que debamos mostrar agresivamente.
+                // Podrías añadir un mensaje si fue un error real (ej. 'Share failed').
+            }
+        } else {
+            // Fallback para navegadores que no soportan la Web Share API
+            // Puedes copiar la URL al portapapeles o abrir un modal con opciones de compartir
+            alert(`Tu navegador no soporta la función de compartir directamente. Puedes copiar la URL: ${currentUrl}`);
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                console.log('URL copiada al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar la URL:', err);
+            });
+        }
+    };
 
     return (
         <div className="bg-black text-gray-200 min-h-screen font-sans">
@@ -117,7 +149,13 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                         className="mt-4 md:mt-0 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
                     >
                         Descargar Informe (PDF)
-                    </a> */}
+                    </a> */}                    <button
+                        onClick={handleShare}
+                        className="bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center"
+                    >
+                        <ShareIcon className="h-5 w-5 mr-2" /> {/* Icono de compartir */}
+                        Compartir
+                    </button>
                     <button
                         onClick={handleDownloadCertificate}
                         disabled={isDownloading}
@@ -125,6 +163,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                     >
                         {isDownloading ? 'Generando...' : 'Descargar Certificado (PDF)'}
                     </button>
+
                 </header>
 
                 {/* Veredicto */}
