@@ -3,6 +3,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "lib/utils"
 
+
 const badgeVariants = cva(
     // ✅ CAMBIOS: Clases para hacerlo un círculo perfecto y centrar el contenido
     "inline-flex items-center justify-center rounded-full border w-6 h-6 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
