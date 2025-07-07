@@ -63,7 +63,7 @@ const successCards: SuccessCardProps[] = allDetailedAudits.map((audit) => {
 });
 
 const ProjectsSection = () => {
-    const [showAllProjects, setShowAllProjects] = useState(false);
+    const [showAllProjects, setShowAllProjects] = useState(!false);
     const [selectedProject, setSelectedProject] = useState<AuditData | null>(null);
 
     const displayedProjects = showAllProjects ? successCards : successCards.slice(0, 3);
@@ -84,7 +84,7 @@ const ProjectsSection = () => {
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                         {/* ✅ COLOR CORREGIDO */}
                         <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                            Proyectos{" "}Destacados
+                            Todos Los Proyectos
                         </span>
                     </h2>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto">
