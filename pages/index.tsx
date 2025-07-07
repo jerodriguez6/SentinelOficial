@@ -222,7 +222,7 @@ const Home = () => {
 
           <div className="overflow-x-auto rounded-lg shadow-lg">
             <table className="min-w-[700px] w-full divide-y divide-gray-800">
-              <thead className="bg-sentinel-dark">
+              <thead className="bg-sentinel-dark text-center">
                 <tr>
                   <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     Puesto

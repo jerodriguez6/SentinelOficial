@@ -12,7 +12,7 @@ const BlockchainLogos = () => {
         { name: 'Avalanche', symbol: 'AVAX', url: '/avalanche.png' },
         { name: 'Cardano', symbol: 'ADA', url: '/cardano.webp' },
         { name: 'SOLIDITY', symbol: 'ETH', url: '/solidity.webp' },
-        { name: 'Polkadot', symbol: 'DOT', url: '/Polkadot.png' },
+        { name: 'Polkadot', symbol: 'DOT', url: '/polkadot.png' },
         { name: 'Cosmos', symbol: 'ATOM', url: '/Cosmos.png' }
     ];
 
