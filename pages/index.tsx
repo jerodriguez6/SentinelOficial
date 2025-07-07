@@ -18,6 +18,53 @@ import { loadSlim } from "@tsparticles/slim";
 import type { IOptions, RecursivePartial } from "@tsparticles/engine"; // Import IOptions and RecursivePartial for useMemo
 import { MoveDirection, OutMode } from "@tsparticles/engine"; // Importa los enums para 'direction' y 'outModes'
 import { getAllAudits, AuditData } from '../lib/audit-data'; // Usamos ruta relativa
+
+// Interfaz para las tarjetas de previsualización
+interface AuditProjectCard {
+  logo: string;
+  id: string;
+  name: string;
+  description: string;
+  auditDate: string;
+  tvl: string;
+  status: 'Completed' | 'In Progress' | 'Pending';
+  findings: number;
+  severity: 'Low' | 'Medium' | 'High' | 'Critical' | 'N/A';
+  blockchain: string;
+  verdict: {
+    title: string;
+    grade: string;
+    score: number;
+    summary: string;
+  };
+}
+
+// Función auxiliar para obtener la severidad más alta
+const getHighestSeverity = (summary: AuditData['findingsSummary']): AuditProjectCard['severity'] => {
+  if (summary.critical > 0) return 'Critical';
+  if (summary.high > 0) return 'High';
+  if (summary.medium > 0) return 'Medium';
+  if (summary.low > 0) return 'Low';
+  return 'N/A';
+};
+
+// Obtenemos todos los datos detallados una sola vez
+const allDetailedAudits = getAllAudits();
+
+// Creamos los datos para las tarjetas a partir de los datos detallados
+const auditProjectCards: AuditProjectCard[] = allDetailedAudits.map((audit) => ({
+  id: audit.reportId,
+  name: audit.projectName,
+  description: audit.description,
+  auditDate: audit.releaseDate,
+  tvl: audit.tvl,
+  status: audit.status,
+  findings: audit.findingsSummary.critical + audit.findingsSummary.high + audit.findingsSummary.medium + audit.findingsSummary.low,
+  severity: getHighestSeverity(audit.findingsSummary),
+  blockchain: audit.blockchain,
+  logo: audit.logo,
+  verdict: audit.verdict
+}));
 const Home = () => {
 
   const projects: AuditData[] | undefined = getAllAudits();
@@ -87,7 +134,7 @@ const Home = () => {
   useEffect(() => {
     console.log('Idioma actual detectado por useEffect:', i18n.language);
   }, [i18n.language]);
-
+  const projectsToShow = auditProjectCards.sort((a, b) => b.verdict.score - a.verdict.score).slice(0, 10);
   return (
     <div className="overflow-hidden"> {/* Asegura que no haya scroll horizontal */}
       {/* Hero Section */}
@@ -155,26 +202,80 @@ const Home = () => {
       </section>
 
       {/* Blockchains Supported Section */}
-      <section className="py-12  bg-transparent px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="py-12 bg-transparent px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8">
+            {t('TechMarketCap')}
+          </h2>
 
-        <div className="max-w-screen-xl mx-auto text-center">
+          <div className="overflow-x-auto rounded-lg shadow-lg">
+            <table className="min-w-[700px] w-full divide-y divide-gray-800">
+              <thead className="bg-sentinel-dark">
+                <tr>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Puesto
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Logo
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Proyecto
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Calificación
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Puntuación
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-gray-900 divide-y divide-gray-800">
+                {projectsToShow.map((project, index) => (
+                  <tr key={project.id} className="hover:bg-gray-800 transition-colors duration-200">
+                    <td className="px-4 py-4 whitespace-nowrap text-xl font-medium text-white">
+                      {index + 1}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap">
+                      <img
+                        src={project.logo}
+                        alt={`${project.name} logo`}
+                        width={40}
+                        height={40}
+                        className="object-contain rounded-full"
+                      />
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-xl text-gray-200">
+                      {project.name}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-xl text-gray-200">
+                      {project.verdict.grade}
+                    </td>
+                    <td className="px-4 py-4 whitespace-nowrap text-xl text-gray-200">
+                      {project.verdict.score}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-
-          <div className="text-center  flex flex-col justify-center items-center">
+        <div className="max-w-6xl mx-auto text-center mt-12 px-4">
+          <div className="flex flex-col justify-center items-center">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
               {t('PoweredBySharkTechnology')}
             </h2>
             <Image
               src={'/SHARKTE.png'}
               alt={`Shark logo`}
-              width={200} // Ancho y alto de la imagen en px
-              height={200}
-              className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
+              width={160}
+              height={160}
+              className="object-contain"
             />
           </div>
-
         </div>
       </section>
+
       {/* Services Section (Asumimos que ya es responsive) */}
       <ServicesSection />
 
