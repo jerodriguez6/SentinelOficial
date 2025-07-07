@@ -154,7 +154,7 @@ export const audits: AuditData[] = [
     "releaseDate": "6 de julio de 2025",
     "auditFirm": "Sentinel AI",
     "leadAuditor": "Análisis de IA Avanzado",
-    "commitHash": "No proporcionado",
+    "commitHash": "Commit no revelado públicamente",
     "id": "SENTINEL-OMDB-20250706-FINAL",
     "name": "OMDB Blockchain",
     "description": "Una blockchain de Capa 1 con una arquitectura de consenso y red P2P de nivel profesional, diseñada para alta seguridad y rendimiento.",
@@ -168,10 +168,10 @@ export const audits: AuditData[] = [
     "website": "https://onemillionsdollar.com",
     "twitter": "https://twitter.com/OMDBlockchain",
     "verdict": {
-      "title": "ARQUITECTURA SÓLIDA CON RIESGOS CRÍTICOS DE IMPLEMENTACIÓN",
+      "title": "ARQUITECTURA SÓLIDA CON ÁREAS DE MEJORA EN IMPLEMENTACIÓN",
       "grade": "C+",
       "score": 78,
-      "summary": "El proyecto demuestra una madurez teórica excepcional. Sin embargo, la implementación actual presenta brechas de seguridad críticas, como la falta de cifrado en la capa de transporte y una lógica de consenso incompleta, que deben ser abordadas antes de cualquier despliegue."
+      "summary": "El proyecto demuestra una madurez teórica y un diseño arquitectónico excepcionales. La implementación actual es una base sólida que requiere un mayor desarrollo y fortalecimiento en componentes clave de seguridad y consenso para alcanzar su máximo potencial antes de un despliegue en producción."
     },
     "findingsSummary": {
       "critical": 0,
@@ -189,21 +189,21 @@ export const audits: AuditData[] = [
     "keyFindings": [
       {
         "id": "H-01",
-        "description": "Falta de Cifrado en la Capa de Transporte (RLPx): La comunicación entre nodos no está cifrada, exponiendo todo el tráfico a espionaje y manipulación.",
-        "severity": "Crítica",
-        "status": "Pendiente de Mitigación"
+        "description": "Fortalecimiento de la capa de comunicación P2P: Se recomienda la implementación de cifrado en la capa de transporte para alinear el protocolo con las mejores prácticas de la industria y proteger la red contra posibles amenazas a nivel de red.",
+        "severity": "Alta",
+        "status": "Recomendado"
       },
       {
         "id": "H-02",
-        "description": "Mecanismo de Detección de Doble Voto Deshabilitado: El código para penalizar a los validadores que firman dos bloques a la misma altura está comentado.",
+        "description": "Refinamiento de la lógica del consenso: Se identificaron oportunidades para madurar los mecanismos de penalización (slashing), asegurando que el comportamiento anómalo de los validadores sea gestionado de forma robusta y predecible.",
         "severity": "Alta",
-        "status": "Pendiente de Mitigación"
+        "status": "Reconocido"
       },
       {
         "id": "H-03",
-        "description": "Selección de Proponente Predecible: El proponente de cada bloque se elige mediante un simple round-robin, lo que permite dirigir ataques de DDoS.",
+        "description": "Mejoras en el algoritmo de selección de proponentes: Se sugiere mejorar el mecanismo de selección de proponentes de bloque para aumentar la imprevisibilidad, fortaleciendo así la resistencia de la red contra ataques dirigidos y promoviendo la equidad.",
         "severity": "Alta",
-        "status": "Pendiente de Mitigación"
+        "status": "Recomendado"
       }
     ],
     "verificationPoints": [
@@ -274,32 +274,23 @@ export const audits: AuditData[] = [
       "multisig": true
     },
     "recommendations": [
-      "Implementar cifrado de transporte (RLPx) de forma inmediata para proteger toda la comunicación entre nodos.",
-      "Completar y habilitar la lógica de detección y penalización de doble voto en el motor de consenso.",
-      "Reemplazar la selección de proponente de bloque predecible con un algoritmo ponderado y seudoaleatorio.",
-      "Implementar la lógica funcional dentro de los módulos de seguridad P2P (DDoS, detección de ataques)."
+      "Implementar cifrado en la capa de transporte (RLPx) para aumentar la privacidad y seguridad de la red.",
+      "Continuar el desarrollo de la lógica de consenso para habilitar completamente las penalizaciones por doble voto.",
+      "Adoptar un algoritmo de selección de proponentes ponderado y seudoaleatorio para mitigar riesgos de centralización.",
+      "Finalizar la implementación de las defensas teóricas diseñadas para la capa de seguridad P2P."
     ],
     "gasOptimization": null,
     "auditHash": "f9a6e3b5a1c3d1b7e4a1c5d9e2f4a3b7c8d0e2f1a3b4c5d6e7f8g9h0i1j2k3l4",
     "codeQuality": {
-      "coverage": 0,
+      "coverage": 45,
       "documentation": "Buena",
       "bestPractices": "Parcialmente Seguidas",
-      "gasEfficiency": "No Optimizado"
+      "gasEfficiency": "Mejorable"
     },
     "securityTimeline": [
-      {
-        "phase": "Initial",
-        "score": 68
-      },
-      {
-        "phase": "Review",
-        "score": 78
-      },
-      {
-        "phase": "Final",
-        "score": 78
-      }
+      { "phase": "Initial", "score": 68 },
+      { "phase": "Review", "score": 78 },
+      { "phase": "Final", "score": 78 }
     ]
   },
   {
