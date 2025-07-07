@@ -37,6 +37,7 @@ interface AuditProjectCard {
     score: number;
     summary: string;
   };
+  reportId: string;
 }
 
 // Función auxiliar para obtener la severidad más alta
@@ -63,7 +64,8 @@ const auditProjectCards: AuditProjectCard[] = allDetailedAudits.map((audit) => (
   severity: getHighestSeverity(audit.findingsSummary),
   blockchain: audit.blockchain,
   logo: audit.logo,
-  verdict: audit.verdict
+  verdict: audit.verdict,
+  reportId: audit.reportId
 }));
 const Home = () => {
 
@@ -231,7 +233,11 @@ const Home = () => {
               </thead>
               <tbody className="bg-gray-900 divide-y divide-gray-800">
                 {projectsToShow.map((project, index) => (
-                  <tr key={project.id} className="hover:bg-gray-800 transition-colors duration-200">
+                  <tr
+                    key={project.id}
+                    className="hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
+                    onClick={() => window.open(`/cert/${project.reportId}`, '_blank')}
+                  >
                     <td className="px-4 py-4 whitespace-nowrap text-xl font-medium text-white">
                       {index + 1}
                     </td>
