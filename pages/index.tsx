@@ -140,7 +140,12 @@ const Home = () => {
   return (
     <div className="overflow-hidden"> {/* Asegura que no haya scroll horizontal */}
       {/* Hero Section */}
-      <section className="min-h-screen bg-black flex flex-col items-center justify-center p-4 sm:p-8 pt-20 relative overflow-hidden">
+      <section style={{
+        backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('https://img.freepik.com/free-vector/abstract-red-neon-arrow-light-glow-background_107791-28871.jpg?semt=ais_items_boosted&w=740')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }} className="min-h-[80vh] bg-black flex flex-col items-center justify-center p-4 sm:p-8 pt-20 relative overflow-hidden">
         {/* ✨ PARTÍCULAS DE FONDO ✨ */}
         {particlesInit && (
           <Particles
@@ -155,11 +160,11 @@ const Home = () => {
         {/* Este div ahora controla la dirección responsive (columna en móvil, fila en desktop). */}
         <div className="w-full flex flex-col md:flex-row items-center justify-center mt-20">
           {/* Columna Izquierda (Texto y botones) - SIN CAMBIOS INTERNOS */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-20">
-            <p className='text-white michroma-regular text-lg sm:text-xl lg:text-2xl mb-4 relative z-10'>
+          <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 py-20">
+            <p className='text-white michroma-regular text-lg sm:text-xl lg:text-3xl mb-4 relative z-10'>
               {t('auditWeb3')}
             </p>
-            <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 relative z-10">
+            <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 relative z-10">
               <span dangerouslySetInnerHTML={{ __html: t('blockchainSecurityAuditorTitle') as string }} />
             </h1>
             <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8 relative z-10'>
@@ -180,7 +185,7 @@ const Home = () => {
           </div>
 
           {/* Columna Derecha (Imagen) - SIN CAMBIOS INTERNOS */}
-          <div className="w-full md:w-1/2 flex justify-center p-4">
+          {/* <div className="w-full md:w-1/2 flex justify-center p-4">
             <Image
               className="block max-w-full h-auto relative z-10"
               height={620}
@@ -190,7 +195,7 @@ const Home = () => {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority
             />
-          </div>
+          </div> */}
         </div>
         {/* ✅ FIN DE LA CORRECCIÓN: Contenedor para la fila superior */}
 
@@ -204,7 +209,12 @@ const Home = () => {
       </section>
 
       {/* Blockchains Supported Section */}
-      <section className="py-12 bg-transparent px-4 sm:px-6 lg:px-8 relative z-10">
+      <section style={{
+        backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('https://img.freepik.com/free-vector/abstract-red-neon-arrow-light-glow-background_107791-28871.jpg?semt=ais_items_boosted&w=740')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }} className="pb-12 bg-transparent px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8">
             {t('TechMarketCap')}
