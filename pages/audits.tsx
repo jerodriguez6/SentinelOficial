@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { ChevronDown, Eye, Shield, Star, ArrowRight, Clock, TrendingUp, TrendingDown } from 'lucide-react';
 import { Button } from '@components/ui/button';
-import { Badge } from "@components/ui/Badge";
+import { Badge } from "@components/Badge";
 import ProjectDetailView from '@components/ProjectDetailView';
 
 // Importar datos y tipos

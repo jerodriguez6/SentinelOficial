@@ -1,6 +1,6 @@
 // components/TechRanking.tsx
 import React, { useMemo } from "react";
-import { Badge } from "@components/ui/Badge";
+import { Badge } from "@components/Badge";
 import { TrendingUp, TrendingDown, Clock } from "lucide-react";
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
