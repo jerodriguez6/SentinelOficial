@@ -112,12 +112,12 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                         <h1 className="text-4xl font-bold text-white">{projectName} ({projectTicker})</h1>
                         <p className="text-lg text-gray-400">Certificado de Auditoría de Seguridad</p>
                     </div>
-                    <a
+                    {/* <a
                         href="#"
                         className="mt-4 md:mt-0 bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-300"
                     >
                         Descargar Informe (PDF)
-                    </a>
+                    </a> */}
                     <button
                         onClick={handleDownloadCertificate}
                         disabled={isDownloading}
