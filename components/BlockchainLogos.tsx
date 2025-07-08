@@ -30,7 +30,7 @@ const BlockchainLogos = () => {
                 {extendedLogos.map((blockchain, index) => (
                     <li key={`${blockchain.name}-${index}`} className="flex-shrink-0">
                         <div className="flex flex-col items-center justify-center p-4 text-white w-36">
-                            <div className="w-8 h-8 flex items-center justify-center mb-2 relative">
+                            <div className="w-8 h-4 flex items-center justify-center mb-2 relative">
                                 {blockchain.url ? (
                                     <Image
                                         src={blockchain.url}

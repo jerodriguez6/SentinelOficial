@@ -89,7 +89,7 @@ const Home = () => {
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
         }}
-        className="min-h-[80vh] bg-black flex flex-col items-center justify-center p-4 sm:p-8 pt-20 relative overflow-hidden"
+        className="min-h-[25vh] bg-black flex flex-col items-center justify-center p-4 sm:p-8 pt-20 relative overflow-hidden"
       >
         {particlesInit && (
           <Particles
@@ -100,8 +100,8 @@ const Home = () => {
         )}
 
         <div className="w-full flex flex-col md:flex-row items-center justify-center mt-20">
-          <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 py-20">
-            <p className='text-white michroma-regular text-lg sm:text-xl lg:text-3xl mb-4 relative z-10'>
+          <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-14">
+            <p className='text-white michroma-regular text-lg sm:text-xl lg:text-3xl  relative z-10'>
               {t('auditWeb3')}
             </p>
             <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 relative z-10">
@@ -125,9 +125,9 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="w-full relative z-10">
+        {/* <div className="w-full relative z-10">
           <BlockchainLogos />
-        </div>
+        </div> */}
       </section>
 
       {/* ✨ SECCIÓN DE RANKING REFACTORIZADA ✨ */}
