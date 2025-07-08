@@ -41,7 +41,7 @@ const SuccessCases = () => {
             style={{
                 backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'bottom',
+                backgroundPosition: 'center',
                 backgroundAttachment: 'fixed'
             }}>
             <div className="container mx-auto px-4">
