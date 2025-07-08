@@ -112,7 +112,7 @@ const Home = () => {
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-[80%] mx-auto md:mx-0'>
               <Link href="/form" className='no-underline relative z-10'>
-                <button className="px-6 py-3 bg-sentinel-primary text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
+                <button className="px-6 py-3 bg-gradient-to-r from-blue-400 to-purple-500 text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
                   {t('talkToAdvisor')}
                 </button>
               </Link>

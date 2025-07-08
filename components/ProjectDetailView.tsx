@@ -53,7 +53,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
                         <h3 className="text-lg font-bold text-white mb-3 flex items-center"><Hash className="h-5 w-5 mr-2 text-purple-400" />Audit Hash Verification</h3>
                         <div className="bg-black/50 p-4 rounded-lg font-mono text-sm">
                             <div className="text-gray-400 mb-2">SHA256:</div>
-                            <div className="text-green-400 break-all">{auditHash}</div>
+                            <div className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent break-all">{auditHash}</div>
                         </div>
                     </div>
 
@@ -61,7 +61,9 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-2 bg-gray-800/30 p-6 rounded-xl border border-gray-700 text-center">
                             <h3 className="text-xl font-bold text-white mb-4 flex items-center justify-center"><Award className="h-6 w-6 mr-2 text-purple-400" />Security Assessment</h3>
-                            <div className="text-6xl font-extrabold text-green-400">{verdict.grade}</div>
+                            <span className="text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                                {verdict.grade}
+                            </span>
                             <div className="text-xl font-bold text-white mt-2">{verdict.title}</div>
                             <p className="text-gray-400 mt-2 max-w-md mx-auto">{verdict.summary}</p>
                         </div>
