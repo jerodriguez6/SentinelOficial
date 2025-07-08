@@ -11,7 +11,7 @@ const AuditProcess = () => {
     ];
 
     return (
-        <section id="como-funciona" className="py-16 relative bg-sentinel-dark">
+        <section id="como-funciona" className="py-16 relative bg-[#09090B]">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <Badge variant="outline" className="border-primary/50 text-white mb-4">
@@ -40,7 +40,7 @@ const AuditProcess = () => {
                                     </div>
 
                                     {/* Step Content */}
-                                    <div className="bg-card/50 backdrop-blur-sm rounded-lg border border-border p-4">
+                                    <div className="metalic rounded-lg border border-border p-4">
                                         <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
                                         <p className="text-sm text-muted-foreground">{step.description}</p>
                                     </div>
@@ -51,7 +51,7 @@ const AuditProcess = () => {
 
                     {/* CTA Section */}
                     <div className="text-center mt-12">
-                        <div className="bg-card/30 backdrop-blur-sm rounded-xl border border-border p-6">
+                        <div className="metalic rounded-xl border border-border p-6">
                             <h3 className="text-xl font-bold text-foreground mb-3">
                                 ¿Listo para comenzar tu evolución tecnológica?
                             </h3>
