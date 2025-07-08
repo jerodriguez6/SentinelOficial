@@ -110,16 +110,38 @@
     border: 1px solid hsl(var(--border));
   }
   .blockchair-card {
-    background: #1B1D23;
-    border: 1px solid hsl(var(--border));
+    background-color: #1B1D23;
+    background-image: linear-gradient(to right, #4F596196, currentColor);
+
     border-radius: 8px;
     box-shadow: 0 2px 8px hsla(220, 13%, 5%, 0.3);
+  }
+  .metalic{
+    background-color: #1B1D23 ;
+    background-image: linear-gradient(to right, #4F5961, currentColor);
+  }
+  .metalic-hover:hover {
+    background-color: #1B1D23;
+    background-image: linear-gradient(to left, #4F5961, currentColor);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px hsla(220, 13%, 5%, 0.4);
+  }
+  .metalic-clasic{
+    background-color: #1B1D23 ;
+    background-image: linear-gradient(to right, #4F5961, #1B1D23);
+  }
+  .metalic-clasic-hover:hover {
+    background-color: #1B1D23;
+    background-image: linear-gradient(to left, #4F5961, #1B1D23);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px hsla(220, 13%, 5%, 0.4);
   }
   .coingecko-hover {
     transition: all 0.2s ease;
   }
   .coingecko-hover:hover {
-    background: hsl(var(--accent));
+    background-color: #1B1D23;
+    background-image: linear-gradient(to left, #4F596196, currentColor);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px hsla(220, 13%, 5%, 0.4);
   }

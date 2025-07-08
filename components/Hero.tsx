@@ -62,7 +62,7 @@ const Hero = () => {
     );
 
     return (
-        <section className="relative overflow-hidden bg-gray-900 backdrop-blur-lg py-16 lg:py-24" style={{
+        <section className="relative overflow-hidden bg-gray-900 backdrop-blur-lg pt-16 lg:pt-24 pb-10 lg:pb-10" style={{
             backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/mask.jpg')`,
             backgroundSize: 'cover',
             backgroundPosition: 'top',
@@ -79,12 +79,11 @@ const Hero = () => {
             )} */}
 
             {/* Efectos de fondo sutiles (Gris / Blanco) */}
-            <div className="absolute inset-0 z-0">
-                {/* ✅ COLOR CORREGIDO: De 'bg-primary' a un brillo blanco/neutro */}
+            {/* <div className="absolute inset-0 z-0">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float"></div>
                 <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
                 <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/2 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }}></div>
-            </div>
+            </div> */}
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center max-w-5xl mx-auto">
@@ -93,9 +92,9 @@ const Hero = () => {
                         <Award className="w-4 h-4 mr-2" />
                         Pionero en Tech MarketCap Web3
                     </div>
-
+                    {/* from-blue-400 to-[#55f7ed] */}
                     <h1 className="text-white hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-                        <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-[#4F596196] to-foreground  bg-clip-text text-transparent">
                             Tech MarketCap
                         </span>
                     </h1>
@@ -128,7 +127,7 @@ const Hero = () => {
                     {/* Estadísticas */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
                         <div className="text-center blockchair-card p-4 coingecko-hover">
-                            {/* ✅ COLOR CORREGIDO: De 'bg-primary' a un fondo gris */}
+
                             <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-accent/50 rounded-full border border-border">
                                 <Shield className="w-6 h-6 text-foreground" />
                             </div>

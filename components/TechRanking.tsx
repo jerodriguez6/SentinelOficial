@@ -75,8 +75,8 @@ const TechRanking = () => {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                        <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                            {t('TechMarketCap')}
+                        <span className="bg-gradient-to-r from-[#4F596196] to-foreground bg-clip-text text-transparent hero-title">
+                            {t('Top MarketCap')}
                         </span>
                     </h2>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -84,7 +84,7 @@ const TechRanking = () => {
                     </p>
                 </div>
 
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-[1400px] mx-auto">
                     {/* Table Header */}
                     <div className="bg-gray-900/50 backdrop-blur-lg   border-gray-800 p-6">
                         <div className="grid grid-cols-2 md:grid-cols-7 gap-4 text-sm font-semibold text-gray-300 uppercase tracking-wider">
@@ -134,7 +134,8 @@ const TechRanking = () => {
                                 <div className="hidden md:block">
                                     <div className="flex items-center space-x-2">
                                         <span className="text-xl font-bold text-white">{project.score.toFixed(1)}</span>
-                                        <div className="w-12 h-2 bg-gray-700 rounded-full"><div className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full" style={{ width: `${project.score}%` }}></div></div>
+                                        {/* bg-gradient-to-r from-blue-500 to-purple-600 */}
+                                        <div className="w-12 h-2 bg-gray-700 rounded-full"><div className="h-full metalic rounded-full" style={{ width: `${project.score}%` }}></div></div>
                                     </div>
                                 </div>
                                 <div className="hidden md:flex items-center justify-center">
@@ -159,8 +160,9 @@ const TechRanking = () => {
                     <div className="text-center mt-8">
                         <Link
                             href="/audits"
-                            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-lg transition-all"
+                            className="metalic-clasic metalic-clasic-hover text-white font-semibold px-8 py-3 rounded-lg transition-all no-underline"
                         >
+                            {/* bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700  */}
                             Ver todos los reportes
                         </Link>
                     </div>

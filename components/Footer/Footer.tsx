@@ -4,7 +4,7 @@ import { Segment, Container, Grid, List, Header } from 'semantic-ui-react'
 import Image from 'next/image'
 const Footer = () => (
   <footer className="bg-black text-white py-16 relative z-10">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 no-underline">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center space-x-2 mb-6">
@@ -12,8 +12,7 @@ const Footer = () => (
             <span className="text-xl font-bold">Sentinel IA</span>
           </div>
           <p className="text-gray-300 mb-6 max-w-md">
-            Protección inteligente para el futuro de las finanzas descentralizadas.
-            Aseguramos tu código, protegemos tu inversión.
+            Pioneering the first Tech MarketCap for Web3 projects. Measure and demonstrate your technological quality beyond trading volumes.
           </p>
           <div className="text-sm text-gray-400">
             © 2024 Sentinel IA. Todos los derechos reservados.
@@ -21,30 +20,26 @@ const Footer = () => (
         </div>
 
         <div>
-          {/* <h4 className="font-semibold text-lg mb-4">Servicios</h4>
-          <ul className="space-y-2 text-gray-300">
-            <li><a href="#" className="hover:text-sentinel-accent transition-colors">Auditorías Smart Contract</a></li>
-            <li><a href="#" className="hover:text-sentinel-accent transition-colors">Monitoreo Continuo</a></li>
-            <li><a href="#" className="hover:text-sentinel-accent transition-colors">Consultoría</a></li>
-            <li><a href="#" className="hover:text-sentinel-accent transition-colors">Respuesta de Emergencia</a></li>
-          </ul> */}
+          <h4 className="text-white font-semibold mb-4">Navegación</h4>
+          <ul className="space-y-3">
+            <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Inicio</a></li>
+            <li><a href="#ranking" className="text-gray-300 hover:text-white transition-colors">Ranking</a></li>
+            <li><a href="#como-funciona" className="text-gray-300 hover:text-white transition-colors">Cómo funciona</a></li>
+            <li><a href="#beneficios" className="text-gray-300 hover:text-white transition-colors">Beneficios</a></li>
+            <li><a href="#faqs" className="text-gray-300 hover:text-white transition-colors">FAQs</a></li>
+          </ul>
         </div>
 
+        {/* Services */}
         <div>
-          {/* <h4 className="font-semibold text-lg mb-4">Contacto</h4>
-          <ul className="space-y-2 text-gray-300">
-            <li>security@sentinel-ia.com</li>
-            <li>+1 (555) 123-4567</li>
-            <li>San Francisco, CA</li>
-            <li>24/7 Support</li>
-          </ul> */}
-          <Image
-            src={'/SHARKTE.png'}
-            alt={`Shark logo`}
-            width={200} // Ancho y alto de la imagen en px
-            height={200}
-            className="object-contain" // Para que la imagen se ajuste dentro del div sin cortarse
-          />
+          <h4 className="text-white font-semibold mb-4">Servicios</h4>
+          <ul className="space-y-3">
+            <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Auditoría inicial</a></li>
+            <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Monitoreo continuo</a></li>
+            <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Widget integración</a></li>
+            <li><a href="#contacto" className="text-gray-300 hover:text-white transition-colors">Contacto</a></li>
+            <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Soporte</a></li>
+          </ul>
         </div>
       </div>
     </div>

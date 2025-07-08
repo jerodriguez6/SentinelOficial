@@ -18,6 +18,7 @@ import { loadSlim } from "@tsparticles/slim";
 import type { IOptions, RecursivePartial } from "@tsparticles/engine";
 import { MoveDirection, OutMode } from "@tsparticles/engine";
 import Hero from "@components/Hero";
+import AuditProcess from "@components/AuditProcess";
 
 const Home = () => {
   const router = useRouter();
@@ -85,31 +86,7 @@ const Home = () => {
       <Hero />
       <TechRanking />
       {/* Process Visualization */}
-      <div className="bg-sentinel-dark rounded-3xl p-8 md:p-12 relative z-10">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-white mb-4">Proceso de Auditoría IA</h3>
-          <p className="text-white text-lg">De código fuente a reporte completo en tiempo record</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[
-            { step: '01', title: 'Análisis Inicial', desc: 'Escaneo automático del código fuente' },
-            { step: '02', title: 'IA Processing', desc: 'Análisis profundo con modelos especializados' },
-            { step: '03', title: 'Validación', desc: 'Verificación manual por expertos' },
-            { step: '04', title: 'Reporte Final', desc: 'Entrega de resultados y recomendaciones' }
-          ].map((process, index) => (
-            <div key={index} className="text-center relative">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-sentinel-primary to-sentinel-accent text-white flex items-center justify-center text-xl font-bold mx-auto mb-4 relative z-10">
-                {process.step}
-              </div>
-              <h4 className="text-lg font-semibold text-white mb-2">{process.title}</h4>
-              <p className="text-white text-sm">{process.desc}</p>
-              {index < 3 && (
-                <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-sentinel-primary to-sentinel-accent transform -translate-x-1/2"></div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+      <AuditProcess />
     </div>
   );
 };
