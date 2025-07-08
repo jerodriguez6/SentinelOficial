@@ -77,16 +77,20 @@ const ProjectsSection = () => {
         <section
             id="projects"
             className="py-20 relative bg-black"
-        >
+            style={{
+                backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed'
+            }}>
             <div className="h-24"></div>
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                        {/* ✅ COLOR CORREGIDO */}
-                        <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                            Todos Los Proyectos
+                    <h1 className="text-white hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                        <span className="bg-gradient-to-r from-[#4F596196] to-foreground  bg-clip-text text-transparent">
+                            Todos los Proyectos
                         </span>
-                    </h2>
+                    </h1>
                     <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                         Descubre cómo estos proyectos han construido su reputación tecnológica con Sentinel AI
                     </p>
