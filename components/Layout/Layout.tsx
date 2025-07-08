@@ -56,6 +56,7 @@ const Layout = ({ children }: LayoutProps) => {
           {/* <InfoBar messages={infoMessages} isVisible={isInfoBarVisible} /> */}
           <MarketStats isVisible={isInfoBarVisible} />
           <DynamicNavBar isInfoBarVisible={isInfoBarVisible} />
+          <div className="h-24"></div>
         </>
       )}
 

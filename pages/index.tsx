@@ -17,6 +17,7 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { IOptions, RecursivePartial } from "@tsparticles/engine";
 import { MoveDirection, OutMode } from "@tsparticles/engine";
+import Hero from "@components/Hero";
 
 const Home = () => {
   const router = useRouter();
@@ -81,61 +82,8 @@ const Home = () => {
 
   return (
     <div className="overflow-hidden">
-      {/* Hero Section */}
-      <section
-        style={{
-          backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('https://img.freepik.com/free-vector/abstract-red-neon-arrow-light-glow-background_107791-28871.jpg?semt=ais_items_boosted&w=740')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
-        }}
-        className="min-h-[25vh] bg-black flex flex-col items-center justify-center p-4 sm:p-8 pt-20 relative overflow-hidden"
-      >
-        {particlesInit && (
-          <Particles
-            id="tsparticles-hero"
-            className="absolute inset-0 w-full h-full z-0"
-            options={particlesOptions}
-          />
-        )}
-
-        <div className="w-full flex flex-col md:flex-row items-center justify-center mt-20">
-          <div className="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left mb-8 md:mb-0 pt-14">
-            <p className='text-white michroma-regular text-lg sm:text-xl lg:text-3xl  relative z-10'>
-              {t('auditWeb3')}
-            </p>
-            <h1 className="text-white hero-title text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 relative z-10">
-              <span dangerouslySetInnerHTML={{ __html: t('blockchainSecurityAuditorTitle') as string }} />
-            </h1>
-            <p className='text-white michroma-regular text-base sm:text-lg lg:text-xl mb-8 relative z-10'>
-              {t('certifyTechnology')}
-            </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-[80%] mx-auto md:mx-0'>
-              <Link href="/form" className='no-underline relative z-10'>
-                <button className="px-6 py-3 bg-gradient-to-r from-blue-400 to-purple-500 text-white text-base sm:text-lg michroma-regular rounded-md hover:bg-opacity-90 transition-opacity duration-200 w-full sm:w-auto">
-                  {t('talkToAdvisor')}
-                </button>
-              </Link>
-              <Link href="/audits" className='no-underline relative z-10'>
-                <button className="px-6 py-3 bg-gray-300 text-black text-base sm:text-lg michroma-regular rounded-md hover:bg-gray-400 transition-colors duration-200 w-full sm:w-auto">
-                  {t('viewSuccessStoriesBtn')}
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* <div className="w-full relative z-10">
-          <BlockchainLogos />
-        </div> */}
-      </section>
-
-      {/* ✨ SECCIÓN DE RANKING REFACTORIZADA ✨ */}
+      <Hero />
       <TechRanking />
-
-      {/* Services Section */}
-      {/* <ServicesSection /> */}
-
       {/* Process Visualization */}
       <div className="bg-sentinel-dark rounded-3xl p-8 md:p-12 relative z-10">
         <div className="text-center mb-12">

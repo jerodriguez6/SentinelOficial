@@ -66,7 +66,12 @@ const TechRanking = () => {
     }, []);
 
     return (
-        <section id="ranking" className="py-20 relative bg-black">
+        <section id="ranking" className="py-20 relative bg-black" style={{
+            backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'bottom',
+            backgroundAttachment: 'fixed'
+        }}>
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
