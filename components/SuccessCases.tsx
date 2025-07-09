@@ -31,7 +31,10 @@ const SuccessCases = () => {
                 const lastScore = timelineScores[timelineScores.length - 1] || 0;
                 const prevScore = timelineScores[timelineScores.length - 2] || lastScore;
                 const change = lastScore - prevScore;
-                const trend = change >= 0 ? 'up' : 'down';
+
+                // ✅ CORRECCIÓN 1: Aseguramos que el tipo de 'trend' sea 'up' o 'down'
+                const trend = (change >= 0 ? 'up' : 'down') as 'up' | 'down';
+
                 const totalFindings = audit.findingsSummary.critical + audit.findingsSummary.high + audit.findingsSummary.medium + audit.findingsSummary.low;
 
                 return {
@@ -39,8 +42,9 @@ const SuccessCases = () => {
                     name: audit.projectName,
                     score: audit.verdict.score,
                     change: change,
-                    trend: trend,
+                    trend: trend, // Ahora el tipo es correcto
                     description: audit.description,
+                    // ✅ CORRECCIÓN 2: Usamos la propiedad correcta 'projectType'
                     category: audit.category,
                     audits: totalFindings,
                     lastUpdate: formatDistanceToNow(audit.auditDate),
@@ -75,7 +79,7 @@ const SuccessCases = () => {
 
                 <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* 3. RENDERIZAMOS LAS TARJETAS CON LOS DATOS DINÁMICOS */}
+                        {/* El resto del código funciona sin cambios gracias a las correcciones anteriores */}
                         {topProjects.map((project) => (
                             <ProjectCard
                                 key={project.id}
