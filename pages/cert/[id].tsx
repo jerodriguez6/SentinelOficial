@@ -58,16 +58,66 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
     }, []);
 
     const handleDownloadCertificate = async () => {
-        // ... (lógica de descarga sin cambios)
+        setIsDownloading(true);
+        console.log(auditData.reportId)
+        try {
+            const response = await fetch(`/api/generate-certificate/${auditData.reportId}`);
+
+            if (response.ok) {
+                // ... (lógica de descarga del PDF, que está bien)
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `certificado-${auditData.reportId}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            } else {
+                // ¡Aquí está la mejora!
+                const contentType = response.headers.get("content-type");
+                let errorData;
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    // Si es JSON, lo parseamos
+                    errorData = await response.json();
+                    console.error('Error del API:', errorData);
+                    alert(`Error: ${errorData.error || 'Ocurrió un problema.'}`);
+                } else {
+                    // Si no es JSON (es HTML o texto), lo leemos como texto
+                    errorData = await response.text();
+                    console.error("Se recibió una respuesta inesperada (HTML/Texto) del servidor:", errorData);
+                    alert('Ocurrió un error inesperado en el servidor.');
+                }
+            }
+        } catch (error) {
+            console.error('Error de red o de conexión:', error);
+            alert('No se pudo conectar con el servidor. Revisa tu conexión a internet.');
+        } finally {
+            setIsDownloading(false);
+        }
     };
 
+
     const handleShare = async () => {
-        // ... (lógica de compartir sin cambios)
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: `${projectName} (${projectTicker}) - Certificado de Auditoría`,
+                    text: "Revisa este certificado de seguridad blockchain.",
+                    url: window.location.href,
+                });
+                console.log("Contenido compartido con éxito");
+            } else {
+                alert("La función de compartir no está disponible en este navegador.");
+            }
+        } catch (error) {
+            console.error("Error al compartir:", error);
+        }
     };
 
     return (
         <div className="bg-black text-gray-200 min-h-screen font-sans">
-            <div className="h-24"></div>
             <div className="h-24"></div>
             <main className={`max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 ${headerHeightClass}`}>
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b border-gray-700 pb-4">
