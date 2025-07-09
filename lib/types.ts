@@ -7,7 +7,7 @@ export interface AuditData {
     projectName: string;
     projectTicker: string;
     client: string;
-    projectType: string;
+    category: string;
     releaseDate: string;
     auditFirm: string;
     leadAuditor: string;
