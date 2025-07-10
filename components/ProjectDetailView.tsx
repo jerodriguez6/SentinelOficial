@@ -99,10 +99,20 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
                                     <ChartContainer config={{ gas: { label: "Gas Cost", color: "#22c55e" } }}>
                                         <ResponsiveContainer width="100%" height="100%">
                                             <BarChart data={gasData}>
+                                                {/* Definimos el degradado */}
+                                                <defs>
+                                                    <linearGradient id="barGradient" x1="0" y1="1" x2="0" y2="0">
+                                                        <stop offset="0%" stopColor="#60a5fa" /> {/* blue-400 */}
+                                                        <stop offset="100%" stopColor="#55f7ed" />
+                                                    </linearGradient>
+                                                </defs>
+
                                                 <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#9ca3af' }} />
                                                 <YAxis tick={{ fontSize: 12, fill: '#9ca3af' }} />
                                                 <ChartTooltip content={<ChartTooltipContent payload={undefined} />} />
-                                                <Bar dataKey="gas" fill="#22c55e" />
+
+                                                {/* Aplicamos el degradado a las barras */}
+                                                <Bar dataKey="gas" fill="url(#barGradient)" />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     </ChartContainer>
