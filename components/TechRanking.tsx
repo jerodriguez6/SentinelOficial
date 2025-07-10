@@ -65,7 +65,8 @@ const TechRanking = () => {
                     logo: audit.logo,
                     chartData: timelineScores.slice(-8),
                     reportId: audit.reportId,
-                    grade: audit.verdict.grade
+                    grade: audit.verdict.grade,
+                    blockchain: audit.blockchain
                 };
             })
             .slice(0, 10);
@@ -97,9 +98,10 @@ const TechRanking = () => {
                 {/* ✅ 4. Cambiamos el ancho del contenedor */}
                 <div className="w-[90vw] mx-auto">
                     <div className="bg-gray-900/50 backdrop-blur-lg border-gray-800 p-6">
-                        <div className="grid grid-cols-2 md:grid-cols-8 gap-4 text-sm font-semibold text-gray-300 uppercase tracking-wider text-center">
+                        <div className="grid grid-cols-2 md:grid-cols-9 gap-4 text-sm font-semibold text-gray-300 uppercase tracking-wider text-center">
                             <div>#</div>
                             <div>Proyecto</div>
+                            <div className="hidden md:block">Network</div>
                             <div className="hidden md:block">Grade</div>
                             <div className="hidden md:block">Score</div>
                             <div className="hidden md:block">Gráfica 7d</div>
@@ -115,7 +117,7 @@ const TechRanking = () => {
                             <div
                                 key={project.position}
                                 onClick={() => handleProjectSelect(project.reportId)}
-                                className={`no-underline grid grid-cols-2 md:grid-cols-8 gap-4 p-6 items-center transition-all hover:bg-gray-800/30 cursor-pointer text-center ${index !== projects.length - 1 ? 'border-b border-gray-800' : ''}`}
+                                className={`no-underline grid grid-cols-2 md:grid-cols-9 gap-4 p-6 items-center transition-all hover:bg-gray-800/30 cursor-pointer text-center ${index !== projects.length - 1 ? 'border-b border-gray-800' : ''}`}
                             >
                                 <div className="flex items-center text-center items-center justify-center">
                                     <Badge variant="outline" className={`text-sm font-bold ${project.position <= 3 ? 'border-yellow-400 text-yellow-400' : 'border-gray-300 text-gray-300'}`}>
@@ -130,7 +132,10 @@ const TechRanking = () => {
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-3 justify-center">
-                                    <span className="text-5xl font-extrabold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
+                                    <span className="text-gray-300 text-sm">{project.blockchain}</span>
+                                </div>
+                                <div className="flex items-center space-x-3 justify-center">
+                                    <span className="text-4xl font-extrabold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
                                         {project.grade}
                                     </span>
                                 </div>

@@ -6,6 +6,7 @@ import InfoBar from '../InfoBar';
 import MarketStats from "@components/MarketStats";
 import Footer from '@components/Footer/Footer';
 import { useTranslation } from 'next-i18next';
+import WhatsApp from '@components/WhatsApp';
 
 // Se puede importar el NavBar dinámicamente, pero controlaremos su renderizado
 const DynamicNavBar = dynamic(() => import('@components/NavBar/NavBar'));
@@ -64,6 +65,7 @@ const Layout = ({ children }: LayoutProps) => {
       <main>
         {children}
       </main>
+      <WhatsApp />
       <Footer />
     </div>
   );
