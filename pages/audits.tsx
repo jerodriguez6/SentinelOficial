@@ -28,7 +28,7 @@ const allDetailedAudits = getAllAudits();
 type ProjectCardData = Omit<ProjectCardProps, 'onCardClick'>;
 
 const ProjectsSection = () => {
-    const [showAllProjects, setShowAllProjects] = useState(false);
+    const [showAllProjects, setShowAllProjects] = useState(!false);
     const [selectedProject, setSelectedProject] = useState<AuditData | null>(null);
 
     // 2. PREPARAMOS LOS DATOS PARA LA TARJETA
@@ -44,6 +44,7 @@ const ProjectsSection = () => {
             id: audit.reportId,
             name: audit.projectName,
             score: audit.verdict.score,
+            grade: audit.verdict.grade,
             change: change,
             trend: trend,
             description: audit.description,

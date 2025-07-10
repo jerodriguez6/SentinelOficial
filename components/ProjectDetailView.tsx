@@ -39,21 +39,30 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
     ] : [];
 
     return (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={onClose}>
-            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border border-gray-700 rounded-3xl max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
-
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={onClose}>
+            <div
+                className="backdrop-blur-2xl bg-[#09090B]/70 border border-[#09090B] rounded-3xl max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                    backdropFilter: 'blur(24px)',
+                    backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundAttachment: 'fixed',
+                }}
+            >
                 {/* --- Header --- */}
                 <header className="relative p-8 border-b border-gray-700">
                     {/* ... (código del header sin cambios, ya era dinámico) ... */}
                 </header>
 
-                <main className="p-8 space-y-8">
+                <main className="p-8 space-y-8" >
                     {/* --- Audit Hash --- */}
-                    <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+                    <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700" >
                         <h3 className="text-lg font-bold text-white mb-3 flex items-center"><Hash className="h-5 w-5 mr-2 text-purple-400" />Audit Hash Verification</h3>
                         <div className="bg-black/50 p-4 rounded-lg font-mono text-sm">
                             <div className="text-gray-400 mb-2">SHA256:</div>
-                            <div className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent break-all">{auditHash}</div>
+                            <div className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent break-all">{auditHash}</div>
                         </div>
                     </div>
 
@@ -61,7 +70,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-2 bg-gray-800/30 p-6 rounded-xl border border-gray-700 text-center">
                             <h3 className="text-xl font-bold text-white mb-4 flex items-center justify-center"><Award className="h-6 w-6 mr-2 text-purple-400" />Security Assessment</h3>
-                            <span className="text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                            <span className="text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
                                 {verdict.grade}
                             </span>
                             <div className="text-xl font-bold text-white mt-2">{verdict.title}</div>
@@ -138,10 +147,10 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
                                     <div>
                                         <h4 className="text-lg font-semibold text-white mb-3">Code Quality</h4>
                                         <div className="space-y-3">
-                                            <div className="flex justify-between"><span className="text-gray-300">Code Coverage:</span><span className="text-green-400 font-semibold">{codeQuality.coverage}%</span></div>
-                                            <div className="flex justify-between"><span className="text-gray-300">Documentation:</span><span className="text-green-400 font-semibold">{codeQuality.documentation}</span></div>
-                                            <div className="flex justify-between"><span className="text-gray-300">Best Practices:</span><span className="text-green-400 font-semibold">{codeQuality.bestPractices}</span></div>
-                                            <div className="flex justify-between"><span className="text-gray-300">Gas Efficiency:</span><span className="text-green-400 font-semibold">{codeQuality.gasEfficiency}</span></div>
+                                            <div className="flex justify-between"><span className="text-gray-300">Code Coverage:</span><span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent font-semibold">{codeQuality.coverage}%</span></div>
+                                            <div className="flex justify-between"><span className="text-gray-300">Documentation:</span><span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent font-semibold">{codeQuality.documentation}</span></div>
+                                            <div className="flex justify-between"><span className="text-gray-300">Best Practices:</span><span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent font-semibold">{codeQuality.bestPractices}</span></div>
+                                            <div className="flex justify-between"><span className="text-gray-300">Gas Efficiency:</span><span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent font-semibold">{codeQuality.gasEfficiency}</span></div>
                                         </div>
                                     </div>
                                 )}
@@ -323,7 +332,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
 
                         <a href={`/cert/${project.reportId}`} target="_blank" rel="noopener noreferrer">
 
-                            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold rounded-xl">
+                            <Button className="metalic-clasic metalic-clasic-hover text-white px-8 py-4 text-lg font-semibold rounded-xl">
 
                                 <FileText className="h-5 w-5 mr-3" />
 
@@ -333,7 +342,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
 
                         </a>
 
-                        <Button variant="outline" className="border-2 border-green-500 text-green-400 hover:bg-green-500/10 px-8 py-4 text-lg font-semibold rounded-xl">
+                        <Button className="text-white bg-gradient-to-r from-blue-600 to-[#55f7ed] hover:from-blue-700 hover:to-[#13cbbf] px-8 py-4 text-lg font-semibold rounded-xl">
 
                             <Download className="h-5 w-5 mr-3" />
 

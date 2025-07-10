@@ -10,6 +10,7 @@ export interface ProjectCardProps {
     name: string;
     category: string;
     score: number;
+    grade: string;
     change: number;
     trend: 'up' | 'down';
     description: string;
@@ -21,7 +22,7 @@ export interface ProjectCardProps {
 
 // 2. Creamos el componente de la tarjeta
 export const ProjectCard = ({
-    logo, name, category, score, change, trend, description, audits, lastUpdate, highlights, onCardClick
+    logo, name, category, score, grade, change, trend, description, audits, lastUpdate, highlights, onCardClick
 }: ProjectCardProps) => {
     return (
         <div
@@ -47,6 +48,9 @@ export const ProjectCard = ({
                 {/* Score */}
                 <div className="mb-6">
                     <div className="flex items-center justify-between mb-2">
+                        <span className="text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
+                            {grade}
+                        </span>
                         <span className="text-3xl font-bold text-white">{score.toFixed(1)}</span>
                         <div className="flex items-center space-x-1">
                             {trend === 'up' ? <TrendingUp className="w-4 h-4 text-green-400" /> : <TrendingDown className="w-4 h-4 text-red-400" />}

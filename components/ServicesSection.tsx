@@ -39,7 +39,7 @@ const ServicesSection = () => {
                 'predictiveAIFeature2',
                 'predictiveAIFeature3'
             ],
-            color: 'from-purple-500 to-purple-600'
+            color: 'from-[#55f7ed] to-[#55f7ed]'
         },
         {
             icon: Zap,

@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react'; // ✅ 1. Importamos useState
 import { Badge } from "@components/Badge";
-import { ProjectCard } from "@components/ProjectCard"; // Importamos la tarjeta reutilizable
+import { ProjectCard } from "@components/ProjectCard";
+import ProjectDetailView from '@components/ProjectDetailView'; // ✅ 2. Importamos el modal
 
-// 1. IMPORTAMOS LOS DATOS REALES Y TIPOS NECESARIOS
+// Importamos los datos reales y tipos necesarios
 import { getAllAudits, AuditData } from 'lib/audit-data';
 
 // Función para calcular la distancia de tiempo
@@ -18,11 +19,11 @@ const formatDistanceToNow = (isoDate: string): string => {
 };
 
 const SuccessCases = () => {
-    // 2. PROCESAMOS LOS DATOS REALES PARA MOSTRAR LOS MEJORES 3
+    // ✅ 3. AÑADIMOS EL ESTADO PARA MANEJAR EL PROYECTO SELECCIONADO
+    const [selectedProject, setSelectedProject] = useState<AuditData | null>(null);
+
     const topProjects = useMemo(() => {
         const allAudits = getAllAudits();
-
-        // Ordenamos por score y tomamos los 3 primeros
         return allAudits
             .sort((a, b) => b.verdict.score - a.verdict.score)
             .slice(0, 3)
@@ -31,20 +32,17 @@ const SuccessCases = () => {
                 const lastScore = timelineScores[timelineScores.length - 1] || 0;
                 const prevScore = timelineScores[timelineScores.length - 2] || lastScore;
                 const change = lastScore - prevScore;
-
-                // ✅ CORRECCIÓN 1: Aseguramos que el tipo de 'trend' sea 'up' o 'down'
                 const trend = (change >= 0 ? 'up' : 'down') as 'up' | 'down';
-
                 const totalFindings = audit.findingsSummary.critical + audit.findingsSummary.high + audit.findingsSummary.medium + audit.findingsSummary.low;
 
                 return {
                     id: audit.reportId,
                     name: audit.projectName,
                     score: audit.verdict.score,
+                    grade: audit.verdict.grade,
                     change: change,
-                    trend: trend, // Ahora el tipo es correcto
+                    trend: trend,
                     description: audit.description,
-                    // ✅ CORRECCIÓN 2: Usamos la propiedad correcta 'projectType'
                     category: audit.category,
                     audits: totalFindings,
                     lastUpdate: formatDistanceToNow(audit.auditDate),
@@ -53,6 +51,13 @@ const SuccessCases = () => {
                 };
             });
     }, []);
+
+    // ✅ 4. AÑADIMOS LA FUNCIÓN PARA ABRIR EL MODAL
+    const handleProjectSelect = (id: string) => {
+        const allAudits = getAllAudits();
+        const projectToDisplay = allAudits.find(p => p.reportId === id) || null;
+        setSelectedProject(projectToDisplay);
+    };
 
     return (
         <section className="py-20 relative"
@@ -79,16 +84,24 @@ const SuccessCases = () => {
 
                 <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* El resto del código funciona sin cambios gracias a las correcciones anteriores */}
                         {topProjects.map((project) => (
                             <ProjectCard
                                 key={project.id}
                                 {...project}
-                                onCardClick={() => window.open(`/cert/${project.id}`, '_blank')}
+                                // ✅ 5. CONECTAMOS EL CLIC DE LA TARJETA CON LA FUNCIÓN
+                                onCardClick={() => handleProjectSelect(project.id)}
                             />
                         ))}
                     </div>
                 </div>
+
+                {/* ✅ 6. RENDERIZAMOS EL MODAL CUANDO HAYA UN PROYECTO SELECCIONADO */}
+                {selectedProject && (
+                    <ProjectDetailView
+                        project={selectedProject}
+                        onClose={() => setSelectedProject(null)}
+                    />
+                )}
             </div>
         </section>
     );

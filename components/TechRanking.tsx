@@ -1,22 +1,19 @@
 // components/TechRanking.tsx
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react"; // ✅ 1. Importamos useState
 import { Badge } from "@components/Badge";
 import { TrendingUp, TrendingDown, Clock } from "lucide-react";
 import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { getAllAudits, AuditData } from '../lib/audit-data';
 import { cn } from "lib/utils";
+import ProjectDetailView from "@components/ProjectDetailView"; // ✅ 2. Importamos el modal
 
 // ... (El resto del código que no cambia: formatDistanceToNow, MiniChart)
 const formatDistanceToNow = (isoDate: string): string => {
     const date = new Date(isoDate);
     const now = new Date();
     const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-    let interval = seconds / 31536000;
-    if (interval > 1) return `hace ${Math.floor(interval)} años`;
-    interval = seconds / 2592000;
-    if (interval > 1) return `hace ${Math.floor(interval)} meses`;
-    interval = seconds / 86400;
+    let interval = seconds / 86400;
     if (interval > 1) return `hace ${Math.floor(interval)} días`;
     interval = seconds / 3600;
     if (interval > 1) return `hace ${Math.floor(interval)} horas`;
@@ -31,12 +28,20 @@ const MiniChart = ({ data, trend }: { data: number[], trend: string }) => {
     if (data.length <= 1) {
         return <div className="w-20 h-8 flex items-center justify-center"><div className="w-full h-0.5 bg-gray-600"></div></div>;
     }
-    return <div className="w-20 h-8 flex items-end space-x-0.5">{data.map((value, index) => { const height = range > 0 ? ((value - min) / range) * 100 : 50; return <div key={index} className={`w-1 ${trend === 'up' ? 'bg-green-400' : 'bg-red-400'} opacity-80`} style={{ height: `${Math.max(height, 10)}%` }} /> })}</div>;
+    return <div className="w-20 h-8 flex items-end space-x-0.5 justify-center">{data.map((value, index) => { const height = range > 0 ? ((value - min) / range) * 100 : 50; return <div key={index} className={`w-1 ${trend === 'up' ? 'bg-green-400' : 'bg-red-400'} opacity-80`} style={{ height: `${Math.max(height, 10)}%` }} /> })}</div>;
 };
 
 
 const TechRanking = () => {
     const { t } = useTranslation('common');
+    // ✅ 3. Añadimos el estado y la lógica para el modal
+    const [selectedProject, setSelectedProject] = useState<AuditData | null>(null);
+
+    const handleProjectSelect = (id: string) => {
+        const allAudits = getAllAudits();
+        const projectToDisplay = allAudits.find(p => p.reportId === id) || null;
+        setSelectedProject(projectToDisplay);
+    };
 
     const projects = useMemo(() => {
         const allAudits = getAllAudits();
@@ -47,7 +52,7 @@ const TechRanking = () => {
                 const lastScore = timelineScores[timelineScores.length - 1] || 0;
                 const prevScore = timelineScores[timelineScores.length - 2] || lastScore;
                 const change = lastScore - prevScore;
-                const trend = change >= 0 ? 'up' : 'down';
+                const trend = (change >= 0 ? 'up' : 'down') as 'up' | 'down';
                 const totalFindings = audit.findingsSummary.critical + audit.findingsSummary.high + audit.findingsSummary.medium + audit.findingsSummary.low;
                 return {
                     position: index + 1,
@@ -66,13 +71,17 @@ const TechRanking = () => {
     }, []);
 
     return (
-        <section id="ranking" className="py-20 relative bg-black" style={{
-            backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-        }}>
-            <div className="container mx-auto px-4">
+        <section
+            id="ranking"
+            className="py-20 relative bg-black"
+            style={{
+                backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed'
+            }}
+        >
+            <div className="w-full mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                         <span className="bg-gradient-to-r from-[#4F596196] to-foreground bg-clip-text text-transparent hero-title">
@@ -84,10 +93,10 @@ const TechRanking = () => {
                     </p>
                 </div>
 
-                <div className="max-w-[1400px] mx-auto">
-                    {/* Table Header */}
-                    <div className="bg-gray-900/50 backdrop-blur-lg   border-gray-800 p-6">
-                        <div className="grid grid-cols-2 md:grid-cols-7 gap-4 text-sm font-semibold text-gray-300 uppercase tracking-wider">
+                {/* ✅ 4. Cambiamos el ancho del contenedor */}
+                <div className="w-[90vw] mx-auto">
+                    <div className="bg-gray-900/50 backdrop-blur-lg border-gray-800 p-6">
+                        <div className="grid grid-cols-2 md:grid-cols-7 gap-4 text-sm font-semibold text-gray-300 uppercase tracking-wider text-center">
                             <div>#</div>
                             <div>Proyecto</div>
                             <div className="hidden md:block">Score</div>
@@ -98,76 +107,66 @@ const TechRanking = () => {
                         </div>
                     </div>
 
-                    {/* Table Content */}
-                    <div className="bg-gray-900/30 backdrop-blur-lg rounded-b-2xl border-transparent overflow-hidden">
+                    <div className="bg-gray-900/30 backdrop-blur-lg rounded-b-2xl border-transparent overflow-hidden text-center">
                         {projects.map((project, index) => (
-                            <Link
-                                href={`/cert/${project.reportId}`}
+                            // ✅ 5. Reemplazamos <Link> con un <div> y añadimos el onClick
+                            <div
                                 key={project.position}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`no-underline grid grid-cols-2 md:grid-cols-7 gap-4 p-6 items-center transition-all hover:bg-gray-800/30 cursor-pointer ${index !== projects.length - 1 ? 'border-b border-gray-800' : ''}`}
+                                onClick={() => handleProjectSelect(project.reportId)}
+                                className={`no-underline grid grid-cols-2 md:grid-cols-7 gap-4 p-6 items-center transition-all hover:bg-gray-800/30 cursor-pointer text-center ${index !== projects.length - 1 ? 'border-b border-gray-800' : ''}`}
                             >
-                                {/* Position */}
-                                <div className="flex items-center">
-                                    <Badge
-                                        variant="outline"
-                                        className={`text-sm font-bold ${project.position <= 3
-                                            ? 'border-yellow-500/50 text-yellow-400'
-                                            : 'border-gray-500/50 text-gray-300'
-                                            }`}
-                                    >
+                                <div className="flex items-center text-center items-center justify-center">
+                                    <Badge variant="outline" className={`text-sm font-bold ${project.position <= 3 ? 'border-yellow-400 text-yellow-400' : 'border-gray-300 text-gray-300'}`}>
                                         {project.position}
                                     </Badge>
                                 </div>
-
-                                {/* Project Name */}
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-3 justify-start">
                                     <img src={project.logo} alt={project.name} className="w-8 h-8 rounded-full" />
                                     <div>
-                                        <h3 className="text-white font-semibold text-[1.4rem]">{project.name}</h3>
+                                        <h3 className="text-white font-semibold text-[1.4rem] text-left">{project.name}</h3>
                                         <p className="text-gray-400 text-sm md:hidden">Score: {project.score}</p>
                                     </div>
                                 </div>
-
-                                {/* ... (resto de columnas sin cambios) ... */}
+                                {/* ... (resto de columnas) ... */}
                                 <div className="hidden md:block">
-                                    <div className="flex items-center space-x-2">
-                                        <span className="text-xl font-bold text-white">{project.score.toFixed(1)}</span>
-                                        {/* bg-gradient-to-r from-blue-500 to-purple-600 */}
-                                        <div className="w-12 h-2 bg-gray-700 rounded-full"><div className="h-full metalic rounded-full" style={{ width: `${project.score}%` }}></div></div>
+                                    <div className="flex items-center space-x-2 justify-center">
+                                        <span className="text-xl font-bold text-white ">{project.score.toFixed(1)}</span>
+                                        <div className="w-12 h-2 bg-[#09090B] rounded-full"><div className="h-full bg-gradient-to-r from-blue-600 to-[#55f7ed] rounded-full" style={{ width: `${project.score}%` }}></div></div>
                                     </div>
                                 </div>
                                 <div className="hidden md:flex items-center justify-center">
                                     <MiniChart data={project.chartData} trend={project.trend} />
                                 </div>
-                                <div className="hidden md:flex items-center space-x-1">
+                                <div className="hidden md:flex items-center space-x-1 justify-center">
                                     {project.trend === "up" ? <TrendingUp className="w-4 h-4 text-green-400" /> : <TrendingDown className="w-4 h-4 text-red-400" />}
                                     <span className={`font-semibold ${project.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>{project.change >= 0 ? '+' : ''}{project.change.toFixed(1)}</span>
                                 </div>
                                 <div className="hidden md:block">
                                     <span className="text-gray-300">{project.reviews}</span>
                                 </div>
-                                <div className="hidden md:flex items-center space-x-2">
+                                <div className="hidden md:flex items-center space-x-2 justify-center">
                                     <Clock className="w-4 h-4 text-gray-400" />
                                     <span className="text-gray-300 text-sm">{project.lastAudit}</span>
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
 
-                    {/* View More Button */}
                     <div className="text-center mt-8">
-                        <Link
-                            href="/audits"
-                            className="metalic-clasic metalic-clasic-hover text-white font-semibold px-8 py-3 rounded-lg transition-all no-underline"
-                        >
-                            {/* bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700  */}
+                        <Link href="/audits" className="metalic-clasic metalic-clasic-hover text-white font-semibold px-8 py-3 rounded-lg transition-all no-underline">
                             Ver todos los reportes
                         </Link>
                     </div>
                 </div>
             </div>
+
+            {/* ✅ 6. Añadimos el renderizado del modal */}
+            {selectedProject && (
+                <ProjectDetailView
+                    project={selectedProject}
+                    onClose={() => setSelectedProject(null)}
+                />
+            )}
         </section>
     );
 };

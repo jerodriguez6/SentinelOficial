@@ -128,7 +128,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                     {/* ✅ Botón de compartir con gradiente */}
                     <button
                         onClick={handleShare}
-                        className="bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center mt-4 md:mt-0"
+                        className="bg-gradient-to-r from-blue-400 to-[#55f7ed] hover:from-blue-500 hover:to-[#55f7ed] text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center mt-4 md:mt-0"
                     >
                         <ShareIcon className="h-5 w-5 mr-2" />
                         Compartir
@@ -145,13 +145,13 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                 {/* Veredicto */}
                 <section className="bg-sentinel-dark border border-gray-950 rounded-xl p-6 mb-8 shadow-lg">
                     {/* ✅ Título del veredicto con gradiente */}
-                    <h2 className="text-sm font-semibold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent uppercase tracking-wider mb-2">
+                    <h2 className="text-sm font-semibold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent uppercase tracking-wider mb-2">
                         Veredicto Final
                     </h2>
                     <div className="flex flex-col md:flex-row items-center gap-6">
                         <div className="text-center">
                             {/* ✅ Calificación (letra) con gradiente */}
-                            <p className="text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">{verdict.grade}</p>
+                            <p className="text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">{verdict.grade}</p>
                             <p className="text-2xl font-bold text-white">{verdict.score}/100</p>
                         </div>
                         <div className="flex-1">
