@@ -14,6 +14,7 @@ import { Provider } from "../components/ui/provider";
 // --- START next-i18next specific imports ---
 import { appWithTranslation } from 'next-i18next';
 import nextI18nConfig from '../next-i18next.config'; // Make sure this path is correct
+import { AuthProvider } from "@context/AuthContext";
 // --- END next-i18next specific imports ---
 
 function MyApp({ Component, pageProps }) {
@@ -24,13 +25,15 @@ function MyApp({ Component, pageProps }) {
         <title>SENTINEL IA</title>
       </Head>
       <ProviderAuth>
-        <AppWrapper>
-          <Provider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </Provider>
-        </AppWrapper>
+        <AuthProvider>
+          <AppWrapper>
+            <Provider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </Provider>
+          </AppWrapper>
+        </AuthProvider>
       </ProviderAuth>
     </>
   );

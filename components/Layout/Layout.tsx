@@ -7,6 +7,8 @@ import MarketStats from "@components/MarketStats";
 import Footer from '@components/Footer/Footer';
 import { useTranslation } from 'next-i18next';
 import WhatsApp from '@components/WhatsApp';
+import CryptoTicker from "@components/CryptoTicker";
+import Header from "@components/Header";
 
 // Se puede importar el NavBar dinámicamente, pero controlaremos su renderizado
 const DynamicNavBar = dynamic(() => import('@components/NavBar/NavBar'));
@@ -55,9 +57,13 @@ const Layout = ({ children }: LayoutProps) => {
       {isClient && (
         <>
           {/* <InfoBar messages={infoMessages} isVisible={isInfoBarVisible} /> */}
-          <MarketStats isVisible={isInfoBarVisible} />
+          {/* <MarketStats isVisible={isInfoBarVisible} />
           <DynamicNavBar isInfoBarVisible={isInfoBarVisible} />
-          <div className="h-24"></div>
+          <div className="h-24"></div> */}
+          <div className="sticky top-0 z-50">
+            <CryptoTicker />
+            <Header />
+          </div>
         </>
       )}
 

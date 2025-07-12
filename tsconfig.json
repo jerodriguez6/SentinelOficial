@@ -50,7 +50,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "context/CalculateABY.js"
+    "context/CalculateABY.js",
+    "components/context/AuthContext.jsx"
   ],
   "exclude": [
     "node_modules"
