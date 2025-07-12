@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Filter, TrendingUp, Plus } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
-import Layout from '@components/LayoutFeed';
+import CommunityLayout from '@components/Layout/CommunityLayout';
 import FeedPost from '@components/FeedPost';
 import LoginModal from '@components/LoginModal';
 import { useAuth } from '@context/AuthContext';
@@ -26,8 +26,8 @@ const FeedPage = () => {
     };
 
     return (
-        <Layout>
-            <div className="px-6 py-8">
+        <CommunityLayout>
+            <div className="px-6 py-8" >
                 {/* Header Section */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between mb-6">
@@ -117,7 +117,7 @@ const FeedPage = () => {
                 isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
             />
-        </Layout>
+        </CommunityLayout>
     );
 };
 

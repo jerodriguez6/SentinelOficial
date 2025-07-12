@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/global.css";
 import './index.css'
-import Layout from "@components/Layout/Layout";
+import Layout from "@components/Layout/AppLayout";
 import "semantic-ui-css/semantic.min.css";
 import { AppWrapper } from "../context/state";
 

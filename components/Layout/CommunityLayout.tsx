@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link'; // 1. Importar Link de Next.js
-import { useRouter } from 'next/router'; // 2. Importar useRouter de Next.js
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Home, Rocket, Radio, FileText, Bell, User, MoreHorizontal, Users, TrendingUp, Hash, UserPlus, Verified, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { useAuth } from '../context/AuthContext';
-import LoginModal from './LoginModal';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Button } from '../ui/button';
+import { useAuth } from '../../context/AuthContext';
+import LoginModal from '../LoginModal';
 
-const Layout = ({ children }) => {
+// Este componente ahora SOLO se encarga de la estructura de 3 columnas.
+const CommunityLayout = ({ children }) => {
     const router = useRouter();
-    const location = router.pathname;
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-
     const { isAuthenticated } = useAuth();
 
     const menuItems = [
@@ -29,22 +28,17 @@ const Layout = ({ children }) => {
 
     const isActive = (path) => router.pathname === path;
 
-    const handleLoginRequired = (e) => {
-        e.preventDefault();
-        if (!isAuthenticated) {
+    const handleLoginRequired = (e, path) => {
+        if (!isAuthenticated && (path === '/mypage' || path === '/notifications')) {
+            e.preventDefault();
             setIsLoginModalOpen(true);
         }
     };
 
-    // Check if mobile
     useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 1280); // xl breakpoint
-        };
-
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
         checkMobile();
         window.addEventListener('resize', checkMobile);
-
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
@@ -79,100 +73,48 @@ const Layout = ({ children }) => {
         }
     ];
 
-    const sidebarWidth = isSidebarMinimized ? 'w-16' : 'w-64';
-    const mainMargin = isSidebarMinimized ? 'ml-16' : 'ml-64';
+    const sidebarWidth = isSidebarMinimized ? 'lg:w-16' : 'lg:w-64';
+    const mainMargin = isSidebarMinimized ? 'lg:ml-16' : 'lg:ml-64';
 
     return (
-        <div className="flex min-h-screen" style={{ backgroundColor: 'rgb(9 9 11)' }}>
-            {/* Mobile Overlay */}
+        <div className="flex w-full  ">
             {isMobile && isMobileMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                />
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={() => setIsMobileMenuOpen(false)} />
             )}
 
-            {/* Left Sidebar - Community Navigation */}
-            <div className={`${isMobile
-                ? `fixed left-0 top-24 h-full z-50 transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-                } w-64`
-                : `${sidebarWidth} fixed left-0 top-24 h-full z-30 transition-all duration-300`
-                } bg-[#09090B] border-r border-zinc-800`}>
-                <div className="p-4">
-                    {/* Community Header */}
+            {/* Left Sidebar */}
+            <aside className={`${isMobile
+                ? `fixed left-0 top-0 h-full z-50 transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-64`
+                : `${sidebarWidth} fixed top-24 h-[calc(100vh-6rem)] transition-all duration-300 w-64`} 
+  bg-[#09090B] border-r border-zinc-800`}
+            >                <div className="p-4">
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center space-x-2">
-                            <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-                                <Users className="w-4 h-4 text-white" />
-                            </div>
-                            {(!isSidebarMinimized || isMobile) && (
-                                <h2 className="text-white font-semibold text-lg">COMMUNITY</h2>
-                            )}
+                            <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center"> <Users className="w-4 h-4 text-white" /> </div>
+                            {(!isSidebarMinimized || isMobile) && <h2 className="text-white font-semibold text-lg">COMMUNITY</h2>}
                         </div>
-
-                        {/* Mobile close button */}
-                        {isMobile && (
-                            <button
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="p-2 hover:bg-zinc-800 rounded-full transition-colors"
-                            >
-                                <X className="w-5 h-5 text-slate-400" />
-                            </button>
-                        )}
-
-                        {/* Desktop minimize button */}
-                        {!isMobile && (
-                            <button
-                                onClick={() => setIsSidebarMinimized(!isSidebarMinimized)}
-                                className="p-2 hover:bg-zinc-800 rounded-full transition-colors"
-                            >
-                                {isSidebarMinimized ?
-                                    <ChevronRight className="w-5 h-5 text-slate-400" /> :
-                                    <ChevronLeft className="w-5 h-5 text-slate-400" />
-                                }
-                            </button>
-                        )}
+                        {isMobile && <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-zinc-800 rounded-full"><X className="w-5 h-5 text-slate-400" /></button>}
+                        {!isMobile && <button onClick={() => setIsSidebarMinimized(!isSidebarMinimized)} className="p-2 hover:bg-zinc-800 rounded-full">{isSidebarMinimized ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}</button>}
                     </div>
-
-                    {/* Menu Items */}
                     <nav className="space-y-2">
                         {menuItems.map((item) => (
-                            <Link
-                                key={item.id}
-                                href={item.path}
-                                onClick={(item.id === 'mypage' || item.id === 'notifications') ? handleLoginRequired : undefined}
-                                className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-colors group ${isActive(item.path)
-                                    ? 'bg-gradient-to-r from-orange-500/20 to-red-600/20 text-orange-400 border-l-4 border-orange-500'
-                                    : 'text-slate-400 hover:text-white hover:bg-zinc-800'
-                                    } ${isSidebarMinimized && !isMobile ? 'justify-center' : ''}`}
-                                title={isSidebarMinimized && !isMobile ? item.name : undefined}
-                            >
-                                <item.icon className={`w-5 h-5 ${isActive(item.path) ? 'text-orange-400' : 'text-slate-500 group-hover:text-white'
-                                    }`} />
-                                {(!isSidebarMinimized || isMobile) && (
-                                    <span className="font-medium">{item.name}</span>
-                                )}
+                            <Link key={item.id} href={item.path} onClick={(e) => handleLoginRequired(e, item.path)} className={`flex items-center space-x-3 px-3 py-3 rounded-lg group ${isActive(item.path) ? 'bg-gradient-to-r from-orange-500/20 to-red-600/20 text-orange-400 border-l-4 border-orange-500' : 'text-slate-400 hover:text-white hover:bg-zinc-800'} ${isSidebarMinimized && !isMobile ? 'justify-center' : ''}`} title={isSidebarMinimized && !isMobile ? item.name : undefined}>
+                                <item.icon className={`w-5 h-5 ${isActive(item.path) ? 'text-orange-400' : 'text-slate-500 group-hover:text-white'}`} />
+                                {(!isSidebarMinimized || isMobile) && <span className="font-medium">{item.name}</span>}
                             </Link>
                         ))}
                     </nav>
                 </div>
-            </div>
+            </aside>
 
-            {/* Main Content */}
-            <div className={`flex-1 ${isMobile ? 'ml-0' : mainMargin} ${isMobile ? 'mr-0' : 'mr-0 xl:mr-80'} transition-all duration-300`}>
-                {/* Mobile menu button */}
-                {isMobile && (
-                    <button
-                        onClick={() => setIsMobileMenuOpen(true)}
-                        className="fixed top-28 left-4 z-30 p-2 bg-zinc-800 rounded-full border border-zinc-700 hover:bg-zinc-700 transition-colors"
-                    >
-                        <Users className="w-5 h-5 text-white" />
-                    </button>
-                )}
-
+            {/* Main Content (ocupa el espacio restante) */}
+            <div className={`flex-1 ${mainMargin} lg:mr-80 transition-all duration-300`}>
+                {isMobile && <button onClick={() => setIsMobileMenuOpen(true)} className="fixed top-28 left-4 z-30 p-2 bg-zinc-800 rounded-full"><Users className="w-5 h-5 text-white" /></button>}
+                {/* Aquí se renderizará el contenido específico de la página (Feed, etc.) */}
                 {children}
             </div>
 
+            {/* Right Sidebar */}
             {/* Right Sidebar - Trending & Recommendations - Hidden on Mobile */}
             {!isMobile && (
                 <div className="w-80 bg-[#09090B] border-l border-zinc-800 fixed right-0 top-24 h-full overflow-y-auto z-30">
@@ -277,13 +219,10 @@ const Layout = ({ children }) => {
                 </div>
             )}
 
-            {/* Login Modal */}
-            <LoginModal
-                isOpen={isLoginModalOpen}
-                onClose={() => setIsLoginModalOpen(false)}
-            />
+
+            <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
         </div>
     );
 };
 
-export default Layout;
+export default CommunityLayout;
