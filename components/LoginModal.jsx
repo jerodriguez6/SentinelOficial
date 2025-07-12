@@ -74,7 +74,7 @@ const LoginModal = ({ isOpen, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <Card className="bg-zinc-900 border-zinc-800 w-full max-w-md">
+            <Card className="bg-[#09090B] border-zinc-800 w-full max-w-md">
                 <CardHeader className="relative">
                     <button
                         onClick={onClose}
@@ -128,7 +128,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                             <div className="w-full border-t border-zinc-700"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="bg-zinc-900 px-2 text-slate-400">o</span>
+                            <span className="bg-[#09090B] px-2 text-slate-400">o</span>
                         </div>
                     </div>
 

@@ -15,7 +15,7 @@ const FeedPost = ({ post }) => {
     };
 
     return (
-        <Card className="bg-zinc-800 border-zinc-700 hover:border-zinc-600 transition-all duration-300 group">
+        <Card className="bg-white/5 border-zinc-700 hover:border-zinc-600 transition-all duration-300 group">
             <CardContent className="p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">

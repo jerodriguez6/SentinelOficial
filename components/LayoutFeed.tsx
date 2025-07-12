@@ -97,7 +97,7 @@ const Layout = ({ children }) => {
                 ? `fixed left-0 top-24 h-full z-50 transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
                 } w-64`
                 : `${sidebarWidth} fixed left-0 top-24 h-full z-30 transition-all duration-300`
-                } bg-zinc-900 border-r border-zinc-800`}>
+                } bg-[#09090B] border-r border-zinc-800`}>
                 <div className="p-4">
                     {/* Community Header */}
                     <div className="flex items-center justify-between mb-6">
@@ -175,10 +175,10 @@ const Layout = ({ children }) => {
 
             {/* Right Sidebar - Trending & Recommendations - Hidden on Mobile */}
             {!isMobile && (
-                <div className="w-80 bg-zinc-900 border-l border-zinc-800 fixed right-0 top-24 h-full overflow-y-auto z-30">
+                <div className="w-80 bg-[#09090B] border-l border-zinc-800 fixed right-0 top-24 h-full overflow-y-auto z-30">
                     <div className="p-6 space-y-6">
                         {/* Trending Topics */}
-                        <Card className="bg-zinc-800 border-zinc-700">
+                        <Card className="bg-white/5 border-zinc-700">
                             <CardHeader>
                                 <CardTitle className="flex items-center space-x-2 text-white">
                                     <TrendingUp className="w-5 h-5 text-orange-400" />
@@ -211,7 +211,7 @@ const Layout = ({ children }) => {
                         </Card>
 
                         {/* Recommended Accounts */}
-                        <Card className="bg-zinc-800 border-zinc-700">
+                        <Card className="bg-white/5 border-zinc-700">
                             <CardHeader>
                                 <CardTitle className="flex items-center space-x-2 text-white">
                                     <Users className="w-5 h-5 text-orange-400" />
