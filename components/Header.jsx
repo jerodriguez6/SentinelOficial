@@ -18,7 +18,7 @@ const Header = () => {
         { name: 'Tech MarketCap', href: '#', icon: TrendingUp },
         { name: 'Auditorías', href: '/audits', icon: Shield },
         { name: 'Exchanges', href: '#' },
-        { name: 'Community', href: 'feed', active: true },
+        { name: 'Community', href: 'Feed', active: true },
     ];
 
     const handleLoginClick = () => {
