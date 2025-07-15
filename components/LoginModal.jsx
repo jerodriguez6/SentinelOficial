@@ -74,15 +74,15 @@ const LoginModal = ({ isOpen, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <Card className="bg-[#09090B] border-zinc-800 w-full max-w-md">
+            <Card className="bg-black border border-aqua-blue w-full max-w-md">
                 <CardHeader className="relative">
                     <button
                         onClick={onClose}
-                        className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
+                        className="absolute right-4 top-4 text-aqua-blue/70 hover:text-aqua-light transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
-                    <CardTitle className="text-white text-center">
+                    <CardTitle className="professional-title text-center">
                         {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
                     </CardTitle>
                 </CardHeader>
@@ -93,11 +93,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                         <Button
                             onClick={handleGoogleLogin}
                             variant="outline"
-                            className="w-full border-zinc-700 text-white hover:bg-zinc-800"
-                            style={{
-                                backgroundColor: '#1B1D23',
-                                backgroundImage: 'linear-gradient(90deg, #4F5961, #1B1D23)',
-                            }}
+                            className="w-full border-aqua-blue text-aqua-blue hover:bg-aqua-blue/10 hover:text-aqua-light bg-black"
                         >
                             <div className="flex items-center space-x-2">
                                 <div className="w-5 h-5 bg-gradient-to-r from-blue-500 to-red-500 rounded-full flex items-center justify-center">
@@ -111,11 +107,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                             onClick={handleWalletConnect}
                             variant="outline"
                             disabled={isConnecting}
-                            className="w-full border-zinc-700 text-white hover:bg-zinc-800"
-                            style={{
-                                backgroundColor: '#1B1D23',
-                                backgroundImage: 'linear-gradient(90deg, #4F5961, #1B1D23)',
-                            }}
+                            className="w-full border-aqua-blue text-aqua-blue hover:bg-aqua-blue/10 hover:text-aqua-light bg-black"
                         >
                             <Wallet className="w-5 h-5 mr-2" />
                             {isConnecting ? 'Conectando...' : 'Conectar Wallet'}
@@ -125,25 +117,25 @@ const LoginModal = ({ isOpen, onClose }) => {
                     {/* Divider */}
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-zinc-700"></div>
+                            <div className="w-full border-t border-aqua-blue"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="bg-[#09090B] px-2 text-slate-400">o</span>
+                            <span className="bg-black px-2 text-aqua-blue/70">o</span>
                         </div>
                     </div>
 
                     {/* Email Form */}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-aqua-blue/70 mb-2">
                                 Correo electrónico
                             </label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-aqua-blue/70" />
                                 <Input
                                     type="email"
                                     placeholder="tu@email.com"
-                                    className="pl-10 bg-zinc-800 border-zinc-700 text-white placeholder-slate-400"
+                                    className="pl-10 bg-gray-900/50 border-aqua-blue text-aqua-blue placeholder-aqua-blue/60"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     required
@@ -152,14 +144,14 @@ const LoginModal = ({ isOpen, onClose }) => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                            <label className="block text-sm font-medium text-aqua-blue/70 mb-2">
                                 Contraseña
                             </label>
                             <div className="relative">
                                 <Input
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="••••••••"
-                                    className="pr-10 bg-zinc-800 border-zinc-700 text-white placeholder-slate-400"
+                                    className="pr-10 bg-gray-900/50 border-aqua-blue text-aqua-blue placeholder-aqua-blue/60"
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                     required
@@ -167,7 +159,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white"
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-aqua-blue/70 hover:text-aqua-light"
                                 >
                                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                 </button>
@@ -176,13 +168,13 @@ const LoginModal = ({ isOpen, onClose }) => {
 
                         {!isLogin && (
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                <label className="block text-sm font-medium text-aqua-blue/70 mb-2">
                                     Confirmar contraseña
                                 </label>
                                 <Input
                                     type="password"
                                     placeholder="••••••••"
-                                    className="bg-zinc-800 border-zinc-700 text-white placeholder-slate-400"
+                                    className="bg-gray-900/50 border-aqua-blue text-aqua-blue placeholder-aqua-blue/60"
                                     value={formData.confirmPassword}
                                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                                     required
@@ -192,11 +184,7 @@ const LoginModal = ({ isOpen, onClose }) => {
 
                         <Button
                             type="submit"
-                            className="w-full text-white"
-                            style={{
-                                backgroundColor: '#1B1D23',
-                                backgroundImage: 'linear-gradient(90deg, #4F5961, #1B1D23)',
-                            }}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                         >
                             {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
                         </Button>
@@ -206,7 +194,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                     <div className="text-center">
                         <button
                             onClick={() => setIsLogin(!isLogin)}
-                            className="text-blue-400 hover:text-blue-300 text-sm"
+                            className="text-aqua-blue hover:text-aqua-light text-sm"
                         >
                             {isLogin ? '¿No tienes cuenta? Regístrate' : '¿Ya tienes cuenta? Inicia sesión'}
                         </button>

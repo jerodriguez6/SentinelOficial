@@ -15,30 +15,30 @@ const FeedPost = ({ post }) => {
     };
 
     return (
-        <Card className="bg-white/5 border-zinc-700 hover:border-zinc-600 transition-all duration-300 group">
+        <Card className="bg-black border-aqua-blue hover:border-aqua-blue transition-all duration-300 group card-hover">
             <CardContent className="p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+                        <div className="w-10 h-10 bg-gradient-to-r from-aqua-blue to-neon-cyan rounded-full flex items-center justify-center shadow-neon">
                             <span className="text-white font-medium">
                                 {post.author.charAt(0).toUpperCase()}
                             </span>
                         </div>
                         <div>
                             <div className="flex items-center space-x-2">
-                                <span className="text-white font-medium">{post.author}</span>
+                                <span className="neon-text font-medium">{post.author}</span>
                                 {post.verified && (
-                                    <div className="w-4 h-4 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+                                    <div className="w-4 h-4 bg-gradient-to-r from-aqua-blue to-neon-cyan rounded-full flex items-center justify-center shadow-neon">
                                         <span className="text-white text-xs">✓</span>
                                     </div>
                                 )}
-                                <span className="text-slate-400 text-sm">@{post.handle}</span>
+                                <span className="text-aqua-blue/70 text-sm">@{post.handle}</span>
                             </div>
-                            <div className="flex items-center space-x-2 text-sm text-slate-400">
+                            <div className="flex items-center space-x-2 text-sm text-aqua-blue/70">
                                 <span>{post.timestamp}</span>
                                 <span>•</span>
-                                <Badge variant="outline" className="text-xs border-zinc-600 text-slate-400">
+                                <Badge variant="outline" className="text-xs border-aqua-blue text-aqua-blue bg-aqua-blue/5">
                                     {post.type}
                                 </Badge>
                             </div>
@@ -50,40 +50,40 @@ const FeedPost = ({ post }) => {
                         <Button
                             size="sm"
                             onClick={handleFollow}
-                            className={`text-white text-xs px-4 py-1 transition-colors ${isFollowing
-                                ? 'bg-zinc-600 hover:bg-zinc-700'
-                                : 'bg-blue-600 hover:bg-blue-700'
+                            className={`text-xs px-4 py-1 transition-all duration-300 ${isFollowing
+                                ? 'bg-gray-600 hover:bg-gray-700 text-white'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white'
                                 }`}
                         >
                             <UserPlus className="w-3 h-3 mr-1" />
                             {isFollowing ? 'Following' : 'Follow'}
                         </Button>
 
-                        <button className="p-2 hover:bg-zinc-700 rounded-full transition-colors">
-                            <MoreHorizontal className="w-4 h-4 text-slate-400" />
+                        <button className="p-2 hover:bg-aqua-blue/10 rounded-full transition-all duration-300 text-aqua-blue hover:text-neon-cyan">
+                            <MoreHorizontal className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
 
                 {/* Content */}
                 <div className="mb-4">
-                    <p className="text-white text-base leading-relaxed mb-3">
+                    <p className="neon-text text-base leading-relaxed mb-3">
                         {post.content}
                     </p>
 
                     {/* Chart/Image */}
                     {post.image && (
-                        <div className="relative overflow-hidden rounded-lg mb-3">
+                        <div className="relative overflow-hidden rounded-lg mb-3 border border-aqua-blue">
                             <img
                                 src={post.image}
                                 alt={post.title}
                                 className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                             {post.chartData && (
-                                <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                                <div className="absolute top-4 left-4 glass-effect px-3 py-1 rounded-full border border-aqua-blue">
                                     <div className="flex items-center space-x-2">
-                                        <TrendingUp className="w-4 h-4 text-green-400" />
-                                        <span className="text-white text-sm font-medium">{post.chartData}</span>
+                                        <TrendingUp className="w-4 h-4 text-neon-cyan" />
+                                        <span className="neon-text text-sm font-medium">{post.chartData}</span>
                                     </div>
                                 </div>
                             )}
@@ -96,7 +96,7 @@ const FeedPost = ({ post }) => {
                             <Badge
                                 key={index}
                                 variant="outline"
-                                className="text-xs border-zinc-600 text-slate-300 hover:border-orange-500 hover:text-orange-400 transition-colors cursor-pointer"
+                                className="text-xs border-aqua-blue text-aqua-blue hover:border-neon-cyan hover:text-neon-cyan transition-all duration-300 cursor-pointer bg-aqua-blue/5 hover:bg-aqua-blue/10"
                             >
                                 #{tag}
                             </Badge>
@@ -106,48 +106,49 @@ const FeedPost = ({ post }) => {
 
                 {/* Metrics */}
                 {post.metrics && (
-                    <div className="bg-zinc-700/50 rounded-lg p-3 mb-4">
+                    <div className="bg-gray-900/50 rounded-lg p-3 mb-4  border-aqua-blue">
                         <div className="grid grid-cols-2 gap-4 text-sm">
                             <div>
-                                <span className="text-slate-400">Price: </span>
-                                <span className="text-white font-medium">{post.metrics.price}</span>
+                                <span className="text-aqua-blue/70">Price: </span>
+                                <span className="professional-text font-medium">{post.metrics.price}</span>
                             </div>
                             <div>
-                                <span className="text-slate-400">24h Change: </span>
-                                <span className={`font-medium ${post.metrics.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`}>
+                                <span className="text-aqua-blue/70">24h Change: </span>
+                                <span className={`font-medium ${post.metrics.change.startsWith('+') ? 'text-green-400' : 'text-red-400'}`} style={{ textShadow: post.metrics.change.startsWith('+') ? '0 0 10px #4ade80' : '0 0 10px #ef4444' }}>
                                     {post.metrics.change}
                                 </span>
                             </div>
                             <div>
-                                <span className="text-slate-400">Volume: </span>
-                                <span className="text-white font-medium">{post.metrics.volume}</span>
+                                <span className="text-aqua-blue/70">Volume: </span>
+                                <span className="professional-text font-medium">{post.metrics.volume}</span>
                             </div>
                             <div>
-                                <span className="text-slate-400">Market Cap: </span>
-                                <span className="text-white font-medium">{post.metrics.marketCap}</span>
+                                <span className="text-aqua-blue/70">Market Cap: </span>
+                                <span className="professional-text font-medium">{post.metrics.marketCap}</span>
                             </div>
                         </div>
                     </div>
                 )}
 
                 {/* Actions */}
-                <div className="flex items-center justify-between border-t border-zinc-700 pt-4">
+                <div className="flex items-center justify-between border-tpt-4">
                     <div className="flex items-center space-x-6">
                         <button
                             onClick={() => setIsLiked(!isLiked)}
-                            className={`flex items-center space-x-2 hover:text-red-400 transition-colors ${isLiked ? 'text-red-400' : 'text-slate-400'
+                            className={`flex items-center space-x-2 transition-all duration-300 ${isLiked ? 'text-red-400' : 'text-aqua-blue hover:text-red-400'
                                 }`}
+                            style={{ textShadow: isLiked ? '0 0 10px #ef4444' : '0 0 5px currentColor' }}
                         >
                             <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
                             <span className="text-sm">{post.likes}</span>
                         </button>
 
-                        <button className="flex items-center space-x-2 text-slate-400 hover:text-orange-400 transition-colors">
+                        <button className="flex items-center space-x-2 text-aqua-blue hover:text-neon-cyan transition-all duration-300" style={{ textShadow: '0 0 5px currentColor' }}>
                             <MessageCircle className="w-4 h-4" />
                             <span className="text-sm">{post.comments}</span>
                         </button>
 
-                        <button className="flex items-center space-x-2 text-slate-400 hover:text-green-400 transition-colors">
+                        <button className="flex items-center space-x-2 text-aqua-blue hover:text-green-400 transition-all duration-300" style={{ textShadow: '0 0 5px currentColor' }}>
                             <Share2 className="w-4 h-4" />
                             <span className="text-sm">{post.shares}</span>
                         </button>
@@ -155,8 +156,9 @@ const FeedPost = ({ post }) => {
 
                     <button
                         onClick={() => setIsBookmarked(!isBookmarked)}
-                        className={`p-2 hover:bg-zinc-700 rounded-full transition-colors ${isBookmarked ? 'text-yellow-400' : 'text-slate-400'
+                        className={`p-2 hover:bg-aqua-blue/10 rounded-full transition-all duration-300 ${isBookmarked ? 'text-neon-cyan' : 'text-aqua-blue'
                             }`}
+                        style={{ textShadow: '0 0 5px currentColor' }}
                     >
                         <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
                     </button>

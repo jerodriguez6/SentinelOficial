@@ -27,7 +27,7 @@ const FeedPage = () => {
 
     return (
         <CommunityLayout>
-            <div className="px-6 py-8" >
+            <div className="px-6 py-8">
                 {/* Header Section */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between mb-6">
@@ -55,10 +55,10 @@ const FeedPage = () => {
                     {/* Filters */}
                     <div className="flex flex-wrap items-center gap-4 mb-6">
                         <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-                            <SelectTrigger className="w-40 bg-zinc-800 border-zinc-700 text-white">
+                            <SelectTrigger className="w-40 bg-zinc-800 border-aqua-blue text-aqua-blue">
                                 <SelectValue placeholder="Filtros" />
                             </SelectTrigger>
-                            <SelectContent className="bg-zinc-800 border-zinc-700">
+                            <SelectContent className="bg-zinc-800 border-aqua-blue text-aqua-blue">
                                 <SelectItem value="all">Todos</SelectItem>
                                 <SelectItem value="analysis">Análisis</SelectItem>
                                 <SelectItem value="news">Noticias</SelectItem>
@@ -68,10 +68,10 @@ const FeedPage = () => {
                         </Select>
 
                         <Select value={sortBy} onValueChange={setSortBy}>
-                            <SelectTrigger className="w-40 bg-zinc-800 border-zinc-700 text-white">
+                            <SelectTrigger className="w-40 bg-zinc-800 border-aqua-blue  text-aqua-blue">
                                 <SelectValue placeholder="Ordenar" />
                             </SelectTrigger>
-                            <SelectContent className="bg-zinc-800 border-zinc-700">
+                            <SelectContent className="bg-zinc-800 border-zinc-700 text-aqua-blue">
                                 <SelectItem value="recent">Más Recientes</SelectItem>
                                 <SelectItem value="popular">Más Populares</SelectItem>
                                 <SelectItem value="trending">Trending</SelectItem>

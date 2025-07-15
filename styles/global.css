@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --aqua-blue: 174 72% 56%;
+}
+
+
 
 body {
   margin: 0;

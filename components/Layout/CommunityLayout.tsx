@@ -17,18 +17,18 @@ const CommunityLayout = ({ children }) => {
     const { isAuthenticated } = useAuth();
 
     const menuItems = [
-        { id: 'feed', name: 'Feed', icon: Home, path: '/' },
-        { id: 'launchpad', name: 'Launchpad', icon: Rocket, path: '/launchpad' },
+        { id: 'feed', name: 'Feed', icon: Home, path: '/feed' },
+        { id: 'launchpad', name: 'Launchpad', icon: Rocket, path: '#' },
         { id: 'lives', name: 'Lives', icon: Radio, path: '/lives' },
         { id: 'articles', name: 'Articles', icon: FileText, path: '/articles' },
-        { id: 'notifications', name: 'Notifications', icon: Bell, path: '/notifications' },
-        { id: 'mypage', name: 'My Page', icon: User, path: '/mypage' },
-        { id: 'more', name: 'More', icon: MoreHorizontal, path: '/more' },
+        { id: 'notifications', name: 'Notifications', icon: Bell, path: '/#' },
+        { id: 'mypage', name: 'My Page', icon: User, path: '/#' },
+        { id: 'more', name: 'More', icon: MoreHorizontal, path: '/#' },
     ];
 
     const isActive = (path) => router.pathname === path;
 
-    const handleLoginRequired = (e, path) => {
+    const handleLoginRequired = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
         if (!isAuthenticated && (path === '/mypage' || path === '/notifications')) {
             e.preventDefault();
             setIsLoginModalOpen(true);
@@ -83,29 +83,81 @@ const CommunityLayout = ({ children }) => {
             )}
 
             {/* Left Sidebar */}
-            <aside className={`${isMobile
-                ? `fixed left-0 top-0 h-full z-50 transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} w-64`
-                : `${sidebarWidth} fixed top-24 h-[calc(100vh-6rem)] transition-all duration-300 w-64`} 
-  bg-[#09090B] border-r border-zinc-800`}
-            >                <div className="p-4">
+            <div className={`${isMobile
+                ? `fixed left-0 top-24 h-full z-50 transform transition-transform duration-300 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+                } w-64`
+                : `${sidebarWidth} fixed left-0 top-24 h-full z-30 transition-all duration-300`
+                } bg-black border-r border-aqua-blue`} style={{ borderRightColor: 'rgba(64, 224, 208, 0.3)' }}>
+                <div className="p-4">
+                    {/* Community Header */}
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center space-x-2">
-                            <div className="w-6 h-6 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center"> <Users className="w-4 h-4 text-white" /> </div>
-                            {(!isSidebarMinimized || isMobile) && <h2 className="text-white font-semibold text-lg">COMMUNITY</h2>}
+                            <div className="w-6 h-6 bg-gradient-to-r from-aqua-blue to-aqua-light rounded-full flex items-center justify-center shadow-aqua">
+                                <Users className="w-4 h-4 text-white" />
+                            </div>
+                            {(!isSidebarMinimized || isMobile) && (
+                                <h2 className="professional-title text-lg font-semibold">COMMUNITY</h2>
+                            )}
                         </div>
-                        {isMobile && <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 hover:bg-zinc-800 rounded-full"><X className="w-5 h-5 text-slate-400" /></button>}
-                        {!isMobile && <button onClick={() => setIsSidebarMinimized(!isSidebarMinimized)} className="p-2 hover:bg-zinc-800 rounded-full">{isSidebarMinimized ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}</button>}
+
+                        {/* Mobile close button */}
+                        {isMobile && (
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="p-2 hover:bg-aqua-blue/10 rounded-full transition-all duration-300 text-aqua-blue hover:text-aqua-light"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        )}
+
+                        {/* Desktop minimize button */}
+                        {!isMobile && (
+                            <button
+                                onClick={() => setIsSidebarMinimized(!isSidebarMinimized)}
+                                className="p-2 hover:bg-aqua-blue/10 rounded-full transition-all duration-300 text-aqua-blue hover:text-aqua-light"
+                            >
+                                {isSidebarMinimized ?
+                                    <ChevronRight className="w-5 h-5" /> :
+                                    <ChevronLeft className="w-5 h-5" />
+                                }
+                            </button>
+                        )}
                     </div>
+
+                    {/* Menu Items */}
                     <nav className="space-y-2">
                         {menuItems.map((item) => (
-                            <Link key={item.id} href={item.path} onClick={(e) => handleLoginRequired(e, item.path)} className={`flex items-center space-x-3 px-3 py-3 rounded-lg group ${isActive(item.path) ? 'bg-gradient-to-r from-orange-500/20 to-red-600/20 text-orange-400 border-l-4 border-orange-500' : 'text-slate-400 hover:text-white hover:bg-zinc-800'} ${isSidebarMinimized && !isMobile ? 'justify-center' : ''}`} title={isSidebarMinimized && !isMobile ? item.name : undefined}>
-                                <item.icon className={`w-5 h-5 ${isActive(item.path) ? 'text-orange-400' : 'text-slate-500 group-hover:text-white'}`} />
-                                {(!isSidebarMinimized || isMobile) && <span className="font-medium">{item.name}</span>}
+                            <Link
+                                key={item.id}
+                                href={item.path}
+                                onClick={(e) =>
+                                    (item.id === 'mypage' || item.id === 'notifications') &&
+                                    handleLoginRequired(e, item.path)}
+                                className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-300 group relative ${isActive(item.path)
+                                    ? 'bg-gradient-to-r from-aqua-blue/20 to-aqua-light/10 text-aqua-light border-l-4 border-aqua-blue shadow-aqua'
+                                    : 'text-aqua-blue hover:text-aqua-light hover:bg-aqua-blue/10 hover:border-l-4 hover:border-aqua-blue/50'
+                                    } ${isSidebarMinimized && !isMobile ? 'justify-center' : ''}`}
+                                title={isSidebarMinimized && !isMobile ? item.name : undefined}
+                            >
+                                {/* Indicador de selección activa */}
+                                {isActive(item.path) && (
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-aqua-light to-aqua-blue rounded-r-lg"></div>
+                                )}
+                                <item.icon className={`w-5 h-5 ${isActive(item.path) ? 'text-aqua-light' : 'text-aqua-blue group-hover:text-aqua-light'
+                                    }`} />
+                                {(!isSidebarMinimized || isMobile) && (
+                                    <span className={`font-medium ${isActive(item.path) ? 'text-aqua-light font-semibold' : ''
+                                        }`}>{item.name}</span>
+                                )}
+                                {/* Punto indicador para sidebar minimizado */}
+                                {isActive(item.path) && isSidebarMinimized && !isMobile && (
+                                    <div className="absolute -right-1 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-aqua-light rounded-full"></div>
+                                )}
                             </Link>
                         ))}
                     </nav>
                 </div>
-            </aside>
+            </div>
 
             {/* Main Content (ocupa el espacio restante) */}
             <div className={`flex-1 ${mainMargin} lg:mr-80 transition-all duration-300`}>
@@ -117,13 +169,13 @@ const CommunityLayout = ({ children }) => {
             {/* Right Sidebar */}
             {/* Right Sidebar - Trending & Recommendations - Hidden on Mobile */}
             {!isMobile && (
-                <div className="w-80 bg-[#09090B] border-l border-zinc-800 fixed right-0 top-24 h-full overflow-y-auto z-30">
+                <div className="w-80 bg-black border-l border-aqua-blue fixed right-0 top-24 h-full overflow-y-auto z-30" style={{ borderLeftColor: 'rgba(64, 224, 208, 0.3)' }}>
                     <div className="p-6 space-y-6">
                         {/* Trending Topics */}
-                        <Card className="bg-white/5 border-zinc-700">
+                        <Card className="bg-black border-aqua-blue card-hover">
                             <CardHeader>
-                                <CardTitle className="flex items-center space-x-2 text-white">
-                                    <TrendingUp className="w-5 h-5 text-orange-400" />
+                                <CardTitle className="flex items-center space-x-2 professional-title">
+                                    <TrendingUp className="w-5 h-5 text-aqua-light" />
                                     <span>Trending Topics</span>
                                 </CardTitle>
                             </CardHeader>
@@ -131,20 +183,20 @@ const CommunityLayout = ({ children }) => {
                                 {trendingTopics.map((topic, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center justify-between p-3 rounded-lg bg-zinc-700/50 hover:bg-zinc-700 transition-colors cursor-pointer group"
+                                        className="flex items-center justify-between p-3 rounded-lg bg-gray-900/50 hover:bg-aqua-blue/10 transition-all duration-300 cursor-pointer group border border-transparent hover:border-aqua-blue"
                                     >
                                         <div className="flex items-center space-x-3">
-                                            <span className="text-slate-500 text-sm font-medium w-4">
+                                            <span className="text-aqua-blue text-sm font-medium w-4">
                                                 {index + 1}
                                             </span>
                                             <div className="flex items-center space-x-2">
-                                                <Hash className="w-4 h-4 text-slate-400 group-hover:text-orange-400 transition-colors" />
-                                                <span className="text-slate-300 group-hover:text-white transition-colors">
+                                                <Hash className="w-4 h-4 text-aqua-blue group-hover:text-aqua-light transition-colors" />
+                                                <span className="text-aqua-blue group-hover:text-aqua-light transition-colors">
                                                     {topic.name}
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className="text-slate-400 text-sm">
+                                        <div className="text-aqua-blue/70 text-sm">
                                             {topic.posts}
                                         </div>
                                     </div>
@@ -153,45 +205,41 @@ const CommunityLayout = ({ children }) => {
                         </Card>
 
                         {/* Recommended Accounts */}
-                        <Card className="bg-white/5 border-zinc-700">
+                        <Card className="bg-black border-aqua-blue card-hover">
                             <CardHeader>
-                                <CardTitle className="flex items-center space-x-2 text-white">
-                                    <Users className="w-5 h-5 text-orange-400" />
+                                <CardTitle className="flex items-center space-x-2 professional-title">
+                                    <Users className="w-5 h-5 text-aqua-light" />
                                     <span>Recommended Accounts</span>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 {recommendedAccounts.map((account, index) => (
-                                    <div key={index} className="border-b border-zinc-700 pb-4 last:border-0">
+                                    <div key={index} className="border-b  pb-4 last:border-0">
                                         {/* Account Header */}
                                         <div className="flex items-center justify-between mb-3">
                                             <div className="flex items-center space-x-3">
-                                                <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+                                                <div className="w-10 h-10 bg-gradient-to-r from-aqua-blue to-aqua-light rounded-full flex items-center justify-center shadow-aqua">
                                                     <span className="text-white font-medium">
                                                         {account.name.charAt(0).toUpperCase()}
                                                     </span>
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center space-x-1">
-                                                        <span className="text-white font-medium text-sm">
+                                                        <span className="professional-text font-medium text-sm">
                                                             {account.name}
                                                         </span>
                                                         {account.verified && (
-                                                            <Verified className="w-4 h-4 text-orange-400" />
+                                                            <Verified className="w-4 h-4 text-aqua-light" />
                                                         )}
                                                     </div>
-                                                    <span className="text-slate-400 text-xs">
+                                                    <span className="text-aqua-blue/70 text-xs">
                                                         @{account.handle}
                                                     </span>
                                                 </div>
                                             </div>
                                             <Button
                                                 size="sm"
-                                                className="text-white text-xs px-3 py-1"
-                                                style={{
-                                                    backgroundColor: '#1B1D23',
-                                                    backgroundImage: 'linear-gradient(90deg, #4F5961, #1B1D23)',
-                                                }}
+                                                className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1"
                                             >
                                                 <UserPlus className="w-3 h-3 mr-1" />
                                                 Follow
@@ -201,11 +249,11 @@ const CommunityLayout = ({ children }) => {
                                         {/* Recent Posts */}
                                         <div className="space-y-2">
                                             {account.recentPosts.map((post, postIndex) => (
-                                                <div key={postIndex} className="bg-zinc-700/30 rounded-lg p-2">
-                                                    <p className="text-slate-300 text-xs mb-1">
+                                                <div key={postIndex} className="bg-gray-900/50 rounded-lg p-2 border border-aqua-blue/20">
+                                                    <p className="text-aqua-blue text-xs mb-1">
                                                         {post.text}
                                                     </p>
-                                                    <span className="text-slate-500 text-xs">
+                                                    <span className="text-aqua-blue/60 text-xs">
                                                         {post.time}
                                                     </span>
                                                 </div>
