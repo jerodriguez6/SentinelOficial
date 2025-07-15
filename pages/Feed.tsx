@@ -8,6 +8,7 @@ import LoginModal from '@components/LoginModal';
 import { useAuth } from '@context/AuthContext';
 import { mockFeedPosts } from 'lib/mockData';
 
+
 const FeedPage = () => {
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [sortBy, setSortBy] = useState('recent');
