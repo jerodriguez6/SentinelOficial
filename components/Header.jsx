@@ -39,7 +39,7 @@ const Header = () => {
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/" className="flex items-center space-x-3 text-white hover:text-blue-400 transition-colors no-underline">
                                 <Image className="block" height={80} width={80} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
-                                <div className='hero-title text-white no-underline ml-2 text-lg sm:text-xl'>
+                                <div className="hero-title ml-2 text-lg sm:text-xl bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent no-underline">
                                     SENTINEL IA
                                 </div>
                             </Link>

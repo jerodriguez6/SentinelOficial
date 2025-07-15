@@ -94,7 +94,7 @@ const Hero = () => {
                     </div>
                     {/* from-blue-400 to-[#55f7ed] */}
                     <h1 className="text-white hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-                        <span className="bg-gradient-to-r from-[#4F596196] to-foreground  bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-blue-400 to-[#55f7ed]  bg-clip-text text-transparent">
                             Tech MarketCap
                         </span>
                     </h1>
