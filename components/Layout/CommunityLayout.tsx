@@ -17,7 +17,7 @@ const CommunityLayout = ({ children }) => {
     const { isAuthenticated } = useAuth();
 
     const menuItems = [
-        { id: 'feed', name: 'Feed', icon: Home, path: '/feed' },
+        { id: 'feed', name: 'Feed', icon: Home, path: '/Feed' },
         { id: 'launchpad', name: 'Launchpad', icon: Rocket, path: '#' },
         { id: 'lives', name: 'Lives', icon: Radio, path: '/lives' },
         { id: 'articles', name: 'Articles', icon: FileText, path: '/articles' },
