@@ -95,7 +95,7 @@ export default {
         'professional-blue': '#4A90E2',
         'professional-blue-light': '#6BA6F0',
         'professional-blue-dark': '#2E5F8A',
-        'aqua-blue': '#40E0D0',
+        'aqua-blue': '#55f7ed',
         'aqua-light': '#7FFFD4',
         'aqua-dark': '#20B2AA',
         'accent-blue': '#3B82F6',
@@ -103,7 +103,7 @@ export default {
         'card-bg': '#1a202c',
       },
       textColor: {
-        default: '#40E0D0',
+        default: '#55f7ed',
         title: '#4A90E2',
         accent: '#3B82F6',
       },

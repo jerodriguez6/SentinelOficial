@@ -84,7 +84,7 @@ const Articles = () => {
                 <div className="text-center mt-12">
                     <Button
                         size="lg"
-                        className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-8 py-3 rounded-lg font-medium transition-all hover:scale-105"
+                        className="bg-gradient-to-r from-blue-400 to-[#55f7ed] hover:from-orange-600 hover:to-red-700 text-white px-8 py-3 rounded-lg font-medium transition-all hover:scale-105"
                     >
                         Load More Articles
                     </Button>
