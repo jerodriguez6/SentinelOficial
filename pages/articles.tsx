@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link'; // ✅ 1. Importar Link de Next.js
 import { Filter } from 'lucide-react';
 import { Button } from '@components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select';
@@ -9,6 +10,9 @@ import { mockArticles } from 'lib/mockData';
 const Articles = () => {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [sortBy, setSortBy] = useState('newest');
+
+    // Aquí iría la lógica para filtrar y ordenar los mockArticles
+    // const displayedArticles = ...
 
     return (
         <Layout>
@@ -66,7 +70,13 @@ const Articles = () => {
                 {/* Articles Grid */}
                 <div className="space-y-6">
                     {mockArticles.map((article) => (
-                        <ArticleCard key={article.id} article={article} />
+                        // ✅ 2. Envolver cada tarjeta con el componente Link
+                        <Link key={article.id} href={`/post/${article.id}`} passHref>
+                            {/* ✅ 3. Añadir un div para el cursor y efectos de hover */}
+                            <div className="cursor-pointer transition-transform duration-300 ease-in-out hover:scale-[1.01]">
+                                <ArticleCard article={article} />
+                            </div>
+                        </Link>
                     ))}
                 </div>
 

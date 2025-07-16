@@ -1,16 +1,43 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from './ui/card';
-import { Badge } from './Badge';
-import { Eye, ThumbsUp, MessageCircle, Share2, Bookmark } from 'lucide-react';
-import ArticleDetailModal from './ArticleDetailModal';
+import { Badge } from './Badge'; // Asumo que el Badge viene de ui/badge
+import { Eye, ThumbsUp, MessageCircle, Share2, Bookmark, Heart } from 'lucide-react';
+// import ArticleDetailModal from './ArticleDetailModal'; // Asumo que tienes este componente
 
-const ArticleCard = ({ article }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+// Definimos el tipo para el objeto 'article' para que coincida con tus datos en lib/mockData.js
+type Article = {
+    id: number;
+    title: string;
+    excerpt: string; // Usamos 'excerpt' en lugar de 'description'
+    category: string;
+    author: {
+        name: string;
+        avatar: string;
+    };
+    stats: {
+        views: string;
+        comments: number;
+        likes: number;
+    };
+    timestamp: string;
+    image: string;
+    tags: string[];
+};
+
+
+const ArticleCard = ({ article }: { article: Article }) => {
+    // const [isModalOpen, setIsModalOpen] = useState(false); // Descomenta si usas el Modal
+
+    if (!article) {
+        return null;
+    }
 
     return (
         <>
             <Card className="bg-black border-aqua-blue/30 hover:border-aqua-blue/50 transition-all duration-300 hover:shadow-aqua card-hover group cursor-pointer">
-                <CardContent className="p-6" onClick={() => setIsModalOpen(true)}>
+                {/* Descomenta el onClick si vas a usar el modal */}
+                {/* <CardContent className="p-6" onClick={() => setIsModalOpen(true)}> */}
+                <CardContent className="p-6">
                     {/* Desktop Layout */}
                     <div className="hidden md:flex gap-6">
                         {/* Article Image */}
@@ -38,9 +65,9 @@ const ArticleCard = ({ article }) => {
                                 {article.title}
                             </h3>
 
-                            {/* Description */}
+                            {/* Description -> Excerpt */}
                             <p className="text-aqua-blue/70 text-sm mb-3 line-clamp-2">
-                                {article.description}
+                                {article.excerpt}
                             </p>
 
                             {/* Tags */}
@@ -59,14 +86,11 @@ const ArticleCard = ({ article }) => {
                             {/* Author and Stats */}
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
-                                    <div className="w-6 h-6 bg-gradient-to-r from-aqua-blue to-aqua-light rounded-full flex items-center justify-center">
-                                        <span className="text-white text-xs font-medium">
-                                            {article.author.charAt(0).toUpperCase()}
-                                        </span>
-                                    </div>
+                                    <img src={article.author.avatar} alt={article.author.name} className="w-6 h-6 rounded-full" />
                                     <div className="flex items-center space-x-2 text-sm text-aqua-blue/70">
                                         <span className="hover:text-aqua-light transition-colors cursor-pointer">
-                                            {article.author}
+                                            {/* ✅ CORRECCIÓN: Usar article.author.name */}
+                                            {article.author.name}
                                         </span>
                                         <span>•</span>
                                         <span>{article.timestamp}</span>
@@ -76,15 +100,18 @@ const ArticleCard = ({ article }) => {
                                 <div className="flex items-center space-x-4 text-sm text-aqua-blue/70">
                                     <div className="flex items-center space-x-1 hover:text-aqua-light transition-colors cursor-pointer">
                                         <Eye className="w-4 h-4" />
-                                        <span>{article.views}</span>
+                                        {/* ✅ CORRECCIÓN: Usar article.stats.views */}
+                                        <span>{article.stats.views}</span>
                                     </div>
                                     <div className="flex items-center space-x-1 hover:text-green-400 transition-colors cursor-pointer">
                                         <ThumbsUp className="w-4 h-4" />
-                                        <span>{article.likes}</span>
+                                        {/* ✅ CORRECCIÓN: Usar article.stats.likes */}
+                                        <span>{article.stats.likes}</span>
                                     </div>
                                     <div className="flex items-center space-x-1 hover:text-yellow-400 transition-colors cursor-pointer">
                                         <MessageCircle className="w-4 h-4" />
-                                        <span>{article.comments}</span>
+                                        {/* ✅ CORRECCIÓN: Usar article.stats.comments */}
+                                        <span>{article.stats.comments}</span>
                                     </div>
                                     <button className="p-1 hover:text-aqua-light transition-colors">
                                         <Share2 className="w-4 h-4" />
@@ -124,9 +151,9 @@ const ArticleCard = ({ article }) => {
                                 {article.title}
                             </h3>
 
-                            {/* Description */}
+                            {/* Description -> Excerpt */}
                             <p className="text-slate-400 text-sm mb-4">
-                                {article.description}
+                                {article.excerpt}
                             </p>
 
                             {/* Tags */}
@@ -144,14 +171,11 @@ const ArticleCard = ({ article }) => {
 
                             {/* Author */}
                             <div className="flex items-center space-x-3 mb-3">
-                                <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-medium">
-                                        {article.author.charAt(0).toUpperCase()}
-                                    </span>
-                                </div>
+                                <img src={article.author.avatar} alt={article.author.name} className="w-8 h-8 rounded-full" />
                                 <div className="flex flex-col">
                                     <span className="text-white font-medium text-sm hover:text-orange-400 transition-colors cursor-pointer">
-                                        {article.author}
+                                        {/* ✅ CORRECCIÓN: Usar article.author.name */}
+                                        {article.author.name}
                                     </span>
                                     <span className="text-slate-400 text-xs">{article.timestamp}</span>
                                 </div>
@@ -162,15 +186,15 @@ const ArticleCard = ({ article }) => {
                                 <div className="flex items-center space-x-4">
                                     <div className="flex items-center space-x-1 hover:text-orange-400 transition-colors cursor-pointer">
                                         <Eye className="w-4 h-4" />
-                                        <span>{article.views}</span>
+                                        <span>{article.stats.views}</span>
                                     </div>
                                     <div className="flex items-center space-x-1 hover:text-green-400 transition-colors cursor-pointer">
                                         <ThumbsUp className="w-4 h-4" />
-                                        <span>{article.likes}</span>
+                                        <span>{article.stats.likes}</span>
                                     </div>
                                     <div className="flex items-center space-x-1 hover:text-yellow-400 transition-colors cursor-pointer">
                                         <MessageCircle className="w-4 h-4" />
-                                        <span>{article.comments}</span>
+                                        <span>{article.stats.comments}</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center space-x-2">
@@ -187,12 +211,12 @@ const ArticleCard = ({ article }) => {
                 </CardContent>
             </Card>
 
-            {/* Article Detail Modal */}
-            <ArticleDetailModal
+            {/* Article Detail Modal - Descomenta si lo usas */}
+            {/* <ArticleDetailModal
                 article={article}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-            />
+            /> */}
         </>
     );
 };
