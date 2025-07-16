@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { mockArticles } from 'lib/mockData'; // Asegúrate de exportar el tipo 'Article' desde tu mockData
+import { mockArticles } from 'lib/mockData';
 import Layout from '@components/Layout/CommunityLayout';
 import { Badge } from "@components/Badge";
 import { Button } from "@components/ui/button";
 import { Clock, Eye, MessageCircle, Share2, ArrowLeft, TrendingUp } from "lucide-react";
-
+import ShareComponent from '@components/ShareComponent'; // ✅ 1. Importar el nuevo componente
 
 const ArticlePage = () => {
     const router = useRouter();
     const { postId } = router.query;
 
-    // Encuentra el artículo basado en el postId de la URL
+    // ✅ 2. Añadir estado para controlar el pop-up de compartir
+    const [isShareOpen, setIsShareOpen] = useState(false);
+    const [articleUrl, setArticleUrl] = useState('');
+
+    // ✅ 3. Obtener la URL del lado del cliente
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setArticleUrl(window.location.href);
+        }
+    }, [postId]);
+
     const article = mockArticles.find(a => a.id.toString() === postId);
 
-    // Filtra para encontrar artículos relacionados (misma categoría, excluyendo el actual)
     const relatedArticles = article
         ? mockArticles.filter(a => a.category === article.category && a.id !== article.id).slice(0, 3)
         : [];
 
-    // Si el artículo no se encuentra, muestra un mensaje de error
     if (!article) {
         return (
             <Layout>
@@ -98,13 +106,27 @@ const ArticlePage = () => {
                                     <MessageCircle className="w-4 h-4" />
                                     <span className="text-sm">{article.stats.comments}</span>
                                 </div>
-                                <button className="text-slate-400 hover:text-white transition-colors">
-                                    <Share2 className="w-5 h-5" />
-                                </button>
+
+                                {/* ✅ 4. Integración del botón y componente de compartir */}
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setIsShareOpen(!isShareOpen)}
+                                        className="text-slate-400 hover:text-white transition-colors"
+                                        aria-label="Compartir artículo"
+                                    >
+                                        <Share2 className="w-5 h-5" />
+                                    </button>
+                                    {isShareOpen && (
+                                        <ShareComponent
+                                            url={articleUrl}
+                                            title={article.title}
+                                            onClose={() => setIsShareOpen(false)}
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
 
-                        {/* El contenido del artículo se renderiza aquí */}
                         <div
                             className="prose prose-invert prose-lg max-w-none text-slate-300"
                             dangerouslySetInnerHTML={{ __html: article.content }}
@@ -112,7 +134,6 @@ const ArticlePage = () => {
                     </div>
                 </article>
 
-                {/* Artículos relacionados */}
                 {relatedArticles.length > 0 && (
                     <div>
                         <h2 className="text-2xl font-bold text-white mb-6">Artículos relacionados</h2>
