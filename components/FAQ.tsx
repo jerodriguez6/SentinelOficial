@@ -43,7 +43,7 @@ const FAQ = () => {
                         <HelpCircle className="w-8 h-8 text-foreground mr-3" />
                         <h2 className="text-4xl md:text-5xl font-bold text-white">
 
-                            <span className="bg-gradient-to-r from-[#4F596196] to-foreground bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
                                 Preguntas{" "}frecuentes
                             </span>
                         </h2>

@@ -18,12 +18,12 @@ const CommunityLayout = ({ children }) => {
 
     const menuItems = [
         { id: 'feed', name: 'Feed', icon: Home, path: '/Feed' },
-        { id: 'launchpad', name: 'Launchpad', icon: Rocket, path: '#' },
+        { id: 'launchpad', name: 'Launchpad', icon: Rocket, path: '/comming-soon' },
         { id: 'lives', name: 'Lives', icon: Radio, path: '/lives' },
         { id: 'articles', name: 'Articles', icon: FileText, path: '/articles' },
-        { id: 'notifications', name: 'Notifications', icon: Bell, path: '/#' },
-        { id: 'mypage', name: 'My Page', icon: User, path: '/#' },
-        { id: 'more', name: 'More', icon: MoreHorizontal, path: '/#' },
+        // { id: 'notifications', name: 'Notifications', icon: Bell, path: '/#' },
+        // { id: 'mypage', name: 'My Page', icon: User, path: '/#' },
+        // { id: 'more', name: 'More', icon: MoreHorizontal, path: '/#' },
     ];
 
     const isActive = (path) => router.pathname === path;

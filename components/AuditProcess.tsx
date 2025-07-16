@@ -40,7 +40,7 @@ const AuditProcess = () => {
                                     </div>
 
                                     {/* Step Content */}
-                                    <div className="bg-gradient-to-r from-[#4F596196] to-foreground/3 rounded-lg border border-border p-4">
+                                    <div className="bg-gradient-to-r from-blue-400 to-[#55f7ed]/3 rounded-lg border border-border p-4">
                                         <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
                                         <p className="text-sm text-muted-foreground">{step.description}</p>
                                     </div>

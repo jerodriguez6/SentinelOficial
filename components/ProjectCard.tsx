@@ -33,7 +33,7 @@ export const ProjectCard = ({
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
                     <div className="flex items-center space-x-3">
-                        <div className="w-12 h-12 bg-gradient-to-r from-[#4F596196] to-foreground rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 bg-gradient-to-r from-blue-400 to-[#55f7ed] rounded-xl flex items-center justify-center">
                             <img src={logo} alt={`${name} logo`} className="w-8 h-8 rounded-full object-contain" />
                         </div>
                         <div>
@@ -62,7 +62,7 @@ export const ProjectCard = ({
                     </div>
                     <div className="w-full h-2 bg-gray-700 rounded-full">
                         <div
-                            className="h-full bg-gradient-to-r from-[#4F596196] to-foreground rounded-full"
+                            className="h-full bg-gradient-to-r from-blue-400 to-[#55f7ed] rounded-full"
                             style={{ width: `${score}%` }}
                         ></div>
                     </div>

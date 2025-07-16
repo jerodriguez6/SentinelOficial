@@ -73,7 +73,7 @@ const SuccessCases = () => {
                         Casos de éxito
                     </Badge>
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="bg-gradient-to-r from-[#4F596196] to-foreground bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
                             Proyectos destacados
                         </span>
                     </h2>

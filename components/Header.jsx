@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router'; // 1. Importar useRouter
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Search, User, Menu, X, ChevronDown, Wallet, Shield, TrendingUp } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import LoginModal from './LoginModal';
 import Image from 'next/image';
+
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -13,12 +15,13 @@ const Header = () => {
     const [showUserMenu, setShowUserMenu] = useState(false);
 
     const { isAuthenticated, user, logout } = useAuth();
+    const router = useRouter(); // 2. Obtener el objeto router
 
     const navigationItems = [
-        { name: 'Tech MarketCap', href: '#', icon: TrendingUp },
+        { name: 'Tech MarketCap', href: '/tech-marketcap', icon: TrendingUp },
         { name: 'Auditorías', href: '/audits', icon: Shield },
         { name: 'Exchanges', href: '#' },
-        { name: 'Community', href: 'Feed', active: true },
+        { name: 'Community', href: '/Feed' }, // Eliminamos 'active: true'
     ];
 
     const handleLoginClick = () => {
@@ -32,7 +35,7 @@ const Header = () => {
 
     return (
         <>
-            <header className="bg-black  sticky top-0 z-50">
+            <header className="bg-black border-b border-professional-blue/20 sticky top-0 z-50" style={{ background: 'black', borderBottomColor: 'rgba(74, 144, 226, 0.2)', boxShadow: '0 2px 10px rgba(74, 144, 226, 0.1)' }}>
                 <div className="w-full px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         {/* Logo */}
@@ -51,7 +54,8 @@ const Header = () => {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium transition-colors rounded-md ${item.active
+                                    // 3. Comparación dinámica de la ruta
+                                    className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium transition-colors rounded-md ${router.pathname === item.href
                                         ? 'text-blue-400 bg-blue-900/20'
                                         : 'text-slate-300 hover:text-white hover:bg-zinc-800'
                                         }`}
@@ -172,7 +176,7 @@ const Header = () => {
                                     <Link
                                         key={item.name}
                                         href={item.href}
-                                        className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors rounded-md ${item.active
+                                        className={`flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-colors rounded-md ${router.pathname === item.href // Aplicar la misma lógica aquí
                                             ? 'text-blue-400 bg-blue-900/20'
                                             : 'text-slate-300 hover:text-white hover:bg-zinc-800'
                                             }`}
