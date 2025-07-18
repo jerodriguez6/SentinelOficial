@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { getAllAudits, AuditData } from '../lib/audit-data'; // Asumimos que AuditData no tiene 'category'
 import { cn } from "lib/utils";
-import ProjectDetailView from "@components/ProjectDetailView";
+import dynamic from 'next/dynamic';
+
+const ProjectDetailView = dynamic(() => import('@components/ProjectDetailView'), { ssr: false });
 
 // (El código de formatDistanceToNow y MiniChart no cambia)
 const formatDistanceToNow = (isoDate: string): string => {

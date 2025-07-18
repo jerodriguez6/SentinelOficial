@@ -3,7 +3,9 @@
 import { useState, useMemo } from 'react';
 import { ChevronDown, Eye, Shield, Star, ArrowRight, Clock, TrendingUp, TrendingDown } from 'lucide-react';
 import { Button } from '@components/ui/button';
-import ProjectDetailView from '@components/ProjectDetailView';
+import dynamic from 'next/dynamic';
+
+const ProjectDetailView = dynamic(() => import('@components/ProjectDetailView'), { ssr: false });
 
 // 1. IMPORTAMOS LA NUEVA TARJETA
 import { ProjectCard, ProjectCardProps } from '@components/ProjectCard';

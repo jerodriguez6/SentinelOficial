@@ -1,6 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { notFound } from 'next/navigation';
-import { CheckCircleIcon, InformationCircleIcon, ShareIcon } from '@heroicons/react/24/solid';
+import { CheckCircle, Info, Share2 } from 'lucide-react';
 import { getAuditById, AuditData } from '../../lib/audit-data';
 import { useEffect, useState } from 'react';
 
@@ -130,7 +130,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                         onClick={handleShare}
                         className="bg-gradient-to-r from-blue-400 to-[#55f7ed] hover:from-blue-500 hover:to-[#55f7ed] text-white font-bold py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center mt-4 md:mt-0"
                     >
-                        <ShareIcon className="h-5 w-5 mr-2" />
+                        <Share2 className="h-5 w-5 mr-2" />
                         Compartir
                     </button>
                     <button
@@ -182,7 +182,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                                 {verificationPoints.map((point, index) => (
                                     <div key={index} className="bg-sentinel-dark p-4 rounded-lg flex items-start gap-4">
                                         {/* ✅ Icono con color del tema */}
-                                        <CheckCircleIcon className="h-6 w-6 text-blue-400 mt-1 flex-shrink-0" />
+                                        <CheckCircle className="h-6 w-6 text-blue-400 mt-1 flex-shrink-0" />
                                         <div>
                                             {/* ✅ Estado con color del tema */}
                                             <h3 className="font-semibold text-white">{point.feature}: <span className="text-blue-400">{point.status}</span></h3>
@@ -253,7 +253,7 @@ const AuditCertificatePage = ({ auditData }: InferGetServerSidePropsType<typeof 
                             <ul className="space-y-4">
                                 {architecturalStrengths.map((strength, index) => (
                                     <li key={index} className="flex items-start gap-3">
-                                        <InformationCircleIcon className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                                        <Info className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                                         <div>
                                             <h4 className="font-semibold text-white">{strength.title}</h4>
                                             <p className="text-sm text-gray-400">{strength.description}</p>

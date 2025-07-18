@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'; // ✅ 1. Importamos useState
 import { Badge } from "@components/Badge";
 import { ProjectCard } from "@components/ProjectCard";
-import ProjectDetailView from '@components/ProjectDetailView'; // ✅ 2. Importamos el modal
+import dynamic from 'next/dynamic';
+
+const ProjectDetailView = dynamic(() => import('@components/ProjectDetailView'), { ssr: false });
 
 // Importamos los datos reales y tipos necesarios
 import { getAllAudits, AuditData } from 'lib/audit-data';

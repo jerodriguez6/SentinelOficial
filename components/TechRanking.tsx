@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { getAllAudits, AuditData } from '../lib/audit-data';
 import { cn } from "lib/utils";
-import ProjectDetailView from "@components/ProjectDetailView"; // ✅ 2. Importamos el modal
+import dynamic from 'next/dynamic';
+
+const ProjectDetailView = dynamic(() => import('@components/ProjectDetailView'), { ssr: false });
 
 // ... (El resto del código que no cambia: formatDistanceToNow, MiniChart)
 const formatDistanceToNow = (isoDate: string): string => {
