@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useTranslation } from 'next-i18next';
 import { Button } from "@components/ui/button";
 import { ArrowRight, Shield, TrendingUp, Award } from "lucide-react";
-
+import Image from "next/image";
 // Importaciones de Partículas
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
@@ -92,13 +92,14 @@ const Hero = () => {
                         <Award className="w-4 h-4 mr-2" />
                         Pionero en Tech MarketCap Web3
                     </div>
-                    {/* from-blue-400 to-[#55f7ed] */}
-                    <h1 className="text-white hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-                        <span className="bg-gradient-to-r from-blue-400 to-[#55f7ed]  bg-clip-text text-transparent">
-                            Tech MarketCap
-                        </span>
-                    </h1>
-
+                    <div className="flex items-center justify-center space-x-4">
+                        <Image className="block" height={80} width={80} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
+                        <h1 className="text-white hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"> {/* Eliminado mb-6 */}
+                            <span className="text-white bg-clip-text text-transparent">
+                                SENTINEL IA
+                            </span>
+                        </h1>
+                    </div>
                     <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-4xl mx-auto leading-relaxed michroma-regular">
                         Mide y demuestra tu calidad tecnológica
                     </p>

@@ -64,12 +64,11 @@ const NavBar = ({ isInfoBarVisible }: { isInfoBarVisible: boolean }) => {
             <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center">
                 {/* Logo y Título */}
                 <Link href="/" className="text-white no-underline flex items-center shrink-0">
-                    <Image className="block" height={80} width={80} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
+                    <Image className="block" height={40} width={40} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
                     <div className='hero-title text-white no-underline ml-2 text-lg sm:text-xl'>
                         SENTINEL IA
                     </div>
                 </Link>
-
                 {/* Botón de Menú Hamburguesa para Móviles */}
                 <div className="md:hidden">
                     <button
