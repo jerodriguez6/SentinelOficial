@@ -13,8 +13,10 @@ const Footer = () => {
         <SimpleGrid columns={gridColumns} >
           <Stack gridColumn={{ base: 'auto', md: 'span 2' }}>
             <Stack direction="row" align="center">
-              <Image width={80} height={80} src={'/sentinel-logo.png'} alt={'sentinel-logo'} />
-              <Text fontSize="xl" fontWeight="bold">Sentinel IA</Text>
+              <Image width={40} height={40} src={'/sentinel-logo-blue.png'} alt={'sentinel-logo'} />
+              <div className="hero-title ml-2 text-lg sm:text-xl bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent no-underline">
+                SENTINEL IA
+              </div>
             </Stack>
             <Text color="gray.300" maxW="md">
               Pioneering the first Tech MarketCap for Web3 projects. Measure and demonstrate your technological quality beyond trading volumes.
