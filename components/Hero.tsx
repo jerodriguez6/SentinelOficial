@@ -28,7 +28,7 @@ const Hero = () => {
     // Solo ejecutar en el cliente
     if (typeof window === 'undefined') return;
 
-    const canvas = document.getElementById("matrix-canvas");
+    const canvas = document.getElementById("matrix-canvas") as HTMLCanvasElement | null;
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
