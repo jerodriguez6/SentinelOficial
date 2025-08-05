@@ -60,22 +60,6 @@ const Hero = () => {
     []
   );
 
-  // Función para actualizar el desenfoque dinámico
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const maxBlur = 20; // Máximo desenfoque (px)
-      const blurAmount = Math.min(scrollTop / 50, maxBlur); // Ajusta el divisor para controlar la sensibilidad
-
-      document.documentElement.style.setProperty("--scroll-blur", `${blurAmount}px`);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <section
       className="relative overflow-hidden bg-gray-900 backdrop-blur-lg pt-16 lg:pt-24 pb-10 lg:pb-10"
