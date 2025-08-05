@@ -23,6 +23,87 @@ const Hero = () => {
     });
   }, []);
 
+  // Efecto Matrix Rain MEJORADO
+  useEffect(() => {
+    // Solo ejecutar en el cliente
+    if (typeof window === 'undefined') return;
+
+    const canvas = document.getElementById("matrix-canvas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Ajustar tamaño del canvas al contenedor
+    const resizeCanvas = () => {
+      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
+      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Configuración del efecto Matrix MEJORADO
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const charArray = chars.split("");
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    
+    // Array para almacenar la posición Y de cada columna
+    const drops = new Array(columns).fill(0);
+    drops.forEach((_, i) => {
+      drops[i] = Math.floor(Math.random() * -100);
+    });
+
+    // Función para dibujar el efecto MEJORADO
+    const draw = () => {
+      // Fondo semitransparente para efecto de desvanecimiento
+      ctx.fillStyle = "rgba(5, 5, 7, 0.03)"; // Más sutil
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Dibujar caracteres en cada columna
+      for (let i = 0; i < drops.length; i++) {
+        const text = charArray[Math.floor(Math.random() * charArray.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+
+        // Determinar si esta letra debe brillar
+        const shouldGlow = Math.random() > 0.95; // 5% de probabilidad de brillo
+        
+        if (shouldGlow) {
+          // Letra brillante
+          ctx.shadowColor = "#55f7ed";
+          ctx.shadowBlur = 15;
+          ctx.fillStyle = "#ffffff"; // Blanco brillante
+        } else {
+          // Letra normal
+          ctx.shadowBlur = 0;
+          ctx.fillStyle = "rgba(85, 247, 237, 0.3)"; // Azul aguamarina más visible
+        }
+
+        ctx.font = `bold ${fontSize}px 'Courier New', monospace`;
+        ctx.fillText(text, x, y);
+
+        // Resetear la posición si llega al final o aleatoriamente
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = Math.floor(Math.random() * -20);
+        }
+
+        // Mover la gota hacia abajo
+        drops[i]++;
+      }
+    };
+
+    // Iniciar animación
+    const interval = setInterval(draw, 60); // Más fluido
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      clearInterval(interval);
+    };
+  }, []);
+
   // Opciones para las partículas
   const particlesOptions: RecursivePartial<IOptions> = useMemo(
     () => ({
@@ -51,7 +132,7 @@ const Hero = () => {
           density: { enable: true },
           value: 80,
         },
-        opacity: { value: 0.2 }, // Reducido para un efecto más sutil
+        opacity: { value: 0.2 },
         shape: { type: "circle" },
         size: { value: { min: 1, max: 3 } },
       },
@@ -64,12 +145,18 @@ const Hero = () => {
     <section
       className="relative overflow-hidden bg-gray-900 backdrop-blur-lg pt-16 lg:pt-24 pb-10 lg:pb-10"
       style={{
-        backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.6), rgba(10, 10, 15, 0.6)), url('/mask.jpg')`, // Opacidad reducida para fondo más claro
+        backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.6), rgba(10, 10, 15, 0.6)), url('/mask.jpg')`,
         backgroundSize: "cover",
         backgroundPosition: "top",
         backgroundAttachment: "scroll",
       }}
     >
+      {/* Canvas para el efecto Matrix MEJORADO */}
+      <canvas 
+        id="matrix-canvas" 
+        className="absolute inset-0 w-full h-full z-0"
+      />
+
       {/* Partículas de fondo */}
       {particlesInit && (
         <Particles
@@ -78,13 +165,6 @@ const Hero = () => {
           options={particlesOptions}
         />
       )}
-
-      {/* Efectos de fondo sutiles (comentados, pero puedes descomentar si los quieres) */}
-      {/* <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-white/2 rounded-full blur-2xl animate-float" style={{ animationDelay: '2s' }}></div>
-      </div> */}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
@@ -180,14 +260,5 @@ const Hero = () => {
     </section>
   );
 };
-
-// Estilos CSS para la animación (debes añadir esto en un archivo CSS global)
-const styles = `
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-`;
 
 export default Hero;
