@@ -216,45 +216,37 @@ const Hero = () => {
             </Link>
           </div>
 
-          {/* Estadísticas */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div
-              className="text-center blockchair-card p-4 coingecko-hover bg-transparent rounded-lg border border-white/20"
-              style={{
-                backdropFilter: "blur(var(--scroll-blur))",
-              }}
-            >
-              <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-accent/50 rounded-full border border-border">
-                <Shield className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-1">500+</h3>
-              <p className="text-sm text-white/80">Proyectos auditados</p>
-            </div>
-            <div
-              className="text-center blockchair-card p-4 coingecko-hover bg-transparent rounded-lg border border-white/20"
-              style={{
-                backdropFilter: "blur(var(--scroll-blur))",
-              }}
-            >
-              <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-accent/50 rounded-full border border-border">
-                <TrendingUp className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-1">95%</h3>
-              <p className="text-sm text-white/80">Mejora en seguridad</p>
-            </div>
-            <div
-              className="text-center blockchair-card p-4 coingecko-hover bg-transparent rounded-lg border border-white/20"
-              style={{
-                backdropFilter: "blur(var(--scroll-blur))",
-              }}
-            >
-              <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 bg-accent/50 rounded-full border border-border">
-                <Award className="w-6 h-6 text-foreground" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-1">24/7</h3>
-              <p className="text-sm text-white/80">Monitoreo continuo</p>
-            </div>
-          </div>
+          {/* Estadísticas - TARJETAS ACTUALIZADAS */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+  {/* Tarjeta 1 */}
+  <div className="p-6 rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 text-white/90">
+    <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-cyan-500/20 rounded-full border border-cyan-400/30">
+      <Shield className="w-6 h-6 text-cyan-300" />
+    </div>
+    <h3 className="text-2xl font-bold text-cyan-100 mb-1 text-center">500+</h3>
+    <p className="text-sm text-center text-white/70">Proyectos auditados</p>
+  </div>
+
+  {/* Tarjeta 2 */}
+  <div className="p-6 rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 text-white/90">
+    <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-emerald-500/20 rounded-full border border-emerald-400/30">
+      <TrendingUp className="w-6 h-6 text-emerald-300" />
+    </div>
+    <h3 className="text-2xl font-bold text-emerald-100 mb-1 text-center">95%</h3>
+    <p className="text-sm text-center text-white/70">Mejora en seguridad</p>
+  </div>
+
+  {/* Tarjeta 3 */}
+  <div className="p-6 rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 text-white/90">
+    <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-indigo-500/20 rounded-full border border-indigo-400/30">
+      <Award className="w-6 h-6 text-indigo-300" />
+    </div>
+    <h3 className="text-2xl font-bold text-indigo-100 mb-1 text-center">24/7</h3>
+    <p className="text-sm text-center text-white/70">Monitoreo continuo</p>
+  </div>
+</div>
+
+
         </div>
       </div>
     </section>
