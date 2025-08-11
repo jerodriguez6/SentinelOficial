@@ -10,6 +10,14 @@ const AuditProcess = () => {
         { number: '04', title: 'Reporte Final', description: 'Entrega de resultados y recomendaciones' },
     ];
 
+    // Función para redirigir a WhatsApp
+    const redirectToWhatsApp = () => {
+        const phoneNumber = '573175090528';
+        const message = 'Hola, estoy interesado en comenzar mi evolución tecnológica.';
+        const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    };
+
     return (
         <section id="como-funciona" className="py-16 relative bg-[#09090B]">
             <div className="container mx-auto px-4">
@@ -58,7 +66,11 @@ const AuditProcess = () => {
                             <p className="text-gray-300 mb-4 max-w-xl mx-auto">
                                 Únete a los proyectos más innovadores y construye una reputación sólida en el ecosistema Web3
                             </p>
-                            <Button className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white hover:from-cyan-500 hover:to-blue-600 font-semibold px-6 py-2 transition-all duration-300">
+                            {/* Botón modificado para redirigir a WhatsApp */}
+                            <Button 
+                                onClick={redirectToWhatsApp}
+                                className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white hover:from-cyan-500 hover:to-blue-600 font-semibold px-6 py-2 transition-all duration-300 cursor-pointer"
+                            >
                                 Hablar con un asesor
                             </Button>
                         </div>
