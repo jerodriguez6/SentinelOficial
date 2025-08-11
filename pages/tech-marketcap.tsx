@@ -152,13 +152,12 @@ const TechMarketCap = () => {
           </p>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Contenedor principal con scroll horizontal */}
+        <div className="overflow-x-auto min-h-screen">
           <div className="w-full min-w-[1200px]">
-            <div
-              className={cn(
-                "bg-[#202531] backdrop-blur-lg border-b border-gray-700 transition-all duration-300 sticky top-16 z-40"
-              )}
-            >
+            {/* Sección fija al hacer scroll */}
+            <div className="sticky top-0 z-40 bg-[#202531] backdrop-blur-lg border-b border-gray-700 transition-all duration-300">
+              {/* Tabs */}
               <div className="flex px-4 py-3 space-x-1 bg-[#202531] overflow-x-auto">
                 {tabs.map((tab) => (
                   <button
@@ -175,7 +174,9 @@ const TechMarketCap = () => {
                   </button>
                 ))}
               </div>
-              <div className="grid grid-cols-[40px_2fr_1fr_80px_120px_80px_80px_80px_120px] gap-4 px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider bg-[#202531]">
+
+              {/* Encabezados de tabla */}
+              <div className="grid grid-cols-[40px_2fr_1fr_80px_120px_80px_80px_80px_120px] gap-4 px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider bg-[#202531] border-b border-gray-700">
                 <div>#</div>
                 <div>Proyecto</div>
                 <div>Network</div>
@@ -188,6 +189,7 @@ const TechMarketCap = () => {
               </div>
             </div>
 
+            {/* Lista de proyectos */}
             <div className="bg-gray-900/30 backdrop-blur-lg rounded-b-lg overflow-hidden border border-gray-800">
               {projects.map((project, index) => (
                 <div

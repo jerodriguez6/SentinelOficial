@@ -41,3 +41,48 @@ body {
 .animate-scroll {
   animation: scroll 30s linear infinite;
 }
+
+/* Animación de brillo recorriendo la línea */
+@keyframes glow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s linear infinite;
+}
+
+/* Animación de brillo recorriente en los círculos (efecto radar) */
+@keyframes radar {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar {
+  animation: radar 3s linear infinite;
+}
+
+/* Animación de entrada para tarjetas en dispositivos móviles */
+@keyframes slide-up-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-fade-in {
+  animation: slide-up-fade-in 0.5s ease-out forwards;
+}
+
