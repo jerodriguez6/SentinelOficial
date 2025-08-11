@@ -28,17 +28,14 @@ const AuditProcess = () => {
                 {/* Process Steps - Horizontal layout */}
                 <div className="max-w-5xl mx-auto">
                     <div className="relative">
-                        {/* Connection line with glow effect */}
-                        <div className="absolute top-[2rem] left-0 right-0 h-0.5 overflow-hidden z-10">
-                            <div className="w-full h-full bg-cyan-400 blur-sm animate-glow"></div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                        {/* Circles and cards - SIN LÍNEA HORIZONTAL */}
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
                             {steps.map((step, index) => (
                                 <div key={step.number} className="text-center">
-                                    {/* Step Circle with radar-like glow effect */}
-                                    <div className="w-16 h-16 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4 mx-auto relative z-10">
-                                        <div className="absolute inset-0 rounded-full animate-radar ring ring-cyan-400 ring-offset-cyan-400 ring-offset-2 ring-opacity-50"></div>
+                                    {/* Step Circle with circular border and aquamarine color */}
+                                    <div className="w-16 h-16 border-2 border-cyan-400 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4 mx-auto relative bg-transparent">
+                                        {/* Circulating glow effect */}
+                                        <div className="absolute inset-0 rounded-full animate-spin-slow"></div>
                                         {step.number}
                                     </div>
 
