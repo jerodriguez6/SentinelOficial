@@ -115,8 +115,7 @@ const TechRanking = () => {
         backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
+      }} // Eliminé background-attachment: fixed
     >
       <div className="w-full">
         <div className="text-center mb-10">
@@ -130,100 +129,97 @@ const TechRanking = () => {
           </p>
         </div>
 
-        <div className="w-full">
-          <div
-            className={cn(
-              "bg-gray-900/30 backdrop-blur-lg border-b border-gray-700 sticky top-16 z-40 transition-all duration-300 rounded-t-lg",
-              isScrolled ? "bg-gray-900/50 shadow-lg" : ""
-            )}
-          >
-            <div className="grid grid-cols-[40px_2fr_1fr_80px_120px_80px_80px_80px_120px] gap-4 px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider bg-gray-900/30">
-              <div>#</div>
-              <div>Proyecto</div>
-              <div>Network</div>
-              <div>Grade</div>
-              <div>Score</div>
-              <div>Gráfica 7d</div>
-              <div>Cambio</div>
-              <div>Hallazgos</div>
-              <div>Última auditoría</div>
+        <div className="overflow-x-auto"> {/* Desplazamiento horizontal para toda la sección */}
+          <div className="w-full min-w-[1200px]"> {/* Ajusté min-width para simular ranking infinito */}
+            <div
+              className={cn(
+                "bg-gray-900/30 backdrop-blur-lg border-b border-gray-700 transition-all duration-300"
+              )} // Eliminé sticky
+            >
+              <div className="grid grid-cols-[40px_2fr_1fr_80px_120px_80px_80px_80px_120px] gap-4 px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider bg-gray-900/30">
+                <div>#</div>
+                <div>Proyecto</div>
+                <div>Network</div>
+                <div>Grade</div>
+                <div>Score</div>
+                <div>Gráfica 7d</div>
+                <div>Cambio</div>
+                <div>Hallazgos</div>
+                <div>Última auditoría</div>
+              </div>
             </div>
-          </div>
 
-          <div className="bg-gray-900/30 backdrop-blur-lg rounded-b-lg overflow-hidden border border-gray-800">
-            {projects.map((project, index) => (
-              <div
-                key={project.reportId}
-                onClick={() => handleProjectSelect(project.reportId)}
-                className={cn(
-                  "cursor-pointer hover:bg-gray-800/30 transition-colors duration-200",
-                  index !== projects.length - 1 ? "border-b border-gray-800" : ""
-                )}
-              >
-                <div className="w-full">
-                  <div className="overflow-x-auto">
-                    <div className="grid grid-cols-[40px_2fr_1fr_80px_120px_80px_80px_80px_120px] gap-4 p-4 items-center text-sm min-w-[800px]">
-                      <div className="flex items-center space-x-2">
-                        <Star
-                          className={`w-4 h-4 ${favorites.has(project.reportId) ? "text-yellow-400" : "text-gray-500"}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleFavorite(project.reportId);
-                          }}
-                        />
-                        <span className="text-white font-bold">{project.position}</span>
+            <div className="bg-gray-900/30 backdrop-blur-lg rounded-b-lg overflow-hidden border border-gray-800">
+              {projects.map((project, index) => (
+                <div
+                  key={project.reportId}
+                  onClick={() => handleProjectSelect(project.reportId)}
+                  className={cn(
+                    "cursor-pointer hover:bg-gray-800/30 transition-colors duration-200",
+                    index !== projects.length - 1 ? "border-b border-gray-800" : ""
+                  )}
+                >
+                  <div className="grid grid-cols-[40px_2fr_1fr_80px_120px_80px_80px_80px_120px] gap-4 p-4 items-center text-sm w-full">
+                    <div className="flex items-center space-x-2">
+                      <Star
+                        className={`w-4 h-4 ${favorites.has(project.reportId) ? "text-yellow-400" : "text-gray-500"}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(project.reportId);
+                        }}
+                      />
+                      <span className="text-white font-bold">{project.position}</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <img src={project.logo} alt={project.name} className="w-6 h-6 rounded-full" />
+                      <h3 className="text-white font-semibold">{project.name}</h3>
+                    </div>
+                    <div className="text-gray-300">{project.blockchain}</div>
+                    <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
+                      {project.grade}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-lg font-bold text-white">{project.score.toFixed(1)}</span>
+                      <div className="w-12 h-2 bg-gray-700 rounded-full">
+                        <div
+                          className="h-full bg-gradient-to-r from-blue-400 to-[#55f7ed] rounded-full"
+                          style={{ width: `${Math.min(project.score, 100)}%` }}
+                        ></div>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <img src={project.logo} alt={project.name} className="w-6 h-6 rounded-full" />
-                        <h3 className="text-white font-semibold">{project.name}</h3>
-                      </div>
-                      <div className="text-gray-300">{project.blockchain}</div>
-                      <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
-                        {project.grade}
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold text-white">{project.score.toFixed(1)}</span>
-                        <div className="w-12 h-2 bg-gray-700 rounded-full">
-                          <div
-                            className="h-full bg-gradient-to-r from-blue-400 to-[#55f7ed] rounded-full"
-                            style={{ width: `${Math.min(project.score, 100)}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      <div>
-                        <MiniChart data={project.chartData} trend={project.trend} />
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        {project.trend === "up" ? (
-                          <TrendingUp className="w-4 h-4 text-green-500" />
-                        ) : (
-                          <TrendingDown className="w-4 h-4 text-red-500" />
-                        )}
-                        <span
-                          className={`font-semibold ${project.change >= 0 ? "text-green-500" : "text-red-500"}`}
-                        >
-                          {project.change >= 0 ? "+" : ""}{project.change.toFixed(1)}
-                        </span>
-                      </div>
-                      <span className="text-gray-300">{project.reviews}</span>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-4 h-4 text-gray-400" />
-                        <span className="text-gray-300 text-sm">{project.lastAudit}</span>
-                      </div>
+                    </div>
+                    <div>
+                      <MiniChart data={project.chartData} trend={project.trend} />
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      {project.trend === "up" ? (
+                        <TrendingUp className="w-4 h-4 text-green-500" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4 text-red-500" />
+                      )}
+                      <span
+                        className={`font-semibold ${project.change >= 0 ? "text-green-500" : "text-red-500"}`}
+                      >
+                        {project.change >= 0 ? "+" : ""}{project.change.toFixed(1)}
+                      </span>
+                    </div>
+                    <span className="text-gray-300">{project.reviews}</span>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-4 h-4 text-gray-400" />
+                      <span className="text-gray-300 text-sm">{project.lastAudit}</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <div className="text-center mt-8 mb-8">
-            <Link
-              href="/audits"
-              className="inline-flex items-center px-6 py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-blue-400 to-[#55f7ed] hover:from-blue-500 hover:to-[#66ffcc] transition-all duration-300"
-            >
-              Ver todos los reportes
-            </Link>
+            <div className="text-center mt-8 mb-8">
+              <Link
+                href="/audits"
+                className="inline-flex items-center px-6 py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-blue-400 to-[#55f7ed] hover:from-blue-500 hover:to-[#66ffcc] transition-all duration-300"
+              >
+                Ver todos los reportes
+              </Link>
+            </div>
           </div>
         </div>
       </div>
