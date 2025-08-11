@@ -143,7 +143,7 @@ const TechMarketCap = () => {
     >
       <div className="w-full">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "Zen Dots, sans-serif", fontSize: "50px" }}>
             <span className="bg-gradient-to-r from-blue-400 to-[#55f7ed] bg-clip-text text-transparent">
               Tech MarketCap Ranking
             </span>
