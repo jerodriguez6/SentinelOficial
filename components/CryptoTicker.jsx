@@ -1,6 +1,10 @@
-import React from 'react';
+// components/CryptoTicker.tsx
+import React, { useEffect, useState } from 'react';
 
 const CryptoTicker = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   const cryptoData = [
     { symbol: 'BTC', logo: '₿', change: '+2.4%', isPositive: true },
     { symbol: 'ETH', logo: 'Ξ', change: '-1.2%', isPositive: false },
@@ -24,19 +28,56 @@ const CryptoTicker = () => {
     { symbol: 'XLM', logo: '✨', change: '-0.9%', isPositive: false },
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Solo cambiar visibilidad si el scroll es significativo (>5px)
+      if (Math.abs(currentScrollY - lastScrollY) > 5) {
+        // Si se scrollea hacia abajo, ocultar
+        if (currentScrollY > lastScrollY) {
+          setIsVisible(false);
+        } 
+        // Si se scrollea hacia arriba, mostrar
+        else {
+          setIsVisible(true);
+        }
+        setLastScrollY(currentScrollY);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
-    <div className="bg-black border-b border-zinc-800 text-white relative h-12">
+    // El contenedor principal del CryptoTicker
+    // No necesita posicionamiento fijo, se comporta como un bloque normal
+    // La transición se maneja con translate-y
+    <div 
+      className={`bg-blue border-b border-zinc-900 text-white relative h-10 transition-transform duration-300 ease-in-out w-full ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+      // Aseguramos que el ancho sea completo y que no interfiera con otros elementos
+      style={{
+        // Si necesitas un z-index específico para que esté por encima de otros elementos del flujo
+        // puedes añadirlo aquí, pero normalmente no es necesario si va antes del Header fijo.
+        // zIndex: 40, 
+      }}
+    >
       <div className="ticker-wrapper h-full">
         <div className="ticker-content h-full">
           {/* Triple content for seamless infinite loop */}
           {[...cryptoData, ...cryptoData, ...cryptoData].map((crypto, index) => (
-            <div key={index} className="ticker-item flex items-center space-x-3 whitespace-nowrap h-full">
-              <div className="flex items-center space-x-2">
-                <span className="text-lg">{crypto.logo}</span>
-                <span className="text-white font-medium text-sm">{crypto.symbol}</span>
+            <div key={index} className="ticker-item flex items-center space-x-2 whitespace-nowrap h-full">
+              <div className="flex items-center space-x-1">
+                <span className="text-base">{crypto.logo}</span>
+                <span className="text-white font-medium text-xs">{crypto.symbol}</span>
               </div>
-              <span className={`text-sm font-medium ${crypto.isPositive ? 'text-green-400' : 'text-red-400'
-                }`}>
+              <span className={`text-xs font-medium ${crypto.isPositive ? 'text-green-400' : 'text-red-400'}`}>
                 {crypto.change}
               </span>
             </div>
@@ -47,7 +88,6 @@ const CryptoTicker = () => {
       <style jsx>{`
         .ticker-wrapper {
           width: 100%;
-          // overflow: hidden;
         }
         
         .ticker-content {
@@ -57,12 +97,12 @@ const CryptoTicker = () => {
         }
         
         .ticker-item {
-          padding: 0 32px;
+          padding: 0 20px;
           border-right: 1px solid #3f3f46;
           flex-shrink: 0;
           display: flex;
           align-items: center;
-          min-width: 140px;
+          min-width: 110px;
         }
         
         @keyframes scroll-left {
