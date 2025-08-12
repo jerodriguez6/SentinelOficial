@@ -16,7 +16,7 @@ export interface ProjectCardProps {
     audits: number;
     lastUpdate: string;
     highlights: string[];
-    onCardClick: () => void;
+    onCardClick?: () => void; // 🔹 Ahora es opcional
     descriptionClassName?: string;
     hideButton?: boolean; // 🔹 NUEVO
 }
@@ -28,7 +28,7 @@ export const ProjectCard = ({
 }: ProjectCardProps) => {
     return (
         <div
-            onClick={onCardClick}
+            onClick={onCardClick ? onCardClick : undefined} // 🔹 Solo se ejecuta si existe
             className="group relative overflow-hidden h-full cursor-pointer"
         >
             <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-8 h-full flex flex-col group-hover:bg-white/10 transition-all duration-300 group-hover:scale-105">
