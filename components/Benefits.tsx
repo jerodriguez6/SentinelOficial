@@ -3,75 +3,95 @@ import { useState, useEffect, useRef } from "react";
 
 const Benefits = () => {
     const benefits = [
-        {
-            icon: Eye,
-            title: "Transparencia total",
-            description: "Tu calidad tecnológica queda documentada y accesible al público.",
-            buttonText: "Explorar más",
-            image: "/s1.jpg"
-        },
-        {
-            icon: Star,
-            title: "Visibilidad Web3",
-            description: "Destaca en el ranking y llama la atención de socios e inversores.",
-            buttonText: "Más detalles",
-            image: "/s2.jpg"
-        },
-        {
-            icon: TrendingUp,
-            title: "Mejora continua",
-            description: "El sistema te incentiva a mantener buenas prácticas y seguridad.",
-            buttonText: "Ver beneficios",
-            image: "/s3.jpg"
-        },
-        {
-            icon: Share,
-            title: "Marketing verificado",
-            description: "Comparte tu score o insignia con un widget y respalda tu marca.",
-            buttonText: "Obtener ahora",
-            image: "/s4.jpg"
-        },
-        {
-            icon: Shield,
-            title: "Ventaja competitiva",
-            description: "Un SentinelScore alto es tu carta de presentación en blockchain.",
-            buttonText: "Iniciar hoy",
-            image: "/s5.jpg"
-        }
+        { icon: Eye, title: "Transparencia total", description: "Tu calidad tecnológica queda documentada y accesible al público.", buttonText: "Explorar más", image: "/s1.jpg" },
+        { icon: Star, title: "Visibilidad Web3", description: "Destaca en el ranking y llama la atención de socios e inversores.", buttonText: "Más detalles", image: "/s2.jpg" },
+        { icon: TrendingUp, title: "Mejora continua", description: "El sistema te incentiva a mantener buenas prácticas y seguridad.", buttonText: "Ver beneficios", image: "/s3.jpg" },
+        { icon: Share, title: "Marketing verificado", description: "Comparte tu score o insignia con un widget y respalda tu marca.", buttonText: "Obtener ahora", image: "/s4.jpg" },
+        { icon: Shield, title: "Ventaja competitiva", description: "Un SentinelScore alto es tu carta de presentación en blockchain.", buttonText: "Iniciar hoy", image: "/s5.jpg" }
     ];
 
-    // Duplicamos el array para dar efecto infinito
+    // Duplicamos el array para efecto infinito
     const extendedBenefits = [...benefits, ...benefits];
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(true);
-    const cardsPerView = 3;
-
+    const [cardsPerView, setCardsPerView] = useState(3);
     const intervalRef = useRef(null);
 
-    // Función para avanzar el carrusel
-    const nextSlide = () => {
-        setCurrentIndex(prev => prev + 1);
-    };
+    // Para drag/touch
+    const startX = useRef(0);
+    const currentTranslate = useRef(0);
+    const isDragging = useRef(false);
 
-    // Auto-play
+    // Ajustar cantidad de cards por vista según el ancho de pantalla
     useEffect(() => {
-        intervalRef.current = setInterval(nextSlide, 4000);
-        return () => clearInterval(intervalRef.current);
+        const updateCardsPerView = () => {
+            setCardsPerView(window.innerWidth < 768 ? 1 : 3);
+        };
+        updateCardsPerView();
+        window.addEventListener("resize", updateCardsPerView);
+        return () => window.removeEventListener("resize", updateCardsPerView);
     }, []);
 
-    // Reset suave al llegar al final de la primera tanda
+    // Avanzar slide
+    const nextSlide = () => setCurrentIndex(prev => prev + 1);
+    const prevSlide = () => setCurrentIndex(prev => prev - 1);
+
+    // Autoplay
+    const startAutoplay = () => {
+        stopAutoplay();
+        intervalRef.current = setInterval(nextSlide, 4000);
+    };
+    const stopAutoplay = () => clearInterval(intervalRef.current);
+
+    useEffect(() => {
+        startAutoplay();
+        return () => stopAutoplay();
+    }, []);
+
+    // Reset suave para loop infinito
     useEffect(() => {
         if (currentIndex === benefits.length) {
-            // Pausamos animación
             setTimeout(() => {
                 setIsTransitioning(false);
                 setCurrentIndex(0);
-            }, 500); // tiempo de transición
+            }, 500);
+        } else if (currentIndex < 0) {
+            setTimeout(() => {
+                setIsTransitioning(false);
+                setCurrentIndex(benefits.length - 1);
+            }, 500);
         } else {
             setIsTransitioning(true);
         }
     }, [currentIndex, benefits.length]);
+
+    // Eventos de arrastre (touch/mouse)
+    const handleDragStart = (e) => {
+        stopAutoplay();
+        isDragging.current = true;
+        startX.current = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+    };
+
+    const handleDragMove = (e) => {
+        if (!isDragging.current) return;
+        const currentX = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+        currentTranslate.current = currentX - startX.current;
+    };
+
+    const handleDragEnd = () => {
+        if (!isDragging.current) return;
+        isDragging.current = false;
+
+        if (currentTranslate.current < -50) {
+            nextSlide();
+        } else if (currentTranslate.current > 50) {
+            prevSlide();
+        }
+
+        currentTranslate.current = 0;
+        startAutoplay();
+    };
 
     return (
         <section id="beneficios" className="py-12 relative bg-[#09090B]">
@@ -86,7 +106,16 @@ const Benefits = () => {
                 </div>
 
                 {/* Carrusel */}
-                <div className="max-w-5xl mx-auto overflow-hidden relative">
+                <div
+                    className="max-w-5xl mx-auto overflow-hidden relative"
+                    onMouseDown={handleDragStart}
+                    onMouseMove={handleDragMove}
+                    onMouseUp={handleDragEnd}
+                    onMouseLeave={handleDragEnd}
+                    onTouchStart={handleDragStart}
+                    onTouchMove={handleDragMove}
+                    onTouchEnd={handleDragEnd}
+                >
                     <div
                         className={`flex ${isTransitioning ? "transition-transform duration-500 ease-in-out" : ""}`}
                         style={{
@@ -96,7 +125,7 @@ const Benefits = () => {
                         {extendedBenefits.map((benefit, index) => (
                             <div
                                 key={index}
-                                className="w-full md:w-1/3 p-4 flex-shrink-0"
+                                className={`w-full ${cardsPerView === 3 ? "md:w-1/3" : "w-full"} p-4 flex-shrink-0`}
                             >
                                 <div className="relative rounded-lg border border-cyan-400 overflow-hidden flex flex-col h-full">
                                     {/* Imagen de fondo */}

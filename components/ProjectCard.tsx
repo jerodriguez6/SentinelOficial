@@ -3,7 +3,6 @@ import React from 'react';
 import { Badge } from "@components/Badge";
 import { TrendingUp, TrendingDown, Shield, Star, Clock, ArrowRight } from "lucide-react";
 
-// 1. Definimos las propiedades que la tarjeta necesita
 export interface ProjectCardProps {
     id: string;
     logo: string;
@@ -17,12 +16,14 @@ export interface ProjectCardProps {
     audits: number;
     lastUpdate: string;
     highlights: string[];
-    onCardClick: () => void; // Una función para manejar el clic
+    onCardClick: () => void;
+    descriptionClassName?: string; // 🔹 NUEVO: para personalizar el tamaño del texto
 }
 
-// 2. Creamos el componente de la tarjeta
 export const ProjectCard = ({
-    logo, name, category, score, grade, change, trend, description, audits, lastUpdate, highlights, onCardClick
+    logo, name, category, score, grade, change, trend,
+    description, audits, lastUpdate, highlights,
+    onCardClick, descriptionClassName
 }: ProjectCardProps) => {
     return (
         <div
@@ -30,6 +31,7 @@ export const ProjectCard = ({
             className="group relative overflow-hidden h-full cursor-pointer"
         >
             <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-8 h-full flex flex-col group-hover:bg-white/10 transition-all duration-300 group-hover:scale-105">
+                
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
                     <div className="flex items-center space-x-3">
@@ -69,7 +71,7 @@ export const ProjectCard = ({
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 mb-6 leading-relaxed flex-grow">
+                <p className={`text-gray-300 mb-6 leading-relaxed flex-grow ${descriptionClassName || ''}`}>
                     {description}
                 </p>
 

@@ -145,7 +145,7 @@ const Hero = () => {
     <section
       className="relative overflow-hidden bg-gray-900 backdrop-blur-lg pt-16 lg:pt-24 pb-10 lg:pb-10"
       style={{
-        backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.6), rgba(10, 10, 15, 0.6)), url('/mask.jpg')`,
+        backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.6), rgba(10, 10, 15, 0.6)), url('/poly.jpeg')`,
         backgroundSize: "cover",
         backgroundPosition: "top",
         backgroundAttachment: "scroll",

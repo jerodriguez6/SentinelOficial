@@ -1,14 +1,11 @@
-import { useMemo, useState } from 'react'; // ✅ 1. Importamos useState
+import { useMemo, useState } from 'react';
 import { Badge } from "@components/Badge";
 import { ProjectCard } from "@components/ProjectCard";
 import dynamic from 'next/dynamic';
+import { getAllAudits, AuditData } from 'lib/audit-data';
 
 const ProjectDetailView = dynamic(() => import('@components/ProjectDetailView'), { ssr: false });
 
-// Importamos los datos reales y tipos necesarios
-import { getAllAudits, AuditData } from 'lib/audit-data';
-
-// Función para calcular la distancia de tiempo
 const formatDistanceToNow = (isoDate: string): string => {
     const date = new Date(isoDate);
     const now = new Date();
@@ -21,7 +18,6 @@ const formatDistanceToNow = (isoDate: string): string => {
 };
 
 const SuccessCases = () => {
-    // ✅ 3. AÑADIMOS EL ESTADO PARA MANEJAR EL PROYECTO SELECCIONADO
     const [selectedProject, setSelectedProject] = useState<AuditData | null>(null);
 
     const topProjects = useMemo(() => {
@@ -54,7 +50,6 @@ const SuccessCases = () => {
             });
     }, []);
 
-    // ✅ 4. AÑADIMOS LA FUNCIÓN PARA ABRIR EL MODAL
     const handleProjectSelect = (id: string) => {
         const allAudits = getAllAudits();
         const projectToDisplay = allAudits.find(p => p.reportId === id) || null;
@@ -62,13 +57,15 @@ const SuccessCases = () => {
     };
 
     return (
-        <section className="py-20 relative"
+        <section
+            className="py-20 relative"
             style={{
                 backgroundImage: `linear-gradient(rgba(5, 5, 7, 0.85), rgba(10, 10, 15, 0.85)), url('/circuits.png')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundAttachment: 'fixed'
-            }}>
+            }}
+        >
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <Badge variant="outline" className="border-gray-500/50 text-gray-300 mb-6">
@@ -85,19 +82,47 @@ const SuccessCases = () => {
                 </div>
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                         {topProjects.map((project) => (
-                            <ProjectCard
+                            <div
                                 key={project.id}
-                                {...project}
-                                // ✅ 5. CONECTAMOS EL CLIC DE LA TARJETA CON LA FUNCIÓN
-                                onCardClick={() => handleProjectSelect(project.id)}
-                            />
+                                className="group [perspective:1200px] h-[420px] w-full"
+                            >
+                                <div className="relative w-full h-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                                    
+                                    {/* Frente - SIN botón */}
+                                    <div className="absolute inset-0 [backface-visibility:hidden]">
+                                        <ProjectCard
+                                            {...project}
+                                            hideButton
+                                            descriptionClassName="text-sm md:text-base leading-snug text-gray-300"
+                                        />
+                                    </div>
+
+                                    {/* Reverso - Botón con efecto NFT sutil */}
+                                    <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden] rounded-xl overflow-hidden flex flex-col items-center justify-center bg-black/70">
+                                        <img
+                                            src="/masku.jpeg"
+                                            alt="Mask NFT"
+                                            className="absolute inset-0 w-full h-full object-cover object-center opacity-30"
+                                        />
+                                        <button
+                                            onClick={() => handleProjectSelect(project.id)}
+                                            className="relative z-10 px-6 py-3 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 text-white font-semibold rounded-lg shadow-lg transition duration-300 hover:scale-105"
+                                            style={{
+                                                boxShadow: '0 0 6px rgba(85, 247, 237, 0.3), 0 0 12px rgba(0, 162, 255, 0.25)'
+                                            }}
+                                        >
+                                            Ver perfil y evolución
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </div>
 
-                {/* ✅ 6. RENDERIZAMOS EL MODAL CUANDO HAYA UN PROYECTO SELECCIONADO */}
                 {selectedProject && (
                     <ProjectDetailView
                         project={selectedProject}
