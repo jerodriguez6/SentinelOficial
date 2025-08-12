@@ -1,7 +1,7 @@
 // components/ProjectCard.tsx
 import React from 'react';
 import { Badge } from "@components/Badge";
-import { TrendingUp, TrendingDown, Shield, Star, Clock, ArrowRight } from "lucide-react";
+import { TrendingUp, TrendingDown, Star, Clock, ArrowRight } from "lucide-react";
 
 export interface ProjectCardProps {
     id: string;
@@ -17,13 +17,14 @@ export interface ProjectCardProps {
     lastUpdate: string;
     highlights: string[];
     onCardClick: () => void;
-    descriptionClassName?: string; // 🔹 NUEVO: para personalizar el tamaño del texto
+    descriptionClassName?: string;
+    hideButton?: boolean; // 🔹 NUEVO
 }
 
 export const ProjectCard = ({
     logo, name, category, score, grade, change, trend,
     description, audits, lastUpdate, highlights,
-    onCardClick, descriptionClassName
+    onCardClick, descriptionClassName, hideButton
 }: ProjectCardProps) => {
     return (
         <div
@@ -98,11 +99,13 @@ export const ProjectCard = ({
                     </div>
                 </div>
 
-                {/* CTA */}
-                <button className="w-full mt-auto bg-gradient-to-r from-gray-500/20 to-gray-400/20 hover:from-gray-500/30 hover:to-gray-400/30 border border-gray-500/30 text-gray-300 font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center space-x-2 group-hover:border-gray-200">
-                    <span>Ver perfil y evolución</span>
-                    <ArrowRight className="w-4 h-4" />
-                </button>
+                {/* CTA - ocultable */}
+                {!hideButton && (
+                    <button className="w-full mt-auto bg-gradient-to-r from-gray-500/20 to-gray-400/20 hover:from-gray-500/30 hover:to-gray-400/30 border border-gray-500/30 text-gray-300 font-semibold py-3 px-4 rounded-lg transition-all flex items-center justify-center space-x-2 group-hover:border-gray-200">
+                        <span>Ver perfil y evolución</span>
+                        <ArrowRight className="w-4 h-4" />
+                    </button>
+                )}
             </div>
         </div>
     );
