@@ -110,7 +110,8 @@ const SuccessCases = () => {
                                             onClick={() => handleProjectSelect(project.id)}
                                             className="relative z-10 px-6 py-3 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500 text-white font-semibold rounded-lg shadow-lg transition duration-300 hover:scale-105"
                                             style={{
-                                                boxShadow: '0 0 6px rgba(85, 247, 237, 0.3), 0 0 12px rgba(0, 162, 255, 0.25)'
+                                                boxShadow: '0 0 6px rgba(85, 247, 237, 0.3), 0 0 12px rgba(0, 162, 255, 0.25)',
+                                                borderRadius: '9999px', // Asegura que el botón sea completamente redondo
                                             }}
                                         >
                                             Ver perfil y evolución

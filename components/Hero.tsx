@@ -216,37 +216,65 @@ const Hero = () => {
             </Link>
           </div>
 
-          {/* Estadísticas - TARJETAS ACTUALIZADAS */}
-<div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-  {/* Tarjeta 1 */}
-  <div className="p-6 rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 text-white/90">
-    <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-cyan-500/20 rounded-full border border-cyan-400/30">
-      <Shield className="w-6 h-6 text-cyan-300" />
-    </div>
-    <h3 className="text-2xl font-bold text-cyan-100 mb-1 text-center">500+</h3>
-    <p className="text-sm text-center text-white/70">Proyectos auditados</p>
-  </div>
+          {/* Estadísticas - TARJETAS CON IMÁGENES DE FONDO */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+            {/* Tarjeta 1 - Proyectos auditados */}
+            <div className="p-6 rounded-2xl border border-cyan-400/50 backdrop-blur-md bg-transparent shadow-lg hover:shadow-2xl hover:border-cyan-300/80 hover:shadow-[0_0_15px_5px_rgba(85,247,237,0.8)] transition-all duration-300 text-white/90">
+              <div
+                className="w-full h-32 mb-4"
+                style={{
+                  backgroundImage: `url('/im1.png')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'top', // Mostrar desde la parte superior
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
+                &nbsp;
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-cyan-100 mb-1">Proyectos</h3>
+                <p className="text-sm text-white/70">auditados</p>
+              </div>
+            </div>
 
-  {/* Tarjeta 2 */}
-  <div className="p-6 rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 text-white/90">
-    <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-emerald-500/20 rounded-full border border-emerald-400/30">
-      <TrendingUp className="w-6 h-6 text-emerald-300" />
-    </div>
-    <h3 className="text-2xl font-bold text-emerald-100 mb-1 text-center">95%</h3>
-    <p className="text-sm text-center text-white/70">Mejora en seguridad</p>
-  </div>
+            {/* Tarjeta 2 - Mejora en seguridad */}
+            <div className="p-6 rounded-2xl border border-cyan-400/50 backdrop-blur-md bg-transparent shadow-lg hover:shadow-2xl hover:border-cyan-300/80 hover:shadow-[0_0_15px_5px_rgba(85,247,237,0.8)] transition-all duration-300 text-white/90">
+              <div
+                className="w-full h-32 mb-4"
+                style={{
+                  backgroundImage: `url('/scan.svg')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center', // Mantener centrado para el SVG
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
+                &nbsp;
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-emerald-100 mb-1">Mejora</h3>
+                <p className="text-sm text-white/70">en seguridad</p>
+              </div>
+            </div>
 
-  {/* Tarjeta 3 */}
-  <div className="p-6 rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 shadow-lg hover:shadow-2xl transition-all duration-300 text-white/90">
-    <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-indigo-500/20 rounded-full border border-indigo-400/30">
-      <Award className="w-6 h-6 text-indigo-300" />
-    </div>
-    <h3 className="text-2xl font-bold text-indigo-100 mb-1 text-center">24/7</h3>
-    <p className="text-sm text-center text-white/70">Monitoreo continuo</p>
-  </div>
-</div>
-
-
+            {/* Tarjeta 3 - Monitoreo continuo */}
+            <div className="p-6 rounded-2xl border border-cyan-400/50 backdrop-blur-md bg-transparent shadow-lg hover:shadow-2xl hover:border-cyan-300/80 hover:shadow-[0_0_15px_5px_rgba(85,247,237,0.8)] transition-all duration-300 text-white/90">
+              <div
+                className="w-full h-32 mb-4"
+                style={{
+                  backgroundImage: `url('/im3.png')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'top', // Mostrar desde la parte superior
+                  backgroundRepeat: 'no-repeat',
+                }}
+              >
+                &nbsp;
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-indigo-100 mb-1">Monitoreo</h3>
+                <p className="text-sm text-white/70">continuo</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
