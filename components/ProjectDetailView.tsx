@@ -1,4 +1,4 @@
-import { Shield, Calendar, Code, FileText, Download, ExternalLink, Globe, Twitter, AlertTriangle, CheckCircle, XCircle, Clock, Zap, Lock, Activity, Star, Award, Hash, Users } from 'lucide-react';
+import { Shield, Calendar, Code, FileText, Download, ExternalLink, Globe, Twitter, AlertTriangle, CheckCircle, XCircle, Clock, Zap, Lock, Activity, Star, Award, Hash, Users, X } from 'lucide-react';
 import { Button } from '@components/ui/button';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LineChart, Line } from 'recharts';
@@ -41,7 +41,7 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={onClose}>
             <div
-                className="backdrop-blur-2xl bg-[#09090B]/70 border border-[#09090B] rounded-3xl max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl"
+                className="backdrop-blur-2xl bg-[#09090B]/70 border border-[#09090B] rounded-3xl max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl relative"
                 onClick={(e) => e.stopPropagation()}
                 style={{
                     backdropFilter: 'blur(24px)',
@@ -51,6 +51,15 @@ const ProjectDetailView = ({ project, onClose }: ProjectDetailViewProps) => {
                     backgroundAttachment: 'fixed',
                 }}
             >
+                {/* Botón de cierre X */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 z-50 p-2 bg-black/30 hover:bg-black/50 rounded-full transition-all duration-200 backdrop-blur-sm border border-cyan-400/30 hover:border-cyan-400/50"
+                    aria-label="Cerrar"
+                >
+                    <X className="h-6 w-6 text-cyan-400 hover:text-cyan-300" />
+                </button>
+
                 {/* --- Header --- */}
                 <header className="relative p-8 border-b border-gray-700">
                     {/* ... (código del header sin cambios, ya era dinámico) ... */}

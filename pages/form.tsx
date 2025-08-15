@@ -1,10 +1,9 @@
-// components/ContactForm.tsx
 import React, { useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router'; // Usar next/router para Pages Router
-// serverSideTranslations no es necesario en este componente, se usa en las páginas
+import { useRouter } from 'next/router';
+import { X } from 'lucide-react'; // Importamos el ícono de cierre
 
-const ContactForm: React.FC = () => {
+const ContactForm = () => {
     const { t } = useTranslation('common');
     const router = useRouter();
     const [formData, setFormData] = useState({
@@ -28,13 +27,13 @@ const ContactForm: React.FC = () => {
     const [message, setMessage] = useState('');
 
     // Maneja cambios en los campos de texto
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     // Maneja cambios en los checkboxes de servicios
-    const handleServiceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleServiceChange = (e) => {
         const { name, checked } = e.target;
         setFormData((prev) => ({
             ...prev,
@@ -45,13 +44,19 @@ const ContactForm: React.FC = () => {
         }));
     };
 
-    // Nueva función para redirigir a la página del asesor
+    // Función para redirigir a WhatsApp
     const handleTalkToAdvisor = () => {
-        router.push('/advisor-chat'); // Redirige a la página de chat con un asesor
+        const message = encodeURIComponent("Hola, me gustaría obtener más información sobre Sentinel");
+        window.open(`https://wa.me/573175090528?text=${message}`, '_blank');
+    };
+
+    // Función para cerrar el formulario
+    const handleCloseForm = () => {
+        router.push('/'); // Redirige a la página principal
     };
 
     // Maneja el envío del formulario a tu API
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setMessage('');
@@ -66,35 +71,45 @@ const ContactForm: React.FC = () => {
             });
 
             if (res.ok) {
-                setMessage(t('formSubmittedSuccess'));
+                setMessage(t('formSubmittedSuccess', '¡Formulario enviado con éxito!'));
                 router.push('/');
             } else {
                 const errorData = await res.json();
-                setMessage(errorData.message || t('formSubmissionError'));
+                setMessage(errorData.message || t('formSubmissionError', 'Error al enviar el formulario. Por favor, inténtalo de nuevo.'));
             }
         } catch (error) {
             console.error('Submission error:', error);
-            setMessage(t('formSubmissionError'));
+            setMessage(t('formSubmissionError', 'Error al enviar el formulario. Por favor, inténtalo de nuevo.'));
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="bg-white pt-[80px]">
+        <div className="bg-transparent pt-[80px]">
 
-            <div className="max-w-2xl mx-auto p-4 bg-white shadow-lg rounded-lg my-8 pt-[120px]">
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900">{t('formTitle')}</h2> {/* Texto más oscuro para fondo blanco */}
-                    {/* Puedes añadir un botón de cerrar si es un modal */}
-                    {/* <button className="text-gray-500 hover:text-gray-700">&times;</button> */}
+            <div className="max-w-2xl mx-auto p-4 bg-transparent shadow-none my-8 pt-[60px] relative">
+                {/* Botón de cierre (X) */}
+                <button
+                    onClick={handleCloseForm}
+                    className="absolute top-4 right-4 text-cyan-400 hover:text-cyan-300 p-2 rounded-full hover:bg-cyan-900/20 transition-colors z-10"
+                    aria-label="Cerrar formulario"
+                    type="button"
+                >
+                    <X className="w-6 h-6" /> {/* Aumentado el tamaño de la X a 6x6 */}
+                </button>
+
+                <div className="flex justify-between items-center mb-4"> {/* Reducido el margen inferior del título */}
+                    <h2 className="text-2xl font-bold text-cyan-400">
+                        {t('formTitle', 'Protege tu Proyecto Hoy')}
+                    </h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Project/Company Name */}
                     <div>
-                        <label htmlFor="projectName" className="block text-sm font-medium text-gray-800">
-                            {t('projectCompanyName')}*
+                        <label htmlFor="projectName" className="block text-sm font-medium text-cyan-300">
+                            {t('projectCompanyName', 'Nombre del Proyecto/Compañía')}*
                         </label>
                         <input
                             type="text"
@@ -103,16 +118,16 @@ const ContactForm: React.FC = () => {
                             value={formData.projectName}
                             onChange={handleChange}
                             required
-                            // Estilo de input para fondo blanco
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 bg-white focus:outline-none focus:ring-sentinel-primary focus:border-sentinel-primary sm:text-sm"
+                            className="mt-1 block w-full border border-cyan-400 rounded-md shadow-sm py-2 px-3 text-cyan-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 sm:text-sm placeholder-cyan-400/70"
+                            placeholder={t('projectCompanyName', 'Nombre del Proyecto/Compañía')}
                         />
                     </div>
 
                     {/* Your Full Name & Email */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="fullName" className="block text-sm font-medium text-gray-800">
-                                {t('yourFullName')}*
+                            <label htmlFor="fullName" className="block text-sm font-medium text-cyan-300">
+                                {t('yourFullName', 'Tu Nombre Completo')}*
                             </label>
                             <input
                                 type="text"
@@ -121,12 +136,13 @@ const ContactForm: React.FC = () => {
                                 value={formData.fullName}
                                 onChange={handleChange}
                                 required
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 bg-white focus:outline-none focus:ring-sentinel-primary focus:border-sentinel-primary sm:text-sm"
+                                className="mt-1 block w-full border border-cyan-400 rounded-md shadow-sm py-2 px-3 text-cyan-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 sm:text-sm placeholder-cyan-400/70"
+                                placeholder={t('yourFullName', 'Tu Nombre Completo')}
                             />
                         </div>
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-800">
-                                {t('email')}*
+                            <label htmlFor="email" className="block text-sm font-medium text-cyan-300">
+                                {t('email', 'Correo Electrónico')}*
                             </label>
                             <input
                                 type="email"
@@ -135,15 +151,16 @@ const ContactForm: React.FC = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 bg-white focus:outline-none focus:ring-sentinel-primary focus:border-sentinel-primary sm:text-sm"
+                                className="mt-1 block w-full border border-cyan-400 rounded-md shadow-sm py-2 px-3 text-cyan-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 sm:text-sm placeholder-cyan-400/70"
+                                placeholder={t('email', 'Correo Electrónico')}
                             />
                         </div>
                     </div>
 
                     {/* Job Title */}
                     <div>
-                        <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-800">
-                            {t('jobTitle')}
+                        <label htmlFor="jobTitle" className="block text-sm font-medium text-cyan-300">
+                            {t('jobTitle', 'Cargo')}
                         </label>
                         <input
                             type="text"
@@ -151,14 +168,15 @@ const ContactForm: React.FC = () => {
                             name="jobTitle"
                             value={formData.jobTitle}
                             onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 bg-white focus:outline-none focus:ring-sentinel-primary focus:border-sentinel-primary sm:text-sm"
+                            className="mt-1 block w-full border border-cyan-400 rounded-md shadow-sm py-2 px-3 text-cyan-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-cyan-0 focus:border-cyan-400 sm:text-sm placeholder-cyan-400/70"
+                            placeholder={t('jobTitle', 'Cargo')}
                         />
                     </div>
 
                     {/* Telegram / WeChat / Others */}
                     <div>
-                        <label htmlFor="contactMethod" className="block text-sm font-medium text-gray-800">
-                            {t('telegramWechatOthers')}
+                        <label htmlFor="contactMethod" className="block text-sm font-medium text-cyan-300">
+                            {t('telegramWechatOthers', 'Telegram / WeChat / Otros')}
                         </label>
                         <input
                             type="text"
@@ -166,26 +184,26 @@ const ContactForm: React.FC = () => {
                             name="contactMethod"
                             value={formData.contactMethod}
                             onChange={handleChange}
-                            placeholder={t('telegramWechatOthersPlaceholder')}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 bg-white focus:outline-none focus:ring-sentinel-primary focus:border-sentinel-primary sm:text-sm"
+                            placeholder={t('telegramWechatOthersPlaceholder', 'Telegram, WeChat, WhatsApp, o cualquier método preferido (por favor, especifica).')}
+                            className="mt-1 block w-full border border-cyan-400 rounded-md shadow-sm py-2 px-3 text-cyan-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 sm:text-sm placeholder-cyan-400/70"
                         />
                     </div>
 
                     {/* Select Services */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-800 mb-2">
-                            {t('selectServicesInterest')}
+                        <label className="block text-sm font-medium text-cyan-300 mb-2">
+                            {t('selectServicesInterest', 'Por favor, selecciona los servicios que te interesan')}
                         </label>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-800">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-cyan-300">
                             <label className="flex items-center">
                                 <input
                                     type="checkbox"
                                     name="auditing"
                                     checked={formData.services.auditing}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('auditing')}</span>
+                                <span className="ml-2">{t('auditing', 'Auditoría')}</span>
                             </label>
                             <label className="flex items-center">
                                 <input
@@ -193,9 +211,9 @@ const ContactForm: React.FC = () => {
                                     name="penetrationTesting"
                                     checked={formData.services.penetrationTesting}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('penetrationTesting')}</span>
+                                <span className="ml-2">{t('penetrationTesting', 'Pruebas de Penetración')}</span>
                             </label>
                             <label className="flex items-center">
                                 <input
@@ -203,9 +221,9 @@ const ContactForm: React.FC = () => {
                                     name="skynetScore"
                                     checked={formData.services.skynetScore}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('skynetScore')}</span>
+                                <span className="ml-2">{t('skynetScore', 'Skynet Score')}</span>
                             </label>
                             <label className="flex items-center">
                                 <input
@@ -213,9 +231,9 @@ const ContactForm: React.FC = () => {
                                     name="teamVerification"
                                     checked={formData.services.teamVerification}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('teamVerificationContractVerificationBugBounty')}</span>
+                                <span className="ml-2">{t('teamVerificationContractVerificationBugBounty', 'Verificación de Equipo, Verificación de Contrato, Bug Bounty')}</span>
                             </label>
                             <label className="flex items-center">
                                 <input
@@ -223,9 +241,9 @@ const ContactForm: React.FC = () => {
                                     name="advisory"
                                     checked={formData.services.advisory}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('advisoryOrOtherServices')}</span>
+                                <span className="ml-2">{t('advisoryOrOtherServices', 'Asesoría u otros servicios')}</span>
                             </label>
                             <label className="flex items-center">
                                 <input
@@ -233,9 +251,9 @@ const ContactForm: React.FC = () => {
                                     name="skynetQuest"
                                     checked={formData.services.skynetQuest}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('skynetQuest')}</span>
+                                <span className="ml-2">{t('skynetQuest', 'Skynet Quest')}</span>
                             </label>
                             <label className="flex items-center">
                                 <input
@@ -243,17 +261,17 @@ const ContactForm: React.FC = () => {
                                     name="complianceAML"
                                     checked={formData.services.complianceAML}
                                     onChange={handleServiceChange}
-                                    className="focus:ring-sentinel-primary h-4 w-4 text-sentinel-primary border-gray-300 rounded"
+                                    className="focus:ring-cyan-400 h-4 w-4 text-cyan-400 border-cyan-400 rounded bg-transparent"
                                 />
-                                <span className="ml-2">{t('complianceAML')}</span>
+                                <span className="ml-2">{t('complianceAML', 'Cumplimiento / AML')}</span>
                             </label>
                         </div>
                     </div>
 
                     {/* Additional Notes */}
                     <div>
-                        <label htmlFor="additionalNotes" className="block text-sm font-medium text-gray-800">
-                            {t('additionalNotes')}
+                        <label htmlFor="additionalNotes" className="block text-sm font-medium text-cyan-300">
+                            {t('additionalNotes', 'Notas Adicionales')}
                         </label>
                         <textarea
                             id="additionalNotes"
@@ -261,61 +279,48 @@ const ContactForm: React.FC = () => {
                             value={formData.additionalNotes}
                             onChange={handleChange}
                             rows={4}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 text-gray-900 bg-white focus:outline-none focus:ring-sentinel-primary focus:border-sentinel-primary sm:text-sm"
+                            className="mt-1 block w-full border border-cyan-400 rounded-md shadow-sm py-2 px-3 text-cyan-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 sm:text-sm placeholder-cyan-400/70 resize-y"
+                            placeholder={t('additionalNotes', 'Notas Adicionales')}
                         ></textarea>
                     </div>
 
                     {/* reCAPTCHA placeholder (replace with actual reCAPTCHA implementation) */}
                     <div className="flex items-center space-x-2">
-                        <div className="bg-gray-100 p-2 rounded-md flex items-center justify-between flex-grow"> {/* Fondo más claro */}
-                            <span className="text-xs text-gray-700">{t('protectedByRecaptcha')}</span>
-                            <div className="w-6 h-6 bg-gray-400 rounded-full"></div> {/* Placeholder for reCAPTCHA logo */}
+                        <div className="bg-cyan-900/20 p-2 rounded-md flex items-center justify-between flex-grow border border-cyan-400">
+                            <span className="text-xs text-cyan-300">{t('protectedByRecaptcha', 'Protegido por reCAPTCHA')}</span>
+                            <div className="w-6 h-6 bg-cyan-400 rounded-full"></div>
                         </div>
-                        <span className="text-xs text-sentinel-primary cursor-pointer">{t('privacyTerms')}</span> {/* Color rojo */}
+                        <span className="text-xs text-cyan-400 cursor-pointer hover:text-cyan-300">{t('privacyTerms', 'Privacidad - Términos')}</span>
                     </div>
 
                     {/* Message area */}
                     {message && (
-                        <p className={`text-center text-sm font-medium ${message.includes('éxito') || message.includes('success') ? 'text-green-600' : 'text-red-600'}`}>
+                        <p className={`text-center text-sm font-medium ${message.includes('éxito') || message.includes('success') ? 'text-cyan-400' : 'text-red-400'}`}>
                             {message}
                         </p>
                     )}
 
-                    {/* Submit Button */}
+                    {/* Submit Button - Color aguamarina con bordes redondeados */}
                     <button
                         type="submit"
                         disabled={loading}
-                        // Color de botón del Hero: bg-sentinel-primary
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sentinel-primary hover:bg-sentinel-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sentinel-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full flex justify-center py-2 px-4 border border-cyan-400 rounded-full shadow-sm text-sm font-medium text-cyan-900 bg-cyan-400 hover:bg-cyan-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                        {loading ? t('submit') + '...' : t('submit')}
+                        {loading ? t('submit', 'Enviar') + '...' : t('submit', 'Enviar')}
                     </button>
 
-                    {/* Botón para Hablar con un Asesor (Secundario) */}
+                    {/* Botón para Hablar con un Asesor - Borde azul oscuro con bordes redondeados */}
                     <button
                         type="button"
                         onClick={handleTalkToAdvisor}
-                        // Color de botón del Hero (secundario): bg-white text-sentinel-primary border-sentinel-primary
-                        className="w-full flex justify-center py-2 px-4 border border-sentinel-primary rounded-md shadow-sm text-sm font-medium text-sentinel-primary bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sentinel-primary mt-2"
+                        className="w-full flex justify-center py-2 px-4 border border-cyan-400 rounded-full shadow-sm text-sm font-medium text-cyan-400 bg-transparent hover:bg-cyan-400/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 mt-2 transition-colors"
                     >
-                        {t('talkToAdvisor')}
+                        {t('talkToAdvisor', 'Hablar con un Asesor')}
                     </button>
                 </form>
             </div>
         </div>
     );
 };
-
-// getStaticProps es para la página, no para el componente.
-// Si este componente se usa en una página como pages/contacto.tsx,
-// el getStaticProps DEBE estar en pages/contacto.tsx.
-// Lo he comentado aquí para evitar confusiones y errores si este archivo es solo un componente.
-// export const getStaticProps = async ({ locale }: { locale: string }) => {
-//     return {
-//         props: {
-//             ...(await serverSideTranslations(locale, ['common'])),
-//         },
-//     };
-// };
 
 export default ContactForm;
