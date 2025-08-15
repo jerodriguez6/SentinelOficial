@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from "react";
 
 const Benefits = () => {
     const benefits = [
-        { icon: Eye, title: "Transparencia total", description: "Tu calidad tecnológica queda documentada y accesible al público.", buttonText: "Explorar más", image: "/s1.jpg" },
-        { icon: Star, title: "Visibilidad Web3", description: "Destaca en el ranking y llama la atención de socios e inversores.", buttonText: "Más detalles", image: "/s2.jpg" },
-        { icon: TrendingUp, title: "Mejora continua", description: "El sistema te incentiva a mantener buenas prácticas y seguridad.", buttonText: "Ver beneficios", image: "/s3.jpg" },
-        { icon: Share, title: "Marketing verificado", description: "Comparte tu score o insignia con un widget y respalda tu marca.", buttonText: "Obtener ahora", image: "/s4.jpg" },
-        { icon: Shield, title: "Ventaja competitiva", description: "Un SentinelScore alto es tu carta de presentación en blockchain.", buttonText: "Iniciar hoy", image: "/s5.jpg" }
+        { icon: Eye, title: "Transparencia total", description: "Tu calidad tecnológica queda documentada y accesible al público.", buttonText: "Explorar más", image: "/S1.jpg" },
+        { icon: Star, title: "Visibilidad Web3", description: "Destaca en el ranking y llama la atención de socios e inversores.", buttonText: "Más detalles", image: "/S2.jpg" },
+        { icon: TrendingUp, title: "Mejora continua", description: "El sistema te incentiva a mantener buenas prácticas y seguridad.", buttonText: "Ver beneficios", image: "/S3.jpg" },
+        { icon: Share, title: "Marketing verificado", description: "Comparte tu score o insignia con un widget y respalda tu marca.", buttonText: "Obtener ahora", image: "/S4.jpg" },
+        { icon: Shield, title: "Ventaja competitiva", description: "Un SentinelScore alto es tu carta de presentación en blockchain.", buttonText: "Iniciar hoy", image: "/S5.jpg" }
     ];
 
     // Duplicamos el array para efecto infinito
