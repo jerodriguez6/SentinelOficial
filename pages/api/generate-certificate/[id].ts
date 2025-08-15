@@ -26,7 +26,7 @@ const addWatermark = (doc: jsPDF) => {
     const watermarkBase64 = watermarkBuffer.toString('base64');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const logoWidth = 120;
+    const logoWidth = 90;
     const logoHeight = 120;
     const x = (pageWidth - logoWidth) / 2;
     const y = (pageHeight - logoHeight) / 2;
@@ -102,7 +102,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // --- Colores personalizados ---
     // ✅ CORRECCIÓN: Se añade 'as const' para que TypeScript infiera una tupla de longitud fija.
     const colorGris = [22, 26, 29] as [number, number, number];    // #161A1D
-    const colorRojo = [216, 47, 50] as [number, number, number];   // #D82F32
+    const colorAguamarina = [0, 184, 217] as [number, number, number];   // #00B8D9 (aguamarina)
 
     // --- Tablas y Pie de Página Fijo ---
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -120,7 +120,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ['Hash de Auditoría', auditHash],
       ],
       theme: 'grid',
-      headStyles: { fillColor: colorRojo },
+      headStyles: { fillColor: colorAguamarina }, // Cambiado de colorRojo a colorAguamarina
     });
 
     autoTable(doc, {
